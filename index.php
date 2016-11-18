@@ -1,11 +1,56 @@
-<?php get_header(); ?>
+<!doctype html>
+<html <?php language_attributes(); ?> class="no-js">
+	<head>
+		<meta charset="<?php bloginfo('charset'); ?>">
+		<title><?php wp_title(''); ?><?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="<?php bloginfo('description'); ?>">
+		<?php wp_head(); ?>
+	</head>
+	<body <?php body_class(); ?>>
 
-	<main role="main">
+		<header>
+			<div>
+				<div class="wrapper">
+					<nav class="top-left-menu"><?php wp_nav_menu( array( 'theme_location' => 'top-left' ) ); ?></nav>
+					<nav class="top-right-menu"><?php wp_nav_menu( array( 'theme_location' => 'top-right' ) );?></nav>
+				</div>
+			</div>
+			<div class="wrapper">
+				<?php
+				// If a custom logo is set, display it
+				if ( the_custom_logo() ) {
+					the_custom_logo();
+				}
+				?>
+			</div>
 
+			<nav class="primary-menu"><?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?></nav>
+		</header>
 
+		<article>
+			<section>
+			</section>
+			<main>
+			</main>
+			<sidebar>
+			</sidebar>
+		</article>
 
-	</main>
+		<footer>
+			<div>
+				<nav class="primary-menu"><?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?></nav>
+			</div>
+			<?php
+			// If a custom logo is set, display it
+			if ( the_custom_logo() ) {
+				the_custom_logo();
+			}
+			?>
+			<nav class="footer-menu"><?php wp_nav_menu( array( 'theme_location' => 'footer' ) ); ?></nav>
 
-<?php get_sidebar(); ?>
-
-<?php get_footer(); ?>
+		</footer>
+<?php wp_footer(); ?>
+</body>
+</html>
