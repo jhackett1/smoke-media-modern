@@ -10,7 +10,7 @@
   }
   add_filter('quicktags_settings', 'remove_quicktags');
 
-  // Add some new custom quicktag buttons to the editor with the quicktags JS API
+// Add some new custom quicktag buttons to the editor with the quicktags JS API
   function add_quicktags() {
     if (wp_script_is('quicktags')){
     ?>

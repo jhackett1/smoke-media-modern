@@ -6,6 +6,7 @@ wp_enqueue_style( 'FontAwesome', get_stylesheet_directory_uri() . '/font-awesome
 wp_enqueue_script( 'jquery', get_template_directory_uri() . '/js/jquery-3.1.1.min.js');
 wp_enqueue_script( 'app', get_template_directory_uri() . '/js/app.js');
 wp_enqueue_script( 'wow', get_template_directory_uri() . '/js/wow.js');
+wp_enqueue_script( 'jwplayer', get_template_directory_uri() . '/jwplayer-7.7.4/jwplayer.js');
 
 // Register four navigation menu locations
 register_nav_menus( array(
@@ -66,6 +67,14 @@ function theme_typekit_inline() {
 }
 add_action( 'wp_head', 'theme_typekit_inline' );
 
+
+// Add JW player license key to Footer
+function add_jw_license_key(){
+	?><script>jwplayer.key="pTTOSzMuIAwNqrzL1q7qEPIr1EQfvglWbXCelA==";</script>
+<?php
+}
+add_action ('wp_footer', 'add_jw_license_key');
+
 //Shorten excerpts
 			 function custom_excerpt_length( $length ) {
 			return 15;
@@ -92,3 +101,11 @@ add_action( 'wp_head', 'theme_typekit_inline' );
 
 // Include the editor page file
 	require_once( __DIR__ . '/admin/editor.php');
+
+
+	add_filter('fp_img_src' , 'set_video_for_fp_background' , 10 , 3);
+function set_video_for_fp_background( $original_img, $fp_single_id , $featured_page_id ) {
+	if ( 'one' != $fp_single_id )
+		return $original_img ;
+	return sprintf('<iframe style="max-width:none;position: absolute;left: -86px;" src="//player.vimeo.com/video/39312923?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&amp;autoplay=1&amp;loop=1" width="445" height="250" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
+}

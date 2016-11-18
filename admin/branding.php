@@ -3,7 +3,7 @@
 // Tweaks to the Wordpress admin panels to remove Wordpress branding and add in Smoke branding
 //
 
-// Replace the "Thank you for creating with Wordpress message with something better"
+// Replace the "Thank you for creating with Wordpress" message with something better"
 	function wpse_edit_footer() {
 	    add_filter( 'admin_footer_text', 'wpse_edit_text', 11 );
 	}

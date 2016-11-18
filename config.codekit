@@ -687,6 +687,208 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/jwplayer-7.7.4\/jwplayer.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/jwplayer.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/jwplayer-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/jwplayer-7.7.4\/polyfills.base64.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/polyfills.base64.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/polyfills.base64-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/jwplayer-7.7.4\/polyfills.promise.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/polyfills.promise.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/polyfills.promise-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/jwplayer-7.7.4\/polyfills.vttrenderer.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/polyfills.vttrenderer.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/polyfills.vttrenderer-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/jwplayer-7.7.4\/provider.cast.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/provider.cast.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/provider.cast-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/jwplayer-7.7.4\/provider.caterpillar.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/provider.caterpillar.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/provider.caterpillar-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/jwplayer-7.7.4\/provider.flash.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/provider.flash.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/provider.flash-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/jwplayer-7.7.4\/provider.html5.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/provider.html5.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/provider.html5-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/jwplayer-7.7.4\/provider.shaka.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/provider.shaka.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/provider.shaka-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/jwplayer-7.7.4\/provider.youtube.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/provider.youtube.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/provider.youtube-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/jwplayer-7.7.4\/skins\/beelden.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/skins\/beelden.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/jwplayer-7.7.4\/skins\/bekle.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/skins\/bekle.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/jwplayer-7.7.4\/skins\/five.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/skins\/five.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/jwplayer-7.7.4\/skins\/glow.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/skins\/glow.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/jwplayer-7.7.4\/skins\/roundster.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/skins\/roundster.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/jwplayer-7.7.4\/skins\/seven.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/skins\/seven.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/jwplayer-7.7.4\/skins\/six.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/skins\/six.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/jwplayer-7.7.4\/skins\/stormtrooper.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/skins\/stormtrooper.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/jwplayer-7.7.4\/skins\/vapor.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/skins\/vapor.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/jwplayer-7.7.4\/vttparser.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/jwplayer-7.7.4\/vttparser.js",
+		"outputAbbreviatedPath": "\/jwplayer-7.7.4\/min\/vttparser-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/options.php": {
 		"fileType": 8192,
 		"ignore": 0,
