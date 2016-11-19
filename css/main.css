@@ -1,0 +1,227 @@
+.limited-width {
+  margin: auto;
+  max-width: 1100px; }
+
+body.blog {
+  margin: 0;
+  padding: 0;
+  font-family: League Gothic, sans-serif;
+  background-color: #fafafa; }
+  body.blog h2, body.blog h3, body.blog h4, body.blog h5 {
+    font-family: League Gothic, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #505050; }
+  body.blog p {
+    color: #505050;
+    font-family: Adobe Garamond Pro, sans-serif;
+    font-size: 1.1em; }
+    body.blog p a {
+      text-decoration: none; }
+    body.blog p a:hover {
+      text-decoration: underline; }
+  body.blog hr {
+    border: 2px #dfdfdf;
+    border-style: none none dotted none; }
+  body.blog header.site-header {
+    width: 100%;
+    background-color: #9F1D2C; }
+    body.blog header.site-header div.top-bar {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+              flex-direction: row;
+      -webkit-box-pack: justify;
+      -webkit-justify-content: space-between;
+          -ms-flex-pack: justify;
+              justify-content: space-between; }
+      body.blog header.site-header div.top-bar nav ul li:hover > ul {
+        display: block; }
+      body.blog header.site-header div.top-bar nav ul {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px; }
+        body.blog header.site-header div.top-bar nav ul li.menu-item-has-children::before {
+          content: " ";
+          width: 0;
+          height: 0;
+          border-left: 20px solid transparent;
+          border-right: 20px solid transparent;
+          border-top: 20px solid #f00; }
+        body.blog header.site-header div.top-bar nav ul li {
+          display: inline;
+          text-transform: uppercase;
+          font-weight: 100;
+          font-size: 0.9em;
+          letter-spacing: 0.5px;
+          position: relative; }
+          body.blog header.site-header div.top-bar nav ul li ul {
+            list-style-type: none;
+            width: 100px;
+            margin: 0px;
+            padding: 0px;
+            position: absolute;
+            left: 10px;
+            top: 20px;
+            background-color: #505050;
+            display: none; }
+            body.blog header.site-header div.top-bar nav ul li ul li:last-of-type a {
+              padding: 10px 10px 10px 10px; }
+            body.blog header.site-header div.top-bar nav ul li ul li {
+              text-transform: uppercase;
+              display: block;
+              font-weight: 100;
+              font-size: 0.9em;
+              letter-spacing: 0.5px;
+              font-style: italic; }
+              body.blog header.site-header div.top-bar nav ul li ul li a {
+                color: #fafafa;
+                text-decoration: none;
+                padding: 10px 10px 0px 10px;
+                display: inline-block; }
+              body.blog header.site-header div.top-bar nav ul li ul li a:hover {
+                text-decoration: underline; }
+          body.blog header.site-header div.top-bar nav ul li a {
+            color: #fafafa;
+            text-decoration: none;
+            padding: 7px 10px;
+            display: inline-block; }
+          body.blog header.site-header div.top-bar nav ul li a:hover {
+            text-decoration: underline; }
+    body.blog header.site-header img {
+      width: 200px;
+      height: auto;
+      margin: 10px; }
+    body.blog header.site-header div.primary-menu {
+      background-color: #A83441; }
+      body.blog header.site-header div.primary-menu nav {
+        background-color: #AC3E4A; }
+        body.blog header.site-header div.primary-menu nav ul li:hover > ul {
+          display: block; }
+        body.blog header.site-header div.primary-menu nav ul {
+          list-style-type: none;
+          margin: 0px;
+          padding: 0px; }
+          body.blog header.site-header div.primary-menu nav ul li {
+            display: inline;
+            text-transform: uppercase;
+            font-weight: 100;
+            font-size: 1.2em;
+            letter-spacing: 0.5px;
+            position: relative; }
+            body.blog header.site-header div.primary-menu nav ul li ul {
+              list-style-type: none;
+              width: 150px;
+              margin: 0px;
+              padding: 0px;
+              position: absolute;
+              left: 10px;
+              top: 27px;
+              background-color: #505050;
+              display: none; }
+              body.blog header.site-header div.primary-menu nav ul li ul li:last-of-type a {
+                padding: 10px 10px 10px 10px; }
+              body.blog header.site-header div.primary-menu nav ul li ul li {
+                text-transform: uppercase;
+                font-weight: 100;
+                font-size: 0.9em;
+                letter-spacing: 0.5px;
+                font-style: italic;
+                display: block; }
+                body.blog header.site-header div.primary-menu nav ul li ul li a {
+                  color: #fafafa;
+                  text-decoration: none;
+                  padding: 10px 10px 0px 10px;
+                  display: inline-block; }
+                body.blog header.site-header div.primary-menu nav ul li ul li a:hover {
+                  text-decoration: underline; }
+            body.blog header.site-header div.primary-menu nav ul li a {
+              color: #fafafa;
+              text-decoration: none;
+              padding: 10px;
+              display: inline-block; }
+            body.blog header.site-header div.primary-menu nav ul li a:hover {
+              text-decoration: underline; }
+  body.blog article {
+    background-color: #fff;
+    min-height: 500px;
+    padding: 10px;
+    box-sizing: border-box; }
+  body.blog footer.site-footer {
+    width: 100%;
+    background-color: #9F1D2C; }
+    body.blog footer.site-footer nav.corporate-menu {
+      width: 1100px;
+      margin: 0 auto; }
+      body.blog footer.site-footer nav.corporate-menu ul {
+        list-style-type: none;
+        margin: 0px 0px 20px 0px;
+        padding: 0px;
+        text-align: center; }
+        body.blog footer.site-footer nav.corporate-menu ul li {
+          display: inline;
+          text-transform: uppercase;
+          font-weight: 100;
+          font-size: 0.9em;
+          letter-spacing: 0.5px;
+          position: relative; }
+          body.blog footer.site-footer nav.corporate-menu ul li ul {
+            display: none; }
+          body.blog footer.site-footer nav.corporate-menu ul li a {
+            color: #fafafa;
+            text-decoration: none;
+            padding: 10px;
+            display: inline-block; }
+          body.blog footer.site-footer nav.corporate-menu ul li a:hover {
+            text-decoration: underline; }
+    body.blog footer.site-footer div.copyright {
+      background-color: #A83441;
+      width: 100%;
+      font-size: 0.8em;
+      padding: 2px;
+      text-align: center; }
+      body.blog footer.site-footer div.copyright p {
+        color: #fafafa; }
+        body.blog footer.site-footer div.copyright p a {
+          color: #fafafa; }
+    body.blog footer.site-footer a.custom-logo-link {
+      margin: 20px;
+      display: block;
+      text-align: center; }
+      body.blog footer.site-footer a.custom-logo-link img {
+        width: 120px;
+        height: auto;
+        opacity: 0.3; }
+    body.blog footer.site-footer div.footer-menu {
+      background-color: #A83441;
+      width: 100%; }
+      body.blog footer.site-footer div.footer-menu nav {
+        background-color: #AC3E4A;
+        width: 1100px;
+        margin: 0 auto; }
+        body.blog footer.site-footer div.footer-menu nav ul {
+          list-style-type: none;
+          margin: 0px;
+          padding: 0px;
+          text-align: center; }
+          body.blog footer.site-footer div.footer-menu nav ul li {
+            display: inline;
+            text-transform: uppercase;
+            font-weight: 100;
+            font-size: 1.2em;
+            letter-spacing: 0.5px;
+            position: relative; }
+            body.blog footer.site-footer div.footer-menu nav ul li ul {
+              display: none; }
+            body.blog footer.site-footer div.footer-menu nav ul li a {
+              color: #fafafa;
+              text-decoration: none;
+              padding: 10px;
+              display: inline-block; }
+            body.blog footer.site-footer div.footer-menu nav ul li a:hover {
+              text-decoration: underline; }

@@ -1,56 +1,28 @@
-<!doctype html>
-<html <?php language_attributes(); ?> class="no-js">
-	<head>
-		<meta charset="<?php bloginfo('charset'); ?>">
-		<title><?php wp_title(''); ?><?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="<?php bloginfo('description'); ?>">
-		<?php wp_head(); ?>
-	</head>
-	<body <?php body_class(); ?>>
+<? get_header(); ?>
 
-		<header>
-			<div>
-				<div class="wrapper">
-					<nav class="top-left-menu"><?php wp_nav_menu( array( 'theme_location' => 'top-left' ) ); ?></nav>
-					<nav class="top-right-menu"><?php wp_nav_menu( array( 'theme_location' => 'top-right' ) );?></nav>
-				</div>
-			</div>
-			<div class="wrapper">
-				<?php
-				// If a custom logo is set, display it
-				if ( the_custom_logo() ) {
-					the_custom_logo();
-				}
-				?>
-			</div>
+<article class="limited-width">
+	<main>
+		<hr>
+		<h2>Page title</h2>
+		<h3>Page title</h3>
+		<h4>Page title</h4>
+		<h5>Page title</h5>
+		<p>This is some average paragraph text.</p>
+	</main>
+	<sidebar>
+	</sidebar>
+</article>
 
-			<nav class="primary-menu"><?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?></nav>
-		</header>
+	<!-- Example media player -->
+	<!-- <div id="myElement">Loading the player...</div>
+	<script type="text/javascript">
+	var playerInstance = jwplayer("myElement");
+	playerInstance.setup({
+	file: "https://www.youtube.com/watch?v=R1-Ef54uTeU",
+	width: 640,
+	height: 360,
+	name: 'smokeplayerskin'
+	});
+	</script> -->
 
-		<article>
-			<section>
-			</section>
-			<main>
-			</main>
-			<sidebar>
-			</sidebar>
-		</article>
-
-		<footer>
-			<div>
-				<nav class="primary-menu"><?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?></nav>
-			</div>
-			<?php
-			// If a custom logo is set, display it
-			if ( the_custom_logo() ) {
-				the_custom_logo();
-			}
-			?>
-			<nav class="footer-menu"><?php wp_nav_menu( array( 'theme_location' => 'footer' ) ); ?></nav>
-
-		</footer>
-<?php wp_footer(); ?>
-</body>
-</html>
+<?php get_footer(); ?>

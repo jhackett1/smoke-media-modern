@@ -1,1 +1,252 @@
 @import "variables.sass"
+
+.limited-width
+  margin: auto
+  max-width: $width
+
+body.blog
+  margin: 0
+  padding: 0
+  font-family: $h-stack
+  background-color: $background
+
+  h2, h3, h4, h5
+    font-family: $h-stack
+    text-transform: uppercase
+    letter-spacing: 1px
+    color: $text
+
+  p
+    color: $text
+    font-family: $p-stack
+    font-size: 1.1em
+
+    a
+      text-decoration: none
+
+    a:hover
+      text-decoration: underline
+
+  hr
+    border: 2px #dfdfdf
+    border-style: none none dotted none
+
+  header.site-header
+    width: 100%
+    background-color: $brand
+
+    div.top-bar
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+
+      nav
+        ul li:hover > ul
+          display: block
+        ul
+          list-style-type: none
+          margin: 0px
+          padding: 0px
+          li.menu-item-has-children::before
+            content: " "
+            width: 0
+            height: 0
+            border-left: 20px solid transparent
+            border-right: 20px solid transparent
+            border-top: 20px solid #f00
+          li
+            display: inline
+            text-transform: uppercase
+            font-weight: 100
+            font-size: 0.9em
+            letter-spacing: 0.5px
+            position: relative
+
+            // Submenu items
+            ul
+              list-style-type: none
+              width: 100px
+              margin: 0px
+              padding: 0px
+              position: absolute
+              left: 10px
+              top: 20px
+              background-color: #505050
+              display: none
+              li:last-of-type
+                a
+                  padding: 10px 10px 10px 10px
+              li
+                text-transform: uppercase
+                display: block
+                font-weight: 100
+                font-size: 0.9em
+                letter-spacing: 0.5px
+                font-style: italic
+                a
+                  color: $background
+                  text-decoration: none
+                  padding: 10px 10px 0px 10px
+                  display: inline-block
+                a:hover
+                  text-decoration: underline
+
+            a
+              color: $background
+              text-decoration: none
+              padding: 7px 10px
+              display: inline-block
+            a:hover
+              text-decoration: underline
+
+    img
+      width: 200px
+      height: auto
+      margin: 10px
+
+    div.primary-menu
+      background-color: #A83441
+      nav
+        background-color: #AC3E4A
+
+        ul li:hover > ul
+          display: block
+
+        ul
+          list-style-type: none
+          margin: 0px
+          padding: 0px
+
+          li
+            display: inline
+            text-transform: uppercase
+            font-weight: 100
+            font-size: 1.2em
+            letter-spacing: 0.5px
+            position: relative
+
+            // Submenu items
+            ul
+              list-style-type: none
+              width: 150px
+              margin: 0px
+              padding: 0px
+              position: absolute
+              left: 10px
+              top: 27px
+              background-color: #505050
+              display: none
+              li:last-of-type
+                a
+                  padding: 10px 10px 10px 10px
+              li
+                text-transform: uppercase
+                font-weight: 100
+                font-size: 0.9em
+                letter-spacing: 0.5px
+                font-style: italic
+                display: block
+                a
+                  color: $background
+                  text-decoration: none
+                  padding: 10px 10px 0px 10px
+                  display: inline-block
+                a:hover
+                  text-decoration: underline
+
+            a
+              color: $background
+              text-decoration: none
+              padding: 10px
+              display: inline-block
+            a:hover
+              text-decoration: underline
+
+  article
+    background-color: #fff
+    min-height: 500px
+    padding: 10px
+    box-sizing: border-box
+
+  footer.site-footer
+    width: 100%
+    background-color: $brand
+
+    nav.corporate-menu
+      width: $width
+      margin: 0 auto
+      ul
+        list-style-type: none
+        margin: 0px 0px 20px 0px
+        padding: 0px
+        text-align: center
+        marg
+        li
+          display: inline
+          text-transform: uppercase
+          font-weight: 100
+          font-size: 0.9em
+          letter-spacing: 0.5px
+          position: relative
+          // Submenu items
+          ul
+            display: none
+          a
+            color: $background
+            text-decoration: none
+            padding: 10px
+            display: inline-block
+          a:hover
+            text-decoration: underline
+
+    div.copyright
+      background-color: #A83441
+      width: 100%
+      font-size: 0.8em
+      padding: 2px
+      text-align: center
+      p
+        color: $background
+        a
+          color: $background
+
+    a.custom-logo-link
+      margin: 20px
+      display: block
+      text-align: center
+
+      img
+        width: 120px
+        height: auto
+        opacity: 0.3
+
+    div.footer-menu
+      background-color: #A83441
+      width: 100%
+
+      nav
+        background-color: #AC3E4A
+        width: $width
+        margin: 0 auto
+        ul
+          list-style-type: none
+          margin: 0px
+          padding: 0px
+          text-align: center
+          li
+            display: inline
+            text-transform: uppercase
+            font-weight: 100
+            font-size: 1.2em
+            letter-spacing: 0.5px
+            position: relative
+            // Submenu items
+            ul
+              display: none
+            a
+              color: $background
+              text-decoration: none
+              padding: 10px
+              display: inline-block
+            a:hover
+              text-decoration: underline

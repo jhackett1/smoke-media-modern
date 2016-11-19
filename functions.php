@@ -3,6 +3,7 @@
 // Register scripts and styles
 wp_enqueue_style( 'Styles', get_stylesheet_uri() );
 wp_enqueue_style( 'FontAwesome', get_stylesheet_directory_uri() . '/font-awesome-4.7.0/css/font-awesome.min.css' );
+wp_enqueue_style( 'Player skin', get_stylesheet_directory_uri() . '/css/smokeplayerskin.css' );
 wp_enqueue_script( 'jquery', get_template_directory_uri() . '/js/jquery-3.1.1.min.js');
 wp_enqueue_script( 'app', get_template_directory_uri() . '/js/app.js');
 wp_enqueue_script( 'wow', get_template_directory_uri() . '/js/wow.js');
@@ -70,10 +71,11 @@ add_action( 'wp_head', 'theme_typekit_inline' );
 
 // Add JW player license key to Footer
 function add_jw_license_key(){
-	?><script>jwplayer.key="pTTOSzMuIAwNqrzL1q7qEPIr1EQfvglWbXCelA==";</script>
+	?>
+	<script>jwplayer.key="pTTOSzMuIAwNqrzL1q7qEPIr1EQfvglWbXCelA==";</script>
 <?php
 }
-add_action ('wp_footer', 'add_jw_license_key');
+add_action ('wp_head', 'add_jw_license_key');
 
 //Shorten excerpts
 			 function custom_excerpt_length( $length ) {
