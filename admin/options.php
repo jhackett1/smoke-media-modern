@@ -59,6 +59,20 @@
     <?php
   }
 
+  function issuu_api_element()
+  {
+    ?>
+      <input type="text" name="issuu_api_key" id="wissuu_api_key" value="<?php echo get_option('issuu_api_key'); ?>" />
+    <?php
+  }
+  function issuu_secret_element()
+  {
+    ?>
+      <input type="text" name="issuu_api_secret" id="wissuu_api_secret" value="<?php echo get_option('issuu_api_secret'); ?>" />
+      <p class="description">This theme uses the <a href="http://developers.issuu.com/api/" target="blank">Issuu API</a> to integrate printed issues. This will not work correctly without a valid API key & secret.</p>
+    <?php
+  }
+
   function youtube_api_element()
   {
     ?>
@@ -132,6 +146,17 @@ function display_theme_panel_fields()
   add_settings_field("weather_api_key", "Met Office API Key", "weather_api_element", "theme-options", "typekit-section");
   // Automate saving of field to database
   register_setting("section", "weather_api_key");
+  // Automate saving of field to database
+  register_setting("section", "youtube_api_key");
+  // Add a single field
+  add_settings_field("issuu_api_key", "Issuu API Key", "issuu_api_element", "theme-options", "typekit-section");
+  // Automate saving of field to database
+  register_setting("section", "issuu_api_key");
+  // Add a single field
+  add_settings_field("issuu_api_secret", "Issuu API Secret", "issuu_secret_element", "theme-options", "typekit-section");
+  // Automate saving of field to database
+  register_setting("section", "issuu_api_secret");
+
 
   // Create a section of fields
 	add_settings_section("broadcast-section", "Broadcast", null, "theme-options");

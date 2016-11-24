@@ -18,6 +18,9 @@
 // Include YT API functionality
 	require_once( __DIR__ . '/youtube/youtube.php');
 
+	// Include Issuu API functionality
+		require_once( __DIR__ . '/issuu/issuu.php');
+
 // Register scripts and styles
 wp_enqueue_style( 'Styles', get_stylesheet_uri() );
 wp_enqueue_style( 'FontAwesome', get_stylesheet_directory_uri() . '/font-awesome-4.7.0/css/font-awesome.min.css' );

@@ -19,7 +19,7 @@ function the_weather(){
       // Get the current hour and save as a $now var
       $now = date('G');
       // If daytime, set day var to 0, else, set it to 1 for nighttime
-      if ($now > 7 && $now < 20) { $day = 0; } else { $day = 1; }
+      if ($now > 7 && $now < 19) { $day = 0; } else { $day = 1; }
 
       // If it's night, get night temperature, if not, get day temperature
       if($day){
