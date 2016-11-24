@@ -56,7 +56,7 @@ add_filter( 'login_headertitle', 'my_login_logo_url_title' );
       $labels->singular_name = 'Article';
       $labels->add_new = 'Add Article';
       $labels->add_new_item = 'Add Article';
-      $labels->edit_item = 'Edit Articles';
+      $labels->edit_item = 'Edit Article';
       $labels->new_item = 'Article';
       $labels->view_item = 'View Articles';
       $labels->search_items = 'Search Articles';

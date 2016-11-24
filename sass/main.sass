@@ -1,10 +1,11 @@
 @import "variables.sass"
+@import "frontpage.sass"
 
 .limited-width
   margin: auto
   max-width: $width
 
-body.blog
+body.frontend
   margin: 0
   padding: 0
   font-family: $h-stack
@@ -13,16 +14,22 @@ body.blog
   h2, h3, h4, h5
     font-family: $h-stack
     text-transform: uppercase
-    letter-spacing: 1px
     color: $text
+
+  h2.page-title
+    font-size: 3em
+    margin: 20px auto
+    letter-spacing: 0.5px
 
   p
     color: $text
     font-family: $p-stack
     font-size: 1.1em
+    font-style: normal
 
     a
       text-decoration: none
+      color: $brand
 
     a:hover
       text-decoration: underline
@@ -30,6 +37,10 @@ body.blog
   hr
     border: 2px #dfdfdf
     border-style: none none dotted none
+
+  hr.big
+    border: 5px $brand
+    border-style: none none solid none
 
   header.site-header
     width: 100%
@@ -41,26 +52,65 @@ body.blog
       justify-content: space-between
 
       nav
+        position: relative
+
+        div#search-box.visible
+          display: block
+
+        div#search-box
+          position: absolute
+          top: 30px
+          right: 10px
+          padding: 10px
+          box-sizing: border-box
+          background-color: #505050
+          display: none
+          border-radius: 2px
+          border: 0.5px solid #505050
+
+          form
+            input.text
+              padding: 5px
+              border: 0.5px solid #969696
+              background: none
+              border-radius: 2px
+              font-family: $h-stack
+              color: #969696
+              font-size: 1em
+              outline-width: 0
+              width: 300px
+
         ul li:hover > ul
           display: block
         ul
           list-style-type: none
           margin: 0px
           padding: 0px
-          li.menu-item-has-children::before
-            content: " "
-            width: 0
-            height: 0
-            border-left: 20px solid transparent
-            border-right: 20px solid transparent
-            border-top: 20px solid #f00
+          li.menu-item-has-children a:only-child::after
+            content: none
+            display: none
+            margin-bottom: 0
+            margin-left: 0
+            border-left: 0
+            border-right: 0
+            border-top: 0
+
+          li.menu-item-has-children a::after
+            content: ""
+            display: inline-block
+            margin-bottom: 0.125rem
+            margin-left: 0.25rem
+            border-left: 0.25rem solid transparent
+            border-right: 0.25rem solid transparent
+            border-top: 0.5em solid #fafafa
           li
             display: inline
             text-transform: uppercase
-            font-weight: 100
+            font-weight: normal
             font-size: 0.9em
             letter-spacing: 0.5px
             position: relative
+            z-index: 10
 
             // Submenu items
             ul
@@ -73,6 +123,9 @@ body.blog
               top: 20px
               background-color: #505050
               display: none
+              z-index: 11
+              border-radius: 2px
+              border: 0.5px solid #505050
               li:last-of-type
                 a
                   padding: 10px 10px 10px 10px
@@ -81,20 +134,21 @@ body.blog
                 display: block
                 font-weight: 100
                 font-size: 0.9em
-                letter-spacing: 0.5px
+                font-weight: normal
                 font-style: italic
                 a
-                  color: $background
+                  color: #dfdfdf
                   text-decoration: none
                   padding: 10px 10px 0px 10px
                   display: inline-block
                 a:hover
                   text-decoration: underline
-
+            i
+              margin-left: 0.25rem
             a
               color: $background
               text-decoration: none
-              padding: 7px 10px
+              padding: 7px 5px
               display: inline-block
             a:hover
               text-decoration: underline
@@ -117,6 +171,24 @@ body.blog
           margin: 0px
           padding: 0px
 
+          li.menu-item-has-children a:only-child::after
+            content: none
+            display: none
+            margin-bottom: 0
+            margin-left: 0
+            border-left: 0
+            border-right: 0
+            border-top: 0
+
+          li.menu-item-has-children a::after
+            content: ""
+            display: inline-block
+            margin-bottom: 0.125rem
+            margin-left: 0.25rem
+            border-left: 0.25rem solid transparent
+            border-right: 0.25rem solid transparent
+            border-top: 0.5em solid #fafafa
+
           li
             display: inline
             text-transform: uppercase
@@ -124,6 +196,8 @@ body.blog
             font-size: 1.2em
             letter-spacing: 0.5px
             position: relative
+            font-weight: normal
+            z-index: 10
 
             // Submenu items
             ul
@@ -136,6 +210,7 @@ body.blog
               top: 27px
               background-color: #505050
               display: none
+              border-radius: 2px
               li:last-of-type
                 a
                   padding: 10px 10px 10px 10px
@@ -143,11 +218,12 @@ body.blog
                 text-transform: uppercase
                 font-weight: 100
                 font-size: 0.9em
-                letter-spacing: 0.5px
+                font-weight: normal
                 font-style: italic
                 display: block
+                z-index: 11
                 a
-                  color: $background
+                  color: #dfdfdf
                   text-decoration: none
                   padding: 10px 10px 0px 10px
                   display: inline-block
@@ -167,6 +243,268 @@ body.blog
     min-height: 500px
     padding: 10px
     box-sizing: border-box
+    display: flex
+    flex-direction: row
+
+    main
+      flex: 1
+
+      div.standfirst
+        margin: 20px 0px
+        padding-left: 30px
+
+        p.highlight::before
+          content: ''
+          display: inline-block
+          height: 10px
+          width: 10px
+          background-color: $brand
+          margin-right: 20px
+          margin-bottom: 8px
+          margin-left: -30px
+
+        p.highlight
+          font-size: 2em
+          font-family: $h-stack
+          text-transform: uppercase
+          margin: 5px 0px
+          color: #969696
+
+      div.star-rating
+        display: flex
+        flex-direction: row
+        justify-content: flex-end
+        align-items: center
+        margin: 20px 0px
+
+        i
+          font-size: 2em
+          margin-right: 2px
+          color: #9f1d2c
+
+        span
+          text-transform: uppercase
+          color: #969696
+          font-style: italic
+          margin-right: 15px
+
+      div.share-buttons
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        align-items: center
+        margin: 20px 0px
+
+        span
+          text-transform: uppercase
+          color: #969696
+          font-style: italic
+          margin-right: 15px
+
+        a:hover
+          background-color: #A83441
+
+        a
+          display: flex
+          justify-content: center
+          align-items: center
+          background-color: $brand
+          color: #fafafa
+          text-decoration: none
+          margin-right: 5px
+          border-radius: 20px
+          width: 15px
+          height: 15px
+          padding: 10px
+
+      section.author-profile
+        display: flex
+        flex-direction: row
+        margin: 20px 0px
+
+        img
+          width: 150px
+          border-radius: 150px
+          height: 150px
+          margin-right: 30px
+          flex: 0 0 150px
+
+        div
+          display: flex
+          flex-direction: column
+          justify-content: center
+          align-items: flex-start
+
+          h4
+            font-size: 2em
+            margin: 5px 0px
+
+          h5
+            font-size: 1em
+            margin: 5px 0px
+            color: #969696
+            font-style: italic
+
+          p
+            margin: 5px 0px
+
+      section.contents
+
+        img
+          width: 100% !important
+          height: auto
+
+        div.wp-caption.alignnone, div.wp-caption.aligncenter
+          width: 100% !important
+          position: relative
+          margin-bottom: 20px
+
+          img
+            width: 100%
+            height: auto
+
+          p.wp-caption-text
+            position: absolute
+            left: 0
+            bottom: -20px
+            font-family: $h-stack
+            color: #969696
+            font-style: italic
+            background-color: #efefef
+            padding: 5px 10px
+            text-transform: uppercase
+
+        blockquote
+          margin: 0
+          padding: 0
+          border: 2px #dfdfdf
+          border-style: dotted none
+
+          p
+            font-family: $h-stack
+            text-transform: uppercase
+            font-size: 2.5em
+            margin: 10px 0px
+
+          p::before
+            content: "“"
+            display: block
+            font-size: 600%
+            color: #9F1D2C
+            margin-bottom: -170px
+            margin-top: -35px
+            margin-left: -6px
+
+          p:first-of-type::first-letter
+            font-size: 100%
+            font-weight: 300
+            float: none
+            color: $brand
+            margin-right: 0px
+            line-height: 100%
+
+        p
+          color: $text
+          font-family: $p-stack
+          font-size: 1.1em
+          font-style: normal
+
+          a
+            text-decoration: none
+            color: $brand
+
+          a:hover
+            text-decoration: underline
+
+        // p:first-of-type::first-letter
+        //   font-size: 600%
+        //   font-weight: 700
+        //   float: left
+        //   color: $brand
+        //   margin-right: 15px
+        //   line-height: 100px
+
+      section.meta
+
+        figure
+          padding: 0
+          margin: 0px 0px 20px 0px
+          position: relative
+
+          figcaption
+            position: absolute
+            right: 0
+            bottom: 4px
+            background-color: rgba(223,223,223,0.9)
+            padding: 6px 10px
+            text-transform: uppercase
+            color: #969696
+            font-style: italic
+            letter-spacing: 0.4px
+
+          img
+            height: 400px
+            width: 100%
+            margin: 0px
+            object-fit: cover
+
+        h2
+          font-size: 4em
+          margin: 10px 0px
+          letter-spacing: 1.4px
+
+          span
+            color: $brand
+
+          a
+            text-decoration: none
+            color: $text
+
+        h5
+          font-style: italic
+          color: #969696
+          font-size: 1.2em
+          margin: 20px 0px
+          font-weight: normal
+
+          ul
+            list-style-type: none
+            display: inline
+            margin: 0
+            padding: 0
+            li
+              display: inline
+              a
+                text-decoration: none
+                color: #969696
+              a:hover
+                text-decoration: underline
+
+    sidebar
+      flex: 0 0 33.3%
+      margin-left: 20px
+
+      div.widget
+        margin-bottom: 30px
+        background-color: #fafafa
+        position: relative
+        padding: 20px
+        margin-top: 50px
+
+        h2.widgettitle
+          font-size: 1.2em
+          position: absolute
+          left: 0
+          top: -50px
+
+        h2.widgettitle::before
+          content: ""
+          display: inline-block
+          margin-right: 12px
+          background-color: #9F1D2C
+          width: 8px
+          height: 20px
+          margin-bottom: -3px
 
   footer.site-footer
     width: 100%
@@ -180,7 +518,6 @@ body.blog
         margin: 0px 0px 20px 0px
         padding: 0px
         text-align: center
-        marg
         li
           display: inline
           text-transform: uppercase
@@ -205,6 +542,7 @@ body.blog
       font-size: 0.8em
       padding: 2px
       text-align: center
+      box-sizing: border-box
       p
         color: $background
         a
@@ -250,3 +588,142 @@ body.blog
               display: inline-block
             a:hover
               text-decoration: underline
+
+
+  section#videos
+    background-image: url(../img/login.png)
+    background-size: cover
+    background-position: center
+
+    section
+      background-color: rgba(255,255,255,0.3)
+      padding: 10px
+
+      div.slide-nav
+        display: flex
+        flex-direction: row
+        width: 100px
+        margin-left: auto
+        margin-bottom: 20px
+
+        span:hover
+          border: 2px solid rgba(159, 29, 44, 0.7)
+
+          i
+            color: rgba(159, 29, 44, 0.7)
+
+        span
+          width: 40px
+          height: 40px
+          border: 2px solid $brand
+          display: flex
+          justify-content: center
+          align-items: center
+          margin-left: 10px
+          border-radius: 2px
+          cursor: pointer
+
+          i
+            color: $brand
+
+      ul.slider::-webkit-scrollbar
+        display: none
+
+      ul.slider
+        list-style-type: none
+        width: 100%
+        height: auto
+        overflow-x: auto
+        overflow-y: hidden
+        margin: 20px 0px
+        padding: 0
+        display: flex
+        -webkit-overflow-scrolling: touch
+        scroll-snap-points-x: repeat(300px)
+        scroll-snap-type: mandatory
+
+        li.video-tile:last-of-type
+          margin-right: 0px
+
+        li.video-tile:hover
+          span.play-icon
+            background: $brand
+
+            i
+              color: #fafafa
+
+          a.cover:hover
+            background-color: rgba(0,0,0,0.05)
+
+        li.video-tile
+          margin-right: 10px
+          background-color: #efefef
+          position: relative
+          width: 300px
+          flex: 0 0 300px
+          overflow: hidden
+
+          span.play-icon
+            position: absolute
+            left: 50%
+            transform: translateX(-50%)
+            top: 50px
+            padding: 20px
+            background: rgba(239,239,239,0.9)
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 30px
+            height: 30px
+            border-radius: 200px
+
+            i
+              color: $brand
+              font-size: 1.5em
+
+          a.cover
+            position: absolute
+            top: 0
+            bottom: 0
+            left: 0
+            right: 0
+            z-index: 4
+            width: 100%
+            height: 100%
+
+          img
+            width: 100%
+            height: 160px
+            object-fit: cover
+            object-position: center
+
+          h3
+            font-size: 1.8em
+            margin: 20px 20px 10px 20px
+            font-weight: normal
+
+          p
+            font-size: 0.8em
+            margin: 10px 20px 20px 20px
+            color: #969696
+
+section.dateweather
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  margin: 20px auto
+  color: #969696
+  box-sizing: border-box
+  font-style: italic
+  text-transform: uppercase
+  font-weight: normal
+  font-size: 1em
+  letter-spacing: 0.5px
+
+  div
+    padding: 5px 7px 2px 5px
+    background-color: #efefef
+
+    i
+      margin: 0px 5px
+      color: $brand

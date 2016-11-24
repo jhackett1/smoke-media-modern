@@ -1,17 +1,25 @@
 <? get_header(); ?>
 
+<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+
 <article class="limited-width">
 	<main>
-		<hr>
-		<h2>Page title</h2>
-		<h3>Page title</h3>
-		<h4>Page title</h4>
-		<h5>Page title</h5>
-		<p>This is some average paragraph text.</p>
+		<div class="meta">
+			<?php the_post_thumbnail(); ?>
+			<h2><a href="<? the_permalink(); ?>"><?php the_title(); ?></a></h2>
+			<hr class="big">
+			<h5><?php the_category(); ?> &middot; <?php echo human_time_diff( get_the_time('U'), current_time('timestamp') ) . ' ago'; ?> &middot; By <?php the_author(); ?> </h5>
+			<hr>
+		</div>
+		<?php the_content(); ?>
 	</main>
 	<sidebar>
 	</sidebar>
 </article>
+
+<?php endwhile; else : ?>
+<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
+<?php endif; ?>
 
 	<!-- Example media player -->
 	<!-- <div id="myElement">Loading the player...</div>

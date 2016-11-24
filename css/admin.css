@@ -1,8 +1,9 @@
 body.login {
-  background-image: url("/home-bg.jpg");
+  background-image: url("../img/login.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: center; }
+  background-position: center;
+  background-size: cover; }
 
 .login h1 a {
   background-image: url("../img/swirl%20red.png"); }

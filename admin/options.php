@@ -30,17 +30,15 @@
   }
 
 // Display HTML code of a category picker
-  function featured_cat_element()
+  function vid_number_element()
   {
   	?>
-      <?php
-        wp_dropdown_categories( array(
-          'selected' => get_option('featured_cat'),
-          'name' => "featured_cat",
-          'id' => "featured_cat"
-        ) );
-      ?>
-  		<p class="description">Which category should serve as the promoted/featured category at the top of the homepage?.</p>
+      <select name="vid_number" id="vid_number">
+        <option value="6" <?php if('6' === get_option('vid_number')){ echo "selected";}; ?>>6</option>
+        <option value="9" <?php if('9' === get_option('vid_number')){ echo "selected";}; ?>>9</option>
+        <option value="12" <?php if('12' === get_option('vid_number')){ echo "selected";}s; ?>>12</option>
+      </select>
+  		<p class="description">How many video tiles should be displayed on the homepage?</p>
     <?php
   }
 
@@ -53,12 +51,60 @@
     <?php
   }
 
+  function weather_api_element()
+  {
+    ?>
+      <input type="text" name="weather_api_key" id="weather_api_key" value="<?php echo get_option('weather_api_key'); ?>" />
+      <p class="description">This theme uses the <a href="http://www.metoffice.gov.uk/datapoint/" target="blank">Met Office Datapoint API</a> to display weather forecasts for the London area. Remove API key to disable this feature.</p>
+    <?php
+  }
+
+  function youtube_api_element()
+  {
+    ?>
+      <input type="text" name="youtube_api_key" id="youtube_api_key" value="<?php echo get_option('youtube_api_key'); ?>" />
+      <p class="description">This theme uses the <a href="https://developers.google.com/youtube/v3/" target="blank">Youtube Data API</a>. Give the API key here. Without this, Youtube integration won't work properly.</p>
+    <?php
+  }
+
 // Display HTML code of stream URL element
   function stream_url_element()
   {
   	?>
     	<input type="text" name="stream_url" id="stream_url" value="<?php echo get_option('stream_url'); ?>" />
   		<p class="description">Give the full URL of the Smoke Radio output stream here. The player will connect to this.</p>
+    <?php
+  }
+  function stream_type_element()
+  {
+  	?>
+    <select name="stream_type" id="stream_type">
+      <option value="RTMP" <?php if('RTMP' === get_option('stream_type')){ echo "selected";}; ?>>RTMP</option>
+      <option value="HTTP" <?php if('HTTP' === get_option('stream_type')){ echo "selected";}; ?>>HTTP</option>
+    </select>
+  		<p class="description">This affects the player needed to play out the stream. Flash media streams are RTMP. Shoutcast/Icecast streams are HTTP.</p>
+    <?php
+  }
+
+// Display HTML code of FB element
+  function facebook_element()
+  {
+  	?>
+    	<input type="text" name="facebook_link" id="facebook_link" value="<?php echo get_option('facebook_link'); ?>" />
+    <?php
+  }
+// Display HTML code of Twitter element
+  function twitter_element()
+  {
+  	?>
+    	<input type="text" name="twitter_link" id="twitter_link" value="<?php echo get_option('twitter_link'); ?>" />
+    <?php
+  }
+// Display HTML code of Youtube element
+  function yt_element()
+  {
+  	?>
+    	<input type="text" name="yt_link" id="yt_link" value="<?php echo get_option('yt_link'); ?>" />
     <?php
   }
 
@@ -68,16 +114,24 @@ function display_theme_panel_fields()
   // Create a section of fields
 	add_settings_section("frontpage-section", "Front page", null, "theme-options");
 	// Add a single field
-	add_settings_field("featured_cat", "Featured category?", "featured_cat_element", "theme-options", "frontpage-section");
+	add_settings_field("vid_number", "How many videos to display?", "vid_number_element", "theme-options", "frontpage-section");
 	// Automate saving of field to database
-  register_setting("section", "featured_cat");
+  register_setting("section", "vid_number");
 
 	// Create a section of fields
-	add_settings_section("typekit-section", "Adobe Typekit", null, "theme-options");
+	add_settings_section("typekit-section", "API keys and codes", null, "theme-options");
 	// Add a single field
 	add_settings_field("typekit_id", "Typekit Kit ID", "typekit_id_element", "theme-options", "typekit-section");
 	// Automate saving of field to database
   register_setting("section", "typekit_id");
+  // Add a single field
+	add_settings_field("youtube_api_key", "Youtube API Key", "youtube_api_element", "theme-options", "typekit-section");
+	// Automate saving of field to database
+  register_setting("section", "youtube_api_key");
+  // Add a single field
+  add_settings_field("weather_api_key", "Met Office API Key", "weather_api_element", "theme-options", "typekit-section");
+  // Automate saving of field to database
+  register_setting("section", "weather_api_key");
 
   // Create a section of fields
 	add_settings_section("broadcast-section", "Broadcast", null, "theme-options");
@@ -85,6 +139,25 @@ function display_theme_panel_fields()
 	add_settings_field("stream URL", "Output Stream URL", "stream_url_element", "theme-options", "broadcast-section");
 	// Automate saving of field to database
   register_setting("section", "stream_url");
+  // Add a single field
+	add_settings_field("stream type", "Output Stream Type", "stream_type_element", "theme-options", "broadcast-section");
+	// Automate saving of field to database
+  register_setting("section", "stream_type");
+
+  // Create a section of fields
+	add_settings_section("social-section", "Social media links", null, "theme-options");
+  // Add single fields
+	add_settings_field("facebook_link", "Facebook Link", "facebook_element", "theme-options", "social-section");
+	// Automate saving of field to database
+  register_setting("section", "facebook_link");
+  // Add single fields
+	add_settings_field("twitter_link", "Twitter Link", "twitter_element", "theme-options", "social-section");
+	// Automate saving of field to database
+  register_setting("section", "twitter_link");
+  // Add single fields
+	add_settings_field("yt_link", "Youtube Link", "yt_element", "theme-options", "social-section");
+	// Automate saving of field to database
+  register_setting("section", "yt_link");
 
 }
 add_action("admin_init", "display_theme_panel_fields");

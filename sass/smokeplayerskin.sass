@@ -1,6 +1,11 @@
 // Custom CSS for the JW video/audio player
 
+@import "variables.sass"
+
 div.jwplayer
-  div.jw-media
-    .jw-controls
-      .jw-controlbar
+  div.jw-controls
+    div.jw-controlbar, .jw-background-color
+      background-color: $brand
+
+  .jw-progress
+    background-color: #fafafa

@@ -8,12 +8,12 @@
 		<meta name="description" content="<?php bloginfo('description'); ?>">
 		<?php wp_head(); ?>
 	</head>
-	<body <?php body_class(); ?>>
+	<body <?php body_class('frontend'); ?>>
 
 		<header class="site-header">
 			<div class="top-bar limited-width">
 					<nav class="top-left-menu"><?php wp_nav_menu( array( 'theme_location' => 'top-left' ) ); ?></nav>
-					<nav class="top-right-menu"><?php wp_nav_menu( array( 'theme_location' => 'top-right' ) );?></nav>
+					<nav class="top-right-menu"><?php wp_nav_menu( array('theme_location' => 'top-right',	) );?></nav>
 			</div>
 			<div class="limited-width">
 				<?php
