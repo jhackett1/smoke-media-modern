@@ -69,6 +69,9 @@ add_theme_support( 'custom-logo', array(
 	'header-text' => array( 'site-title', 'site-description' ),
 ) );
 
+// Remove rubbish inline CSS from gallery shortcode
+add_filter( 'use_default_gallery_style', '__return_false' );
+
 // Theme supports featured images
 add_theme_support( 'post-thumbnails' );
 
@@ -295,20 +298,20 @@ add_action ('wp_head', 'add_jw_license_key');
 		$values = get_post_custom( $post->ID );
 		// Save current values of particular meta keys as variables for display
 		$byline = isset( $values['byline'] ) ? esc_attr( $values['byline'][0] ) : "";
-		$full_width_image = isset( $values['full_width_image'] ) ? esc_attr( $values['full_width_image'][0] ) : "";
+		$full_width_image = isset( $values['full_width_image'] ) ? $values['full_width_image'][0] : "";
 		$feat_image_credit = isset( $values['feat_image_credit'] ) ? esc_attr( $values['feat_image_credit'][0] ) : "";
 		$feat_video_url = isset( $values['feat_video_url'] ) ? esc_attr( $values['feat_video_url'][0] ) : "";
 		$star_rating = isset( $values['star_rating'] ) ? esc_attr( $values['star_rating'][0] ) : "";
-		$smoke_promoted = isset( $values['smoke_promoted'] ) ? esc_attr( $values['smoke_promoted'][0] ) : "";
+		$smoke_promoted = isset( $values['smoke_promoted'] ) ? $values['smoke_promoted'][0] : "";
+
 		//What a nonce
 		wp_nonce_field( 'smoke_post_options_nonce', 'meta_box_nonce' );
 		// Display input fields, using variables above to show current values
 	    ?>
 			<p class="description">Use these controls to customise your article's appearence.</p>
 			<p>
-				<label for="promoted">Promoted?</label><br/>
-				<input type="checkbox" name="smoke_promoted" id="smoke_promoted" <?php checked( $smoke_promoted, 'on' ); ?>/>
-
+				<label for="smoke_promoted">Promoted</label><br/>
+				<input type="checkbox" id="smoke_promoted" name="smoke_promoted" <?php checked( $smoke_promoted, 'on' ); ?> />
 				<p class="description">Send this article to the top of the homepage.</p>
 				<hr>
 			</p>
@@ -320,7 +323,7 @@ add_action ('wp_head', 'add_jw_license_key');
 			</p>
 			<p>
 				<label for="full_width_image">Full-width featured image?</label><br/>
-				<input type="checkbox" name="full_width_image" id="full_width_image" <?php checked( $full_width_image, 'on' ); ?>/>
+				<input type="checkbox" id="full_width_image" name="full_width_image" <?php checked( $full_width_image, 'on' ); ?> />
 			</p>
 			<p>
 		    <label for="feat_image_credit">Featured image credit</label><br/>
@@ -373,8 +376,8 @@ add_action ('wp_head', 'add_jw_license_key');
     );
 
     // Save full width image field
-		if( isset( $_POST['full_width_image'] ) )
-				update_post_meta( $post_id, 'full_width_image', esc_attr( $_POST['full_width_image'] ) );
+		$chk = isset( $_POST['full_width_image'][0] ) ? 'on' : 'off';
+    	update_post_meta( $post_id, 'full_width_image', $chk );
     // Save featured image credit field
     if( isset( $_POST['feat_image_credit'] ) )
         update_post_meta( $post_id, 'feat_image_credit', wp_kses( $_POST['feat_image_credit'], $allowed ) );
@@ -391,6 +394,7 @@ add_action ('wp_head', 'add_jw_license_key');
     if( isset( $_POST['byline'] ) )
         update_post_meta( $post_id, 'byline', esc_attr( $_POST['byline'] ) );
 		// Save promoted field
-	  if( isset( $_POST['smoke_promoted'] ) )
-	      update_post_meta( $post_id, 'smoke_promoted', esc_attr( $_POST['smoke_promoted'] ) );
+		$chk2 = isset( $_POST['smoke_promoted'][0] ) ? 'on' : 'off';
+    	update_post_meta( $post_id, 'smoke_promoted', $chk2 );
+
 	}

@@ -58,7 +58,7 @@ add_filter( 'login_headertitle', 'my_login_logo_url_title' );
       $labels->add_new_item = 'Add Article';
       $labels->edit_item = 'Edit Article';
       $labels->new_item = 'Article';
-      $labels->view_item = 'View Articles';
+      $labels->view_item = 'View Article';
       $labels->search_items = 'Search Articles';
       $labels->not_found = 'No Articles found';
       $labels->not_found_in_trash = 'No Articles found in Trash';
