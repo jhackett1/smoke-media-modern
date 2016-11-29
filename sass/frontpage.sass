@@ -2,7 +2,7 @@
 
 h2.section-title
   font-size: 1.5em
-  margin-top: 20px
+  margin: 30px auto
 
 h2.section-title::before
   content: ""
@@ -13,10 +13,13 @@ h2.section-title::before
   height: 21px
   margin-bottom: -2px
 
-section#featured
+section.post-box:last-of-type
+  margin-bottom: 30px
+
+section.post-box
   display: flex
   flex-direction: row
-  margin: 20px auto 30px auto
+  margin: 10px auto
 
   div.post
     position: relative
@@ -51,6 +54,24 @@ section#featured
     div.list:last-of-type
       margin-top: 5px
 
+    div.list.comment
+      div
+        width: 100%
+        margin-left: 60px
+
+        h3
+          font-size: 1.8em
+
+        h3::before
+          content: "“"
+          display: block
+          font-size: 530%
+          color: #9F1D2C
+          position: absolute
+          top: -10px
+          left: 15px
+
+
     div.list
       height: 50%
       width: 100%
@@ -77,6 +98,9 @@ section#featured
         height: 100%
         object-fit: cover
         z-index: 1
+
+  div.tile:last-of-type
+    margin-right: 0px
 
   div.tile
     height: 270px
@@ -127,7 +151,7 @@ section#featured
     h3
       position: absolute
       bottom: 10px
-      left: 10px
+      left: 14px
       right: 10px
       margin: 0
       color: #fafafa

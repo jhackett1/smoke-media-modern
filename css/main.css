@@ -1,7 +1,7 @@
 @charset "UTF-8";
 h2.section-title {
   font-size: 1.5em;
-  margin-top: 20px; }
+  margin: 30px auto; }
 
 h2.section-title::before {
   content: "";
@@ -12,7 +12,10 @@ h2.section-title::before {
   height: 21px;
   margin-bottom: -2px; }
 
-section#featured {
+section.post-box:last-of-type {
+  margin-bottom: 30px; }
+
+section.post-box {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -22,14 +25,14 @@ section#featured {
   -webkit-flex-direction: row;
       -ms-flex-direction: row;
           flex-direction: row;
-  margin: 20px auto 30px auto; }
-  section#featured div.post {
+  margin: 10px auto; }
+  section.post-box div.post {
     position: relative;
     overflow: hidden;
     background-color: #efefef; }
-    section#featured div.post a.cover:hover {
+    section.post-box div.post a.cover:hover {
       background-color: rgba(0, 0, 0, 0.05); }
-    section#featured div.post a.cover {
+    section.post-box div.post a.cover {
       position: absolute;
       top: 0;
       bottom: 0;
@@ -38,9 +41,9 @@ section#featured {
       z-index: 4;
       width: 100%;
       height: 100%; }
-  section#featured div.horizontaliser:last-of-type {
+  section.post-box div.horizontaliser:last-of-type {
     margin-right: 0px; }
-  section#featured div.horizontaliser {
+  section.post-box div.horizontaliser {
     -webkit-box-flex: 1;
     -webkit-flex: 1;
         -ms-flex: 1;
@@ -56,11 +59,24 @@ section#featured {
         -ms-flex-direction: column;
             flex-direction: column;
     height: 270px; }
-    section#featured div.horizontaliser div.list:first-of-type {
+    section.post-box div.horizontaliser div.list:first-of-type {
       margin-bottom: 5px; }
-    section#featured div.horizontaliser div.list:last-of-type {
+    section.post-box div.horizontaliser div.list:last-of-type {
       margin-top: 5px; }
-    section#featured div.horizontaliser div.list {
+    section.post-box div.horizontaliser div.list.comment div {
+      width: 100%;
+      margin-left: 60px; }
+      section.post-box div.horizontaliser div.list.comment div h3 {
+        font-size: 1.8em; }
+      section.post-box div.horizontaliser div.list.comment div h3::before {
+        content: "“";
+        display: block;
+        font-size: 530%;
+        color: #9F1D2C;
+        position: absolute;
+        top: -10px;
+        left: 15px; }
+    section.post-box div.horizontaliser div.list {
       height: 50%;
       width: 100%;
       display: -webkit-box;
@@ -72,32 +88,34 @@ section#featured {
       -webkit-flex-direction: row;
           -ms-flex-direction: row;
               flex-direction: row; }
-      section#featured div.horizontaliser div.list div {
+      section.post-box div.horizontaliser div.list div {
         height: 100%;
         width: 60%;
         padding: 15px; }
-        section#featured div.horizontaliser div.list div h3 {
+        section.post-box div.horizontaliser div.list div h3 {
           font-size: 1.2em;
           margin: 0px 0px;
           font-weight: normal; }
-        section#featured div.horizontaliser div.list div p {
+        section.post-box div.horizontaliser div.list div p {
           font-size: 0.8em;
           margin: 5px 0px;
           color: #969696; }
-      section#featured div.horizontaliser div.list img {
+      section.post-box div.horizontaliser div.list img {
         width: 40%;
         height: 100%;
         -o-object-fit: cover;
            object-fit: cover;
         z-index: 1; }
-  section#featured div.tile {
+  section.post-box div.tile:last-of-type {
+    margin-right: 0px; }
+  section.post-box div.tile {
     height: 270px;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
         -ms-flex: 1;
             flex: 1;
     margin-right: 10px; }
-    section#featured div.tile ul.post-categories {
+    section.post-box div.tile ul.post-categories {
       list-style-type: none;
       position: absolute;
       top: 0;
@@ -107,23 +125,23 @@ section#featured {
       padding: 5px 7px;
       z-index: 5;
       font-size: 0.8em; }
-      section#featured div.tile ul.post-categories li:first-of-type {
+      section.post-box div.tile ul.post-categories li:first-of-type {
         display: inline;
         font-style: italic;
         text-transform: uppercase;
         font-weight: normal; }
-      section#featured div.tile ul.post-categories li {
+      section.post-box div.tile ul.post-categories li {
         display: none; }
-        section#featured div.tile ul.post-categories li a {
+        section.post-box div.tile ul.post-categories li a {
           text-decoration: none;
           color: #969696; }
-    section#featured div.tile img {
+    section.post-box div.tile img {
       width: 100%;
       height: 100%;
       -o-object-fit: cover;
          object-fit: cover;
       z-index: 1; }
-    section#featured div.tile div.grad {
+    section.post-box div.tile div.grad {
       width: 100%;
       height: 50%;
       position: absolute;
@@ -134,10 +152,10 @@ section#featured {
       -webkit-transition: 0.1s;
       transition: 0.1s;
       z-index: 2; }
-    section#featured div.tile h3 {
+    section.post-box div.tile h3 {
       position: absolute;
       bottom: 10px;
-      left: 10px;
+      left: 14px;
       right: 10px;
       margin: 0;
       color: #fafafa;
@@ -164,6 +182,8 @@ body.frontend {
     font-size: 3em;
     margin: 20px auto;
     letter-spacing: 0.5px; }
+  body.frontend p.category-desc {
+    margin: 20px auto; }
   body.frontend p {
     color: #505050;
     font-family: Adobe Garamond Pro, sans-serif;
@@ -749,10 +769,13 @@ body.frontend {
   body.frontend section#videos {
     background-image: url(../img/login.png);
     background-size: cover;
-    background-position: center; }
+    background-position: center;
+    margin: 30px 0px; }
     body.frontend section#videos section {
       background-color: rgba(255, 255, 255, 0.3);
       padding: 10px; }
+      body.frontend section#videos section h2.section-title {
+        margin: 20px 0px; }
       body.frontend section#videos section div.slide-nav {
         display: -webkit-box;
         display: -webkit-flex;

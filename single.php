@@ -1,12 +1,22 @@
 <?php
 get_header();
 // Start the loop
-if ( have_posts() ) : while ( have_posts() ) : the_post();
+if ( have_posts() ) :
+
+	// Make an empty array to store post IDs, avoiding replicate post display
+	$do_not_replicate = array();
+
+	while ( have_posts() ) : the_post();
 ?>
 
 <?php
 // Save layout at 1 if full width, 0 if standard
 $layout = get_post_meta( get_the_id(), 'full_width_image')[0];
+
+// Save post ID as var
+$ID = get_the_ID();
+// Save current post ID to array
+array_push($do_not_replicate, $ID);
 
 // If layout is on, get a full-width feature layout, else return the standard layout
 if ($layout === on) {
@@ -83,8 +93,13 @@ if ($layout === on) {
 	<sidebar>
     <?php get_sidebar(); ?>
 	</sidebar>
+
 </article>
 <?php
+
+$cat = get_the_category();
+related_posts_section($cat[1], 'Related', $do_not_replicate);
+
 }
 // What if there are no posts to show?
 endwhile; else :
