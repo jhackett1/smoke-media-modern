@@ -18,6 +18,30 @@
           QTags.addButton( 'eg_hr', 'horizontal rule', '<hr />', '', 'h', 'Horizontal rule line', 201 );
           QTags.addButton( 'eg_ch', 'crosshead', '<h3>', '</h3>', 'h', 'Crossheading', 201 );
           QTags.addButton( 'eg_sp', 'spoiler warning', '<span class="spoiler">Spoiler Warning</span>', '', 'q', 'Preformatted text tag', 111 );
+          QTags.addButton( 'eg_sp', 'tabbed content', '\
+<section class="tabbed"> \
+<ul class="labels">\
+<li class="active">Tab 1</li>\
+<li>Tab 2</li>\
+<li>Tab 3</li>\
+</ul>\
+<ul class="content">\
+<li class="active">Tab 1 content</li>\
+<li>Tab 2 content</li>\
+<li>Tab 3 content</li>\
+</ul>\
+</section>', '', 'q', 'Preformatted text tag', 111 );
+
+
+
+
+
+
+
+
+
+
+
         </script>
     <?php
     }

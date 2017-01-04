@@ -30,4 +30,18 @@ jQuery( document ).ready(function() {
       return false;
   });
 
+// Make tabbed widgets work
+  // When a label is clicked, do stuff
+  jQuery("ul.labels li").click(function(){
+    // Find out which one was clicked and save the index as an integer var starting at 1 for first element
+      var index = jQuery("ul.labels li").index(this) + 1;
+      // Remove active class from all elements
+      jQuery("ul.labels li").removeClass("active");
+      jQuery("ul.content li").removeClass("active");
+      // Re-add the class to the right elements based on the var calculated earlier
+      jQuery("ul.labels li:nth-of-type(" + index + ")").addClass("active");
+      jQuery("ul.content li:nth-of-type(" + index + ")").addClass("active");
+  });
+
+
 });

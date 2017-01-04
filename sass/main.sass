@@ -593,6 +593,7 @@ body.frontend
         h3
           font-size: 2.5em
           font-weight: normal
+          margin: 30px 0px
 
         // A spoiler warning
         span.spoiler
@@ -1377,6 +1378,8 @@ ul.videos
       margin: 5px 15px 15px 15px
       color: #969696
 
+
+
 section#notification-bar
   position: fixed
   box-sizing: border-box
@@ -1388,7 +1391,10 @@ section#notification-bar
   align-items: center
   background-color: #00456E
   width: 100%
-  padding: 10px
+  padding: 15px
+
+  a.cover:hover
+    background-color: rgba(0,0,0,0.1)
 
   h2
     margin: 0
@@ -1408,6 +1414,8 @@ section#notification-bar
     display: flex
     justify-content: center
     align-items: center
+    z-index: 999
+    cursor: pointer
 
   a.cover
     position: absolute
@@ -1418,3 +1426,49 @@ section#notification-bar
     z-index: 4
     width: 100%
     height: 100%
+
+// Tabbed widget styles
+section.tabbed
+  position: relative
+  margin: 20px 0px
+
+  ul.labels
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: space-around
+    list-style-type: none
+    margin: 0
+    padding: 0
+    li.active
+      background-color: #fafafa
+      border: 4px solid #dfdfdf
+      border-bottom: 0
+
+    li
+      flex: 1 0 auto
+      text-align: center
+      font-style: italic
+      color: #969696
+      text-transform: uppercase
+      padding: 10px
+      background-color: #dfdfdf
+      display: block
+      cursor: pointer
+      box-sizing: border-box
+      border: 4px solid #dfdfdf
+      border-bottom: 0
+      font-size: 1.1em
+
+  ul.content
+    list-style-type: none
+    margin: 0
+    padding: 0
+    li
+      display: none
+      width: 100%
+      padding: 10px
+      background-color: #fafafa
+      box-sizing: border-box
+    li.active
+      display: block

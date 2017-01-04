@@ -1149,7 +1149,8 @@ body.frontend {
           text-decoration: underline; }
       body.frontend article main section.contents h3 {
         font-size: 2.5em;
-        font-weight: normal; }
+        font-weight: normal;
+        margin: 30px 0px; }
       body.frontend article main section.contents span.spoiler {
         font-family: League Gothic, sans-serif;
         text-transform: uppercase;
@@ -1919,7 +1920,9 @@ section#notification-bar {
           align-items: center;
   background-color: #00456E;
   width: 100%;
-  padding: 10px; }
+  padding: 15px; }
+  section#notification-bar a.cover:hover {
+    background-color: rgba(0, 0, 0, 0.1); }
   section#notification-bar h2 {
     margin: 0;
     padding: 0;
@@ -1944,7 +1947,9 @@ section#notification-bar {
     -webkit-box-align: center;
     -webkit-align-items: center;
         -ms-flex-align: center;
-            align-items: center; }
+            align-items: center;
+    z-index: 999;
+    cursor: pointer; }
   section#notification-bar a.cover {
     position: absolute;
     top: 0;
@@ -1954,3 +1959,60 @@ section#notification-bar {
     z-index: 4;
     width: 100%;
     height: 100%; }
+
+section.tabbed {
+  position: relative;
+  margin: 20px 0px; }
+  section.tabbed ul.labels {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+    section.tabbed ul.labels li.active {
+      background-color: #fafafa;
+      border: 4px solid #dfdfdf;
+      border-bottom: 0; }
+    section.tabbed ul.labels li {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1 0 auto;
+          -ms-flex: 1 0 auto;
+              flex: 1 0 auto;
+      text-align: center;
+      font-style: italic;
+      color: #969696;
+      text-transform: uppercase;
+      padding: 10px;
+      background-color: #dfdfdf;
+      display: block;
+      cursor: pointer;
+      box-sizing: border-box;
+      border: 4px solid #dfdfdf;
+      border-bottom: 0;
+      font-size: 1.1em; }
+  section.tabbed ul.content {
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+    section.tabbed ul.content li {
+      display: none;
+      width: 100%;
+      padding: 10px;
+      background-color: #fafafa;
+      box-sizing: border-box; }
+    section.tabbed ul.content li.active {
+      display: block; }

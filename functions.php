@@ -268,6 +268,30 @@ function register_widgets() {
 };
 add_action( 'widgets_init', 'register_widgets' );
 
+$args = array(
+	'label' 						 => "Live events",
+	'description' 			 => "Liveblogs and livestreams",
+	'public' 					   => true,
+	'show_ui'            => true,
+	'show_in_menu'       => true,
+	'query_var'          => true,
+	'rewrite'            => array( 'slug' => 'live event' ),
+	'capability_type'    => 'post',
+	'has_archive'        => true,
+	'hierarchical'       => false,
+	'menu_position'      => null,
+	'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'liveblog')
+
+);
+
+register_post_type( 'live', $args );
+
+add_action( 'init', 'no_liveblogs' );
+function no_liveblogs() {
+	// Don't let liveblogs be added to vanilla posts, only live events
+	remove_post_type_support( 'post', 'liveblog' );
+}
+
 // Theme supports logos
 add_theme_support( 'custom-logo', array(
 	'header-text' => array( 'site-title', 'site-description' ),
@@ -353,8 +377,8 @@ add_action ('wp_head', 'add_jw_license_key');
 			 if ( get_option('yt_link') ) {
 					$items = '<li class="right"><a target="blank" href="'. get_option('yt_link') .'">' . '<i class="fa fa-youtube-play"></i></a></li>' . $items;
 			 }
-      if ( get_option('facebook_link') ) {
-         $items = '<li class="right"><a target="blank" href="'. get_option('facebook_link') .'">' . '<i class="fa fa-facebook"></i></a></li>' . $items;
+      if ( get_option('facelive event_link') ) {
+         $items = '<li class="right"><a target="blank" href="'. get_option('facelive event_link') .'">' . '<i class="fa fa-facelive event"></i></a></li>' . $items;
       }
 
 	   }
@@ -545,7 +569,7 @@ add_action ('wp_head', 'add_jw_license_key');
 			var post_thumb = "<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' )[0]; ?>";
 
 			// Process vars into uniform sharing urls
-			var facebookURL = "http://www.facebook.com/sharer/sharer.php?u=" + post_url;
+			var facelive eventURL = "http://www.facelive event.com/sharer/sharer.php?u=" + post_url;
 			var twitterURL = "https://twitter.com/intent/tweet?text=" + post_title + "&amp;url=" + post_url + "&amp;via=Media_Smoke";
 			// If image exists, set a pinterest url too
 			if (post_thumb) {
@@ -556,9 +580,9 @@ add_action ('wp_head', 'add_jw_license_key');
 
 			// Put it into practice, giving Pinterest special treatment
 			if (pinterestURL) {
-				document.getElementById("share-buttons").innerHTML = "<span>Share</span><a href='" + facebookURL + "' target='blank'><i class='fa fa-facebook'></i></a><a href='" + twitterURL + "' target='blank'><i class='fa fa-twitter'></i></a><a href='" + pinterestURL + "' target='blank'><i class='fa fa-pinterest'></i></a><a href='" + whatsappURL + "' target='blank'><i class='fa fa-whatsapp'></i></a><a href='" + emailURL + "' target='blank'><i class='fa fa-envelope'></i></a>";
+				document.getElementById("share-buttons").innerHTML = "<span>Share</span><a href='" + facelive eventURL + "' target='blank'><i class='fa fa-facelive event'></i></a><a href='" + twitterURL + "' target='blank'><i class='fa fa-twitter'></i></a><a href='" + pinterestURL + "' target='blank'><i class='fa fa-pinterest'></i></a><a href='" + whatsappURL + "' target='blank'><i class='fa fa-whatsapp'></i></a><a href='" + emailURL + "' target='blank'><i class='fa fa-envelope'></i></a>";
 			} else {
-				document.getElementById("share-buttons").innerHTML = "<span>Share</span><a href='" + facebookURL + "' target='blank'><i class='fa fa-facebook'></i></a><a href='" + twitterURL + "' target='blank'><i class='fa fa-twitter'></i></a><a href='" + whatsappURL + "' target='blank'><i class='fa fa-whatsapp'></i></a><a href='" + emailURL + "' target='blank'><i class='fa fa-envelope'></i></a>";
+				document.getElementById("share-buttons").innerHTML = "<span>Share</span><a href='" + facelive eventURL + "' target='blank'><i class='fa fa-facelive event'></i></a><a href='" + twitterURL + "' target='blank'><i class='fa fa-twitter'></i></a><a href='" + whatsappURL + "' target='blank'><i class='fa fa-whatsapp'></i></a><a href='" + emailURL + "' target='blank'><i class='fa fa-envelope'></i></a>";
 			}
 			</script>
 			<?php
