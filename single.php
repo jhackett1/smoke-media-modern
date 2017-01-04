@@ -1,5 +1,11 @@
 <?php
-get_header();
+// Get the correct header based on whether we're a radio article or not
+if (in_category("radio")) {
+	get_header("radio");
+} else {
+	get_header();
+}
+
 // Start the loop
 if ( have_posts() ) :
 
@@ -17,6 +23,8 @@ $layout = get_post_meta( get_the_id(), 'full_width_image')[0];
 $ID = get_the_ID();
 // Save current post ID to array
 array_push($do_not_replicate, $ID);
+// Call the function to set and update post view counter with every view
+track_post_views( $ID );
 
 // If layout is on, get a full-width feature layout, else return the standard layout
 if ($layout === on) {
@@ -33,7 +41,7 @@ if ($layout === on) {
 			<section class="meta">
 				<h2><?php the_title(); ?></h2>
 				<hr class="big">
-	      <h5><?php the_category(); ?> &middot; <?php echo human_time_diff( get_the_time('U'), current_time('timestamp') ) . ' ago'; ?> &middot; By <?php	smoke_byline($post->ID); ?> </h5>
+	      <h5><?php the_category(); ?> &middot; <span><?php echo human_time_diff( get_the_time('U'), current_time('timestamp') ) . ' ago'; ?></span> &middot; <span>By <?php	smoke_byline($post->ID); ?></span></h5>
 	      <hr>
 			</section>
 	    <section class="contents">
@@ -44,7 +52,7 @@ if ($layout === on) {
 	    	<!-- Post content -->
 	  		<?php the_content(); ?>
 	    </section>
-	    <?php get_comments(); ?>
+	    <?php comments_template(); ?>
 	    <hr>
 	    <!-- Share buttons-->
 	    <?php smoke_share_buttons(); ?>
@@ -53,7 +61,11 @@ if ($layout === on) {
 			<?php smoke_author_box($post->ID); ?>
 		</main>
 		<sidebar>
-	    <?php get_sidebar(); ?>
+			<?php if (in_category("radio")) {
+				dynamic_sidebar("radio");
+			} else {
+				dynamic_sidebar("post");
+			} ?>
 		</sidebar>
 	</article>
 <?php
@@ -66,8 +78,6 @@ if ($layout === on) {
 			<h2><?php the_title(); ?></h2>
 			<hr class="big">
       <h5><?php the_category(); ?> &middot; <?php echo human_time_diff( get_the_time('U'), current_time('timestamp') ) . ' ago'; ?> &middot; By <?php	smoke_byline($post->ID); ?> </h5>
-
-
       <figure>
 				<!-- Featured media -->
 				<?php featured_video_image($post->ID); ?>
@@ -82,7 +92,7 @@ if ($layout === on) {
     	<!-- Post content -->
   		<?php the_content(); ?>
     </section>
-    <?php get_comments(); ?>
+    <?php comments_template(); ?>
     <hr>
     <!-- Share buttons-->
     <?php smoke_share_buttons(); ?>
@@ -91,16 +101,25 @@ if ($layout === on) {
 		<?php smoke_author_box($post->ID); ?>
 	</main>
 	<sidebar>
-    <?php get_sidebar(); ?>
+    <?php
+		// Get the right sidebar based on whether this is a radio article or not
+		if (in_category("radio")) {
+			dynamic_sidebar("radio");
+		} else {
+			dynamic_sidebar("post");
+		}
+		?>
 	</sidebar>
-
 </article>
 <?php
-
-$cat = get_the_category();
-related_posts_section($cat[1], 'Related', $do_not_replicate);
-
 }
+// Put related bosts below every article
+echo '<article class="limited-width">';
+$cat = get_the_category();
+related_headlines_section($cat{0}->term_id, 'Related', $do_not_replicate);
+popular_headlines_section();
+echo '</article>';
+
 // What if there are no posts to show?
 endwhile; else :
 ?>

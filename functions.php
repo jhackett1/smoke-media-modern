@@ -18,8 +18,14 @@
 // Include YT API functionality
 	require_once( __DIR__ . '/youtube/youtube.php');
 
-	// Include Issuu API functionality
-		require_once( __DIR__ . '/issuu/issuu.php');
+// Include Audioboom API functionality
+	require_once( __DIR__ . '/audioboom/audioboom.php');
+
+// Include show scheduling functionality
+	require_once( __DIR__ . '/marconi/marconi.php');
+
+// Include Issuu API functionality
+	require_once( __DIR__ . '/issuu/issuu.php');
 
 // Register scripts and styles
 wp_enqueue_style( 'Styles', get_stylesheet_uri() );
@@ -30,6 +36,178 @@ wp_enqueue_script( 'jquery', get_template_directory_uri() . '/js/jquery-3.1.1.mi
 wp_enqueue_script( 'app', get_template_directory_uri() . '/js/app.js');
 wp_enqueue_script( 'wow', get_template_directory_uri() . '/js/wow.js');
 wp_enqueue_script( 'jwplayer', get_template_directory_uri() . '/jwplayer-7.7.4/jwplayer.js');
+wp_enqueue_script( 'wavesurfer', get_template_directory_uri() . '/js/wavesurfer.js');
+
+// Support catgory-specific single.php templates
+add_filter('single_template', create_function('$t', 'foreach( (array) get_the_category() as $cat ) { if ( file_exists(TEMPLATEPATH . "/single-{$cat->term_id}.php") ) return TEMPLATEPATH . "/single-{$cat->term_id}.php"; } return $t;' ));
+
+
+// Server-side livestream URL player AJAX handler
+	function stream_ajax(){
+	    header("Content-Type: text/html");
+			echo get_option('stream_url');
+			echo get_option('stream_type');
+	    exit;
+	}
+	add_action('wp_ajax_nopriv_stream_ajax', 'stream_ajax');
+	add_action('wp_ajax_stream_ajax', 'stream_ajax');
+
+
+// Server-side post grid 'load-more' AJAX handler
+function more_post_ajax(){
+		// Check what offset has been requested
+    $offset = $_POST["offset"];
+		// Check how many posts are requested
+    $ppp = $_POST["ppp"];
+		// Check the current category
+    $cat = $_POST["cat"];
+    header("Content-Type: text/html");
+
+    $args = array(
+        'cat' => $cat,
+        'posts_per_page' => $ppp,
+        'offset' => $offset,
+    );
+
+		$ajax_query = new WP_Query($args);
+		// Begin the loop
+		if ($ajax_query->have_posts() ):
+		// Create a counter variable to keep track of post numbers
+		$counter = 1;
+		?>
+		  <ul id="category" class="limited-width headline-block wow fadeIn animated">
+		<?php
+		  // Start looping
+		  while ( $ajax_query->have_posts() ): $ajax_query->the_post();
+		    // Save post ID as var
+		    $ID = get_the_ID();
+		    // If current post ID exists in array, skip post and continue with loop
+		    if (in_array($ID, $do_not_replicate)) { continue; };
+		    // Stop looping after fourth post
+		    if ($counter>8) { break; };
+		    // Save current post ID to array
+		    array_push($do_not_replicate, $ID);
+		    ?>
+		    <!--  -->
+		    <!-- Display output here -->
+				<?php
+		    switch ($counter) {
+		        case 1:
+		            ?>
+		            <li class="headline-item">
+		              <?php the_post_thumbnail('large'); ?>
+		              <h3><?php the_title(); ?></h3>
+		              <?php the_category(); ?>
+		              <div class="grad"></div>
+		              <a class="cover" href="<?php the_permalink(); ?>"></a>
+		            </li>
+		            <?php
+		            break;
+		        case 2:
+		            ?>
+		            <li class="headline-item">
+		              <?php the_post_thumbnail('large'); ?>
+		              <h3><?php the_title(); ?></h3>
+		              <?php the_category(); ?>
+		              <div class="grad"></div>
+		              <a class="cover" href="<?php the_permalink(); ?>"></a>
+		            </li>
+		            <?php
+		            break;
+		        case 3:
+		            ?>
+		              <ul class="horizontal-list">
+		                <li class="horizontal-headline-item">
+		                  <?php the_post_thumbnail('medium'); ?>
+		                  <div>
+		                    <h3><?php the_title(); ?></h3>
+		                    <?php the_excerpt(); ?>
+		                  </div>
+		                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+		                </li>
+		            <?php
+		            break;
+		        case 4:
+		            ?>
+		                <li class="horizontal-headline-item">
+		                  <?php the_post_thumbnail('medium'); ?>
+		                  <div>
+		                    <h3><?php the_title(); ?></h3>
+		                    <?php the_excerpt(); ?>
+		                  </div>
+		                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+		                </li>
+		              </ul>
+		            <?php
+		            break;
+		        case 5:
+		            ?>
+		              <ul class="horizontal-list">
+		                <li class="horizontal-headline-item">
+		                  <?php the_post_thumbnail('medium'); ?>
+		                  <div>
+		                    <h3><?php the_title(); ?></h3>
+		                    <?php the_excerpt(); ?>
+		                  </div>
+		                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+		                </li>
+		            <?php
+		            break;
+		        case 6:
+		            ?>
+		                <li class="horizontal-headline-item">
+		                  <?php the_post_thumbnail('medium'); ?>
+		                  <div>
+		                    <h3><?php the_title(); ?></h3>
+		                    <?php the_excerpt(); ?>
+		                  </div>
+		                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+		                </li>
+		              </ul>
+		            <?php
+		            break;
+		        case 7:
+		            ?>
+		            <li class="headline-item">
+		              <?php the_post_thumbnail('large'); ?>
+		              <h3><?php the_title(); ?></h3>
+		              <?php the_category(); ?>
+		              <div class="grad"></div>
+		              <a class="cover" href="<?php the_permalink(); ?>"></a>
+		            </li>
+		            <?php
+		            break;
+		        case 8:
+		            ?>
+		            <li class="headline-item">
+		              <?php the_post_thumbnail('large'); ?>
+		              <h3><?php the_title(); ?></h3>
+		              <?php the_category(); ?>
+		              <div class="grad"></div>
+		              <a class="cover" href="<?php the_permalink(); ?>"></a>
+		            </li>
+		            <?php
+		            break;
+		        default:
+		            echo "";
+		    }
+		    // Advance the counter by one with each post
+		    $counter++;
+		    // Finish looping
+		  endwhile;
+		?>
+		  </ul>
+
+		<?php
+		// And close out the loop completely
+		endif;
+
+    exit;
+}
+
+add_action('wp_ajax_nopriv_more_post_ajax', 'more_post_ajax');
+add_action('wp_ajax_more_post_ajax', 'more_post_ajax');
+
 
 // Register four navigation menu locations
 register_nav_menus( array(
@@ -37,30 +215,56 @@ register_nav_menus( array(
   'top-left' => 'Top Left',
 	'top-right' => 'Top Right',
 	'footer' => 'Footer',
+
+	'primary-radio' => 'Primary (Radio homepage)',
+	'top-left-radio' => 'Top Left (Radio homepage)'
 ) );
 
 // Register three widgetised sidebars
 function register_widgets() {
 
 	register_sidebar( array(
-		'name'          => 'Single Post Sidebar',
+		'name'          => 'Article Sidebar',
 		'id'            => 'post',
-		'before_widget' => '<div class="widget">',
+		'before_widget' => '<div class="widget %2$s">',
 		'after_widget'  => '</div>',
 	) );
   register_sidebar( array(
     'name'          => 'Page Sidebar',
     'id'            => 'page',
-    'before_widget' => '<div class="widget">',
+    'before_widget' => '<div class="widget %2$s">',
     'after_widget'  => '</div>',
   ) );
+	register_sidebar( array(
+		'name'          => 'Radio Article Sidebar',
+		'id'            => 'radio',
+		'before_widget' => '<div class="widget %2$s">',
+		'after_widget'  => '</div>',
+	) );
+	register_sidebar( array(
+		'name'          => 'Video Sidebar',
+		'id'            => 'video',
+		'before_widget' => '<div class="widget %2$s">',
+		'after_widget'  => '</div>',
+	) );
   register_sidebar( array(
 		'name'          => 'Member Portal Sidebar',
 		'id'            => 'member',
-		'before_widget' => '<div class="widget">',
+		'before_widget' => '<div class="widget %2$s">',
 		'after_widget'  => '</div>',
 	) );
-
+	register_sidebar( array(
+		'name'          => 'Radio Homepage Sidebar',
+		'id'            => 'radio-home',
+		'before_widget' => '<div class="widget %2$s">',
+		'after_widget'  => '</div>',
+	) );
+	register_sidebar( array(
+		'name'          => 'Member Portal Sidebar',
+		'id'            => 'members',
+		'before_widget' => '<div class="widget %2$s">',
+		'after_widget'  => '</div>',
+	) );
 };
 add_action( 'widgets_init', 'register_widgets' );
 
@@ -111,7 +315,7 @@ function add_jw_license_key(){
 add_action ('wp_head', 'add_jw_license_key');
 
 //Shorten excerpts
-			 function custom_excerpt_length( $length ) {
+		function custom_excerpt_length( $length ) {
 			return 10;
 		}
 		add_filter( 'excerpt_length', 'custom_excerpt_length', 15 );
@@ -129,6 +333,15 @@ add_action ('wp_head', 'add_jw_license_key');
 	add_action('init', 'unregister_tags');
 
 
+// Prevent post media from linking to attachment page by default
+	function wpb_imagelink_setup() {
+		$image_set = get_option( 'image_default_link_type' );
+		if ($image_set !== 'none') {
+			update_option('image_default_link_type', 'none');
+		}
+	}
+	add_action('admin_init', 'wpb_imagelink_setup', 10);
+
 // Add social links to the top-right menu
 	add_filter( 'wp_nav_menu_items', 'smoke_social_links', 10, 2 );
 
@@ -143,7 +356,6 @@ add_action ('wp_head', 'add_jw_license_key');
       if ( get_option('facebook_link') ) {
          $items = '<li class="right"><a target="blank" href="'. get_option('facebook_link') .'">' . '<i class="fa fa-facebook"></i></a></li>' . $items;
       }
-
 
 	   }
 	   return $items;
@@ -171,7 +383,29 @@ add_action ('wp_head', 'add_jw_license_key');
 		}
 	}
 
-//Function to display star ratings
+	//Function to display star ratings on front page and category pages
+		function smoke_rating_headline($ID){
+			// Retrieve metadata and save as var
+				$star_rating = get_post_meta( $ID, 'star_rating')[0];
+				if ( $star_rating ){
+					// Display container element
+					echo "<div>";
+					// Display full stars
+					for ($i=0; $i < $star_rating; $i++) {
+						echo "<i class='fa fa-star'></i>";
+					}
+					// Get difference between star rating and 5, then echo remaining empty stars
+					$white_stars = 5 - $star_rating;
+					for ($i=0; $i < $white_stars; $i++) {
+						echo "<i class='fa fa-star-o'></i>";
+					}
+					// Close container element
+					echo "</div>";
+				}
+		}
+
+
+//Function to display star ratings on single pages
 	function smoke_rating($ID){
 		// Retrieve metadata and save as var
 			$star_rating = get_post_meta( $ID, 'star_rating')[0];
@@ -192,10 +426,59 @@ add_action ('wp_head', 'add_jw_license_key');
 			}
 	}
 
+// A function to add a media icon to the post title
+	function add_media_icon($the_title, $id){
+		// Only show on archive and front pages
+		if(!is_single()){
+			// Save the retrieved metadata as a var
+			$featured_video_url = get_post_meta( $id, 'feat_video_url')[0];
+			$featured_audio_embed = get_post_meta( $id, 'feat_audio_embed')[0];
+			// Depending on which meta is set, add icons to the post title
+			if($featured_video_url){
+				$the_title =  '<i class="media fa fa-play-circle"></i> ' . $the_title;
+			}elseif($featured_audio_embed){
+				$the_title =  '<i class="media fa fa-headphones"></i> ' . $the_title;
+			}else{};
+		};
+	return $the_title;
+	};
+
+	add_filter('the_title', 'add_media_icon', 10, 2);
+
+
+
+// Function to provide a default fallback image if no thumbnail is provided
+	function smoke_fallback_thumbnail($html, $post_id){
+		// Where is the fallback image?
+		if (!is_page()){
+			$url = get_template_directory_uri() . '/img/fallback1.jpg';
+		}
+
+		// If there is an image set, return it. Else, return a fallback image html
+		if ($html){
+			return $html;
+		}else{
+			$fallback = '<img src="' . $url . '"/>';
+			return $fallback;
+		}
+	};
+
+	add_filter('post_thumbnail_html', 'smoke_fallback_thumbnail', 10, 2);
+
+
+	add_filter( 'body_class', 'custom_class' );
+	function custom_class( $classes ) {
+	    if ( get_query_var('video')) {
+	        $classes[] = 'example';
+	    }
+	    return $classes;
+	}
+
 // Function to retrieve featured video with image fallback
 	function featured_video_image($ID){
 		// Save the retrieved metadata as a var
 		$featured_video_url = get_post_meta( $ID, 'feat_video_url')[0];
+		$featured_audio_embed = get_post_meta( $ID, 'feat_audio_embed')[0];
 		// If the var is set and the URL is valid, then display a player
 		if($featured_video_url){
 			?>
@@ -210,6 +493,8 @@ add_action ('wp_head', 'add_jw_license_key');
 				});
 			</script>
 			<?php
+		}elseif($featured_audio_embed){
+			echo wp_oembed_get( $featured_audio_embed );
 		}else{
 			// If the var is not set (i.e. no video specified), display the featured image
 			the_post_thumbnail('large');
@@ -231,37 +516,58 @@ add_action ('wp_head', 'add_jw_license_key');
 	        <h4><?php the_author(); ?></h4>
 	        <h5><?php the_author_meta( 'position'); ?></h5>
 	        <p><?php the_author_meta( 'description'); ?></p>
+					<?php
+						if(get_the_author_meta('twitter')){
+							echo '<a target="blank" href="http://twitter.com/' . get_the_author_meta('twitter') . '"><i class="fa fa-twitter"></i>' . get_the_author_meta('twitter') . '</a>';
+						}
+					?>
 	      </div>
 	    </section>
 			<?php
 		}
 	}
 
-// Function to set up share buttons
-	function smoke_share_buttons(){
-		// Prepare the permalink and post title for inclusion in share intent URLs
-		$postURL = urlencode( get_permalink() );
-		$postTitle = str_replace( ' ', '%20', get_the_title() );
-		$postThumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
-		// Create hyperlinks using share intents
-		$facebookURL = "http://www.facebook.com/sharer/sharer.php?u=" . $postURL;
-		$twitterURL = 'https://twitter.com/intent/tweet?text='.$postTitle.'&amp;url='.$postURL.'&amp;via=Media_Smoke';
-		$pinterestURL = 'https://pinterest.com/pin/create/button/?url='.$postURL.'&amp;media='.$postThumbnail[0].'&amp;description='.$postTitle;
-		$whatsappURL = 'whatsapp://send?text='.$postTitle . ' ' . $postURL;
-		$emailURL = 'mailto:?subject=' . $postTitle . '&body=' . $postURL;
-		// Display button markup
-		echo '<div class="share-buttons"><span>Share</span>';
-		echo '<a href="' . $facebookURL . '" target="blank"><i class="fa fa-facebook"></i></a>';
-		echo '<a href="' . $twitterURL . '" target="blank"><i class="fa fa-twitter"></i></a>';
-		echo '<a href="' . $pinterestURL . '" target="blank"><i class="fa fa-pinterest"></i></a>';
-		echo '<a href="' . $whatsappURL . '" target="blank"><i class="fa fa-whatsapp"></i></a>';
-		echo '<a href="' . $emailURL . '" target="blank"><i class="fa fa-envelope"></i></a>';
-		echo '</div>';
-	}
+	// Function to set up share buttons
+		function smoke_share_buttons(){
+			// Echo out empty container for scirpt to work on
+			echo '<div class="share-buttons" id="share-buttons"></div>';
+			?>
+			<script>
+			// LET'S MAKE SOME BETTER SHARE BUTTONS
+
+			// Save the permalink as a var
+			var post_url = window.location.href;
+			// Save the post title (or whatever is in the H2 tag) as a var
+			var post_title = document.getElementsByTagName("h2")[0].textContent;
+			// Trim show / video / and other preceding attributes in the H2 for a cleaner result
+			var post_title = post_title.substring(post_title.indexOf("/") + 2);
+			// Set post thumbnail as var
+			var post_thumb = "<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' )[0]; ?>";
+
+			// Process vars into uniform sharing urls
+			var facebookURL = "http://www.facebook.com/sharer/sharer.php?u=" + post_url;
+			var twitterURL = "https://twitter.com/intent/tweet?text=" + post_title + "&amp;url=" + post_url + "&amp;via=Media_Smoke";
+			// If image exists, set a pinterest url too
+			if (post_thumb) {
+				var pinterestURL = "https://pinterest.com/pin/create/button/?url=" + post_url + "&amp;media=" + post_thumb + "&amp;description=" + post_title;
+			}
+			var whatsappURL = "whatsapp://send?text=" + post_title + " " + post_url;
+			var emailURL = "mailto:?subject=" + post_title + "&body=" + post_url;
+
+			// Put it into practice, giving Pinterest special treatment
+			if (pinterestURL) {
+				document.getElementById("share-buttons").innerHTML = "<span>Share</span><a href='" + facebookURL + "' target='blank'><i class='fa fa-facebook'></i></a><a href='" + twitterURL + "' target='blank'><i class='fa fa-twitter'></i></a><a href='" + pinterestURL + "' target='blank'><i class='fa fa-pinterest'></i></a><a href='" + whatsappURL + "' target='blank'><i class='fa fa-whatsapp'></i></a><a href='" + emailURL + "' target='blank'><i class='fa fa-envelope'></i></a>";
+			} else {
+				document.getElementById("share-buttons").innerHTML = "<span>Share</span><a href='" + facebookURL + "' target='blank'><i class='fa fa-facebook'></i></a><a href='" + twitterURL + "' target='blank'><i class='fa fa-twitter'></i></a><a href='" + whatsappURL + "' target='blank'><i class='fa fa-whatsapp'></i></a><a href='" + emailURL + "' target='blank'><i class='fa fa-envelope'></i></a>";
+			}
+			</script>
+			<?php
+		}
 
 // Add custom links to the top-rigth menu location for login-out
 	add_filter( 'wp_nav_menu_items', 'smoke_loginout_menu_link', 10, 2 );
 	add_filter( 'wp_nav_menu_items', 'smoke_listen_menu_link', 10, 2 );
+	add_filter( 'wp_nav_menu_items', 'smoke_back_menu_link', 10, 2 );
 
 	function smoke_loginout_menu_link( $items, $args ) {
 	   if ($args->theme_location == 'top-right') {
@@ -277,10 +583,25 @@ add_action ('wp_head', 'add_jw_license_key');
 
 	function smoke_listen_menu_link( $items, $args ) {
 	   if ($args->theme_location == 'top-left') {
-       $items .= '<li class="right"><a href="http://uwsu.com/player/index.php"
-				 onclick="return !window.open(this.href, "Listen Live", "resizable=no,width=300,height=615")"
-				 target="_blank">Listen Live <i class="fa fa-headphones"></i></a></li>';
-	   }
+			$listen_live = <<<EOD
+			<li>
+			<a href="javascript: void(0)"
+							 onclick="window.open('player',
+							'windowname1',
+							'width=350, height=600');
+							 return false;">Listen live<i class="fa fa-headphones"></i></a></li>
+EOD;
+
+ 		$items .= $listen_live ;
+		}
+	   return $items;
+	}
+
+	function smoke_back_menu_link( $items, $args ) {
+	   if ($args->theme_location == 'top-left-radio') {
+			$go_back = '<li><a href="' . get_site_url() . '"><i class="fa fa-caret-left"></i> Back to Smoke Media</a></li>';
+ 			$items .= $go_back ;
+		}
 	   return $items;
 	}
 
@@ -300,6 +621,7 @@ add_action ('wp_head', 'add_jw_license_key');
 		$byline = isset( $values['byline'] ) ? esc_attr( $values['byline'][0] ) : "";
 		$full_width_image = isset( $values['full_width_image'] ) ? $values['full_width_image'][0] : "";
 		$feat_image_credit = isset( $values['feat_image_credit'] ) ? esc_attr( $values['feat_image_credit'][0] ) : "";
+		$feat_audio_embed = isset( $values['feat_audio_embed'] ) ? esc_attr( $values['feat_audio_embed'][0] ) : "";
 		$feat_video_url = isset( $values['feat_video_url'] ) ? esc_attr( $values['feat_video_url'][0] ) : "";
 		$star_rating = isset( $values['star_rating'] ) ? esc_attr( $values['star_rating'][0] ) : "";
 		$smoke_promoted = isset( $values['smoke_promoted'] ) ? $values['smoke_promoted'][0] : "";
@@ -345,7 +667,11 @@ add_action ('wp_head', 'add_jw_license_key');
 				<label for="feat_video_url">Featured video URL</label><br/>
 				<input type="text" name="feat_video_url" id="feat_video_url" value="<?php echo $feat_video_url; ?>"/>
 			</p>
-				<p class="description">Include a Youtube URL here to replace the featured image with a video.</p>
+			<p>
+				<label for="feat_audio_embed">Featured audio URL</label><br/>
+				<input type="text" name="feat_audio_embed" id="feat_audio_embed" value="<?php echo $feat_audio_embed; ?>"/>
+			</p>
+				<p class="description">Include a Youtube URL, OR an Audioboom/Soundcloud URL here to replace the featured image with other media.</p>
 				<p class="description">A featured image <b>MUST</b> still be set.</p>
 			<hr>
 			<p>
@@ -384,6 +710,9 @@ add_action ('wp_head', 'add_jw_license_key');
 		// Save video ID field
     if( isset( $_POST['feat_video_url'] ) )
         update_post_meta( $post_id, 'feat_video_url', wp_kses( $_POST['feat_video_url'], $allowed ) );
+		// Save audio field
+    if( isset( $_POST['feat_audio_embed'] ) )
+        update_post_meta( $post_id, 'feat_audio_embed', wp_kses( $_POST['feat_audio_embed'], $allowed ) );
     // Save star rating field
     if( isset( $_POST['star_rating'] ) )
         update_post_meta( $post_id, 'star_rating', esc_attr( $_POST['star_rating'] ) );
@@ -400,26 +729,22 @@ add_action ('wp_head', 'add_jw_license_key');
 	}
 
 
-
-
 	// A function for display of a section of posts, accepting a category ID, title string and the $do_not_replicate array as parameters
-	function related_posts_section($cat, $title, &$do_not_replicate){
-	  // WP_Query arguments
-	  $args = array(
-	    'cat' => $cat
-	  );
-	  // Create the WP_query
-	  $the_query = new WP_Query( $args );
+
+	// Display a block of posts
+	function related_headlines_section($cat, $title, &$do_not_replicate){
+	  // Create the WP_query and pass in $cat parameter
+	  $the_query = new WP_Query( array('cat' => $cat ) );
 	  if ( $the_query->have_posts() ) :
-	  // Create a counter variable to track number of posts
+	  // Create a counter variable to track number of posts and set it to one
 	  $counter = 1;
 	  // If title parameter is set, display the string as a <h2>
 	  if($title){
-	  echo "<h2 class='section-title limited-width'>" . $title . "</h2>";
+	    echo "<h2 class='section-title limited-width'>" . $title . "</h2>";
 	  }
 	  // Output a container <section> element
 	  ?>
-	    <section class="limited-width post-box">
+	    <ul class="limited-width headline-block">
 	  <?php
 	  // Start the loop
 	  while ( $the_query->have_posts() ) : $the_query->the_post();
@@ -431,45 +756,45 @@ add_action ('wp_head', 'add_jw_license_key');
 	  if ($counter>4) { break; };
 	  // Save current post ID to array
 	  array_push($do_not_replicate, $ID);
-	  // Style the first two posts this way
-	  if ($counter<3){
-	  // Display first two posts as big tiles
+	  // Display posts, conditional on $counter value
 	  ?>
-	    <div class="post tile">
+	  <?php if ($counter<3):
+	    //Display first two posts like so
+	  ?>
+	    <li class="headline-item">
 	      <?php the_post_thumbnail('large'); ?>
 	      <h3><?php the_title(); ?></h3>
 	      <?php the_category(); ?>
 	      <div class="grad"></div>
 	      <a class="cover" href="<?php the_permalink(); ?>"></a>
-	    </div>
-	  <?php
-	  }elseif($counter===3){
-	  // And third like this, with a container element
+	    </li>
+	  <?php elseif ($counter === 3):
+	    //The third post, with the opening horizontal container
 	  ?>
-	  <div class="horizontaliser">
-	    <div class="post list">
-	      <?php the_post_thumbnail('large'); ?>
-	      <div>
-	        <h3><?php the_title(); ?></h3>
-	        <?php the_excerpt(); ?>
-	      </div>
-	      <a class="cover" href="<?php the_permalink(); ?>"></a>
-	    </div>
-	  <?php
-	  }else{
-	  // And last/fourth like this
+	    <ul class="horizontal-list">
+	      <li class="horizontal-headline-item">
+	        <?php the_post_thumbnail('medium'); ?>
+	        <div>
+	          <h3><?php the_title(); ?></h3>
+	          <?php the_excerpt(); ?>
+	        </div>
+	        <a class="cover" href="<?php the_permalink(); ?>"></a>
+	      </li>
+	  <?php else:
+	    //The fourth/last post, with the closing horizontal container
 	  ?>
-	    <div class="post list">
-	      <?php the_post_thumbnail('large'); ?>
-	      <div>
-	        <h3><?php the_title(); ?></h3>
-	        <?php the_excerpt(); ?>
-	      </div>
-	      <a class="cover" href="<?php the_permalink(); ?>"></a>
-	    </div>
-	  </div>
+	      <li class="horizontal-headline-item">
+	        <?php the_post_thumbnail('medium'); ?>
+	        <div>
+	          <h3><?php the_title(); ?></h3>
+	          <?php the_excerpt(); ?>
+	        </div>
+	        <a class="cover" href="<?php the_permalink(); ?>"></a>
+	      </li>
+	    </ul>
+	  <?php endif; ?>
+
 	  <?php
-	  }
 	  // Increase the counter with every post to keep an accurate count
 	  $counter++;
 	  // Finish looping
@@ -478,11 +803,194 @@ add_action ('wp_head', 'add_jw_license_key');
 	  wp_reset_postdata();
 	  // Close the container element
 	  ?>
-	    </section>
+	    </ul>
 	  <?php
 	  // What if there are no posts returned?
 	  else :
 	  ?>
-	  	<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
 	  <?php endif;
+	}
+
+// Track post views
+	function track_post_views($postID){
+		// Create a meta key
+		$count_key = 'smoke_post_views';
+		// Set the count var to the value of that key
+		$count = get_post_meta($postID, $count_key, true);
+		// If there's nothing in count, set it to zero and save. Else, increase the value by one and save.
+		if($count==''){
+				$count = 0;
+				delete_post_meta($postID, $count_key);
+				add_post_meta($postID, $count_key, '0');
+		}else{
+				$count++;
+				update_post_meta($postID, $count_key, $count);
+		}
+	}
+
+//To keep the view count accurate, lets get rid of prefetching
+	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
+
+
+
+
+// Display a block of six popular posts from the last month
+	function popular_headlines_section(){
+		// Set up arguments for WP_query
+		$args = array(
+			'meta_key'		=> 'smoke_post_views',
+			'orderby'			=> 'meta_value_num'
+		);
+	  // Create the WP_query and pass in $cat parameter
+	  $the_query = new WP_Query( $args );
+	  if ( $the_query->have_posts() ) :
+	  // Create a counter variable to track number of posts and set it to one
+	  $counter = 1;
+	  // Display the title as a <h2>
+	    echo "<h2 class='section-title limited-width'>Most popular</h2>";
+	  // Output a container <section> element
+	  ?>
+	    <ul class="limited-width popular-headline-block">
+	  <?php
+	  // Start the loop
+	  while ( $the_query->have_posts() ) : $the_query->the_post();
+	  // Save post ID as var
+	  $ID = get_the_ID();
+	  // Stop looping after fourth post
+	  if ($counter>6) { break; };
+	  // Display posts, conditional on $counter value
+	  ?>
+
+		<li class="headline-item">
+			<span><?php echo $counter; ?></span>
+			<div>
+				<h3><?php the_title(); ?></h3>
+				<?php the_excerpt(); ?>
+			</div>
+			<a class="cover" href="<?php the_permalink(); ?>"></a>
+		</li>
+
+	  <?php
+	  // Increase the counter with every post to keep an accurate count
+	  $counter++;
+	  // Finish looping
+	  endwhile;
+	  // Clean up after WP_Query
+	  wp_reset_postdata();
+	  // Close the container element
+	  ?>
+	    </ul>
+	  <?php
+	  // What if there are no posts returned?
+	  else :
+	  ?>
+	  <?php endif;
+	}
+
+
+	// Display a block of six popular posts from the last month
+		function category_popular_headlines_section($cat){
+			// Set up arguments for WP_query
+			$args = array(
+				'meta_key'		=> 'smoke_post_views',
+				'orderby'			=> 'meta_value_num',
+				'cat' 		=> $cat
+			);
+		  // Create the WP_query and pass in $cat parameter
+		  $the_query = new WP_Query( $args );
+		  if ( $the_query->have_posts() ) :
+		  // Create a counter variable to track number of posts and set it to one
+		  $counter = 1;
+		  // Display the title as a <h2>
+		    echo "<h2 class='section-title limited-width'>Popular " . get_cat_name($cat) . "</h2>";
+		  // Output a container <section> element
+		  ?>
+		    <ul class="limited-width popular-headline-block">
+		  <?php
+		  // Start the loop
+		  while ( $the_query->have_posts() ) : $the_query->the_post();
+		  // Save post ID as var
+		  $ID = get_the_ID();
+		  // Stop looping after fourth post
+		  if ($counter>6) { break; };
+		  // Display posts, conditional on $counter value
+		  ?>
+
+			<li class="headline-item">
+				<span><?php echo $counter; ?></span>
+				<div>
+					<h3><?php the_title(); ?></h3>
+					<?php the_excerpt(); ?>
+				</div>
+				<a class="cover" href="<?php the_permalink(); ?>"></a>
+			</li>
+
+		  <?php
+		  // Increase the counter with every post to keep an accurate count
+		  $counter++;
+		  // Finish looping
+		  endwhile;
+		  // Clean up after WP_Query
+		  wp_reset_postdata();
+		  // Close the container element
+		  ?>
+		    </ul>
+		  <?php
+		  // What if there are no posts returned?
+		  else :
+		  ?>
+		  <?php endif;
+		}
+
+
+// Display an info bar on the homepage
+	function info_bar(){
+		// Open section
+    echo '<section class="info-bar limited-width mobile-hide">';
+
+		// Display date
+		echo '<div>' . date( 'l j F Y' ) . '</div>';
+		// Display weather
+		echo '<aside>';
+		the_weather();
+		// Display current radio show
+		echo '<div id="current-show">';
+		echo '<i class="fa fa-headphones"></i>';
+		echo '<h4>Jukebox</h4>';
+		echo '<span>On now</span>';
+
+		?>
+		<script>
+		function showInfoData(){
+      // Make the ajax request
+      jQuery.ajax({url: "https://marconi.smokeradio.co.uk/api/now_playing.php", success: function(result){
+        // Check if there's a show on air
+        var showExists = result.success;
+				console.log(showExists);
+        // If there's a show on air, show the (normally hidden) box
+        if (showExists == 1){
+          // Display the programme info box
+          jQuery("#current-show").css("display", "flex");
+          // Pull specific fields from API and process for display
+          var title = result.show.title;
+          // Display processed data
+          jQuery("#current-show h4").html(title);
+        } else {
+					// If there's no show on, just hide the box
+          jQuery("#current-show").css("display", "none");
+        }
+      }});
+      // Check for new data every 60 seconds
+      setTimeout(showInfoData, 60000);
+    }
+    // Call the function
+    showInfoData();
+		</script>
+		<?php
+
+		echo '</div>';
+		echo '</aside>';
+		// Close section
+		echo '</section>';
+
 	}

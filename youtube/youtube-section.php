@@ -19,8 +19,9 @@ if (get_option('youtube_api_key')) {
     curl_close($ch);
     // Convert the result into an associative array
     $video_array = json_decode($result, true);
-
     ?>
+
+
     <section id="videos">
       <section class="limited-width">
         <h2 class='section-title limited-width'>Smoke TV</h2>
@@ -36,8 +37,8 @@ if (get_option('youtube_api_key')) {
               // Set the description as a var
               $description = $video["snippet"]["description"];
               // Shorten the descriptions to a sensible length
-              if (strlen($description) > 200) {
-                  $descriptionCut = substr($description, 0, 200);
+              if (strlen($description) > 100) {
+                  $descriptionCut = substr($description, 0, 100);
                   // make sure it ends in a whole word
                   $description = substr($descriptionCut, 0, strrpos($descriptionCut, ' ')).'...';
               }
@@ -61,8 +62,8 @@ if (get_option('youtube_api_key')) {
 
           </ul>
          <div class="slide-nav">
-           <span id="slide-back"><i class="fa fa-caret-left"></i></span>
-           <span id="slide-forward"><i class="fa fa-caret-right"></i></span>
+           <span id="slide-back" class="button"><i class="fa fa-caret-left"></i></span>
+           <span id="slide-forward" class="button"><i class="fa fa-caret-right"></i></span>
          </div>
        </section>
     </section>

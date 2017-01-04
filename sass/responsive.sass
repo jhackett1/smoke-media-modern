@@ -1,1 +1,346 @@
 @import "variables.sass"
+
+// First mobile-first breakpoint
+@media screen and (max-width: 650px)
+  .mobile-hide
+    display: none !important
+
+// First mobile-first breakpoint
+@media screen and (min-width: 650px) and (max-width: 899px)
+
+  div.schedule
+    ul.day-labels
+      li
+        width: 150px
+
+  // Site header styles
+  header.site-header#radio
+    // The two top menus
+    div.top-bar
+      justify-content: space-between
+      nav
+        position: relative
+
+    a#site-logo-link
+      margin: 10px 10px
+      // Site logo
+      img
+        width: 200px
+
+    // The main menu styles
+    div.primary-menu
+      nav
+        flex-direction: row
+        align-items: flex-start
+        justify-content: space-between
+
+        a#launch-player:hover
+          background-color: #9F1D2C
+
+        a#launch-player
+          font-size: 1.2em
+          padding: 10px 30px
+          width: 150px
+
+
+
+  // Fix display of popular posts block
+  ul.popular-headline-block
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+
+    li.headline-item:nth-of-type(even)
+      margin-right: 0px
+
+    li.headline-item
+      width: calc(50% - 5px)
+      margin-right: 10px
+      height: 100px
+
+  // Fix display of headline blocks with the first breakpoint's flexbox display
+  ul.headline-block
+    display: flex
+    flex-wrap: wrap
+
+    li.headline-item
+      // Magic property
+      // Subtracts the margin from the width of each block so they sit side by side without wrapping
+      width: calc(50% - 5px)
+      transition: 0.1s
+
+    li.headline-item:first-of-type
+      margin-right: 10px
+
+    ul.horizontal-list
+      flex-direction: row
+      width: 100%
+
+      li
+        width: 50%
+        height: 150px
+        flex-direction: row
+
+        div
+          height: 100%
+          width: 60%
+          padding: 10px
+
+          h3
+            font-size: 1.2em
+            margin: 0px 0px
+            font-weight: normal
+
+          p
+            font-size: 0.8em
+            margin: 10px 0px
+            color: #969696
+
+        img
+          width: 40%
+          height: 100%
+          object-fit: cover
+          z-index: 1
+
+      li:first-of-type
+        margin-right: 10px
+
+  ul.headline-block#interviews
+
+    li.headline-item:nth-of-type(1), li.headline-item:nth-of-type(3)
+      margin-right: 10px
+
+  ul#category.headline-block
+    li.headline-item:nth-of-type(3)
+      margin-right: 10px
+
+  ul.headline-block#reviews
+    margin: 0
+    padding: 10px
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+
+    li.horizontal-headline-item:nth-of-type(1), li.horizontal-headline-item:nth-of-type(3)
+      margin-right: 10px
+
+    li.horizontal-headline-item:nth-of-type(3), li.horizontal-headline-item:nth-of-type(4)
+      height: 100px
+      width: 100%
+      flex: 0 0 calc(50% - 5px)
+
+    li.horizontal-headline-item
+      background-color: #efefef
+      display: flex
+      flex-direction: row
+      width: calc(50% - 5px)
+      height: 130px
+
+  body.frontend
+    article.page
+      main
+        section.meta
+          h2
+            font-size: 5em
+            font-weight: normal
+            letter-spacing: normal
+
+// Second mobile-first breakpoint
+@media screen and (min-width: 900px)
+
+  div.schedule
+    ul.day-labels
+      li
+        width: 150px
+
+  body.frontend
+    // Fix display of single article pages
+    article:first-of-type
+      flex-direction: row
+
+    article.page
+      main
+        section.meta
+          h2
+            font-size: 6em
+            font-weight: normal
+            letter-spacing: normal
+
+    article
+      main
+        flex: 1
+
+        section.meta
+          figure
+            img
+              height: 400px
+
+          h2
+            font-size: 4em
+
+  sidebar
+    flex: 0 0 33.3%
+    padding: 0px 20px
+
+  // Fix display of popular posts block
+  ul.popular-headline-block
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+
+    li.headline-item:nth-of-type(3), li.headline-item:nth-of-type(6)
+      margin-right: 0px
+      flex: 0 0 calc(33.3% - 20px)
+
+    li.headline-item
+      flex: 0 0 calc(33.3%)
+      margin-right: 10px
+      overflow: hidden
+      height: 110px
+
+  section#interviews-reviews, section#shows-twitter
+    display: flex
+
+    aside.padded
+      padding: 0px 20px
+
+    aside, sidebar
+      box-sizing: border-box
+
+      ul.headline-block#interviews
+        flex-wrap: wrap
+        padding: 20px 0px 20px 10px
+
+        ul.horizontal-list
+          flex: 0 0 calc(50% - 5px)
+          margin-right: 10px
+
+        ul.horizontal-list:last-of-type
+          margin-right: 0px
+
+        li.headline-item
+          margin-right: 10px
+          flex: 0 0 calc(50% - 5px)
+          height: 270px
+
+        li.headline-item:nth-of-type(2), li.headline-item:nth-of-type(4)
+          margin-right: 0px
+
+    aside:first-of-type
+      flex: 0 0 67.6%
+
+    aside:last-of-type
+      flex: 0 0 32.3%
+
+  // Fix display of headline blocks with the first breakpoint's flexbox display
+  ul.headline-block
+    display: flex
+    flex-wrap: nowrap
+
+    li.headline-item
+      margin-right: 10px
+      flex: 0 0 33.3%
+      height: 270px
+
+    ul.horizontal-list.comment:first-of-type
+      margin-right: 10px
+
+    ul.horizontal-list.comment
+      li
+        div
+          margin-left: 45px
+
+          h3::before
+            content: "“"
+            display: block
+            font-size: 600%
+            color: #9F1D2C
+            position: absolute
+            left: 10px
+            top: 5px
+            margin-top: -17px
+
+    ul.horizontal-list
+      display: flex
+      flex-direction: column
+      height: 270px
+
+      li
+        width: 100%
+        flex-direction: row
+        flex: 1
+
+        div
+          height: 100%
+          width: 60%
+          padding: 10px
+
+          h3
+            font-size: 1.2em
+            margin: 0px 0px
+            font-weight: normal
+
+          p
+            font-size: 0.8em
+            margin: 10px 0px
+            color: #969696
+
+        img
+          width: 40%
+          object-fit: cover
+          z-index: 1
+
+      li:first-of-type
+        margin-right: 0px
+
+      li:last-of-type
+        margin-bottom: 0px
+
+  ul.headline-block#category
+    flex-wrap: wrap
+
+    li.headline-item:nth-of-type(4)
+      margin-right: 0px
+      flex: 0 0 calc(33.3% - 20px)
+
+    ul.horizontal-list:first-of-type
+      flex: 0 0 calc(33.3% - 20px)
+
+    ul.horizontal-list:last-of-type
+      flex: 0 0 33.3%
+      margin-right: 10px
+
+
+  // Site header styles
+  header.site-header#radio
+    // The two top menus
+    div.top-bar
+      justify-content: space-between
+      nav
+        position: relative
+
+    a#site-logo-link
+      margin: 10px 10px
+      // Site logo
+      img
+        width: 200px
+
+    // The main menu styles
+    div.primary-menu
+      nav
+        flex-direction: row
+        align-items: flex-start
+        justify-content: space-between
+
+        a#launch-player:hover
+          background-color: #9F1D2C
+
+        a#launch-player
+          font-size: 1.2em
+          padding: 10px 30px
+          width: 150px
+
+// Special gift for the big-screen weirdos
+@media screen and (min-width: 1500px)
+  .limited-width
+    max-width: 1200px

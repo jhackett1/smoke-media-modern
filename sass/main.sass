@@ -1,28 +1,80 @@
 @import "variables.sass"
-@import "frontpage.sass"
+@import "widgets.sass"
+@import "radio.sass"
 
+/*////////////////////////////
+////
+//// Universal styles and resets
+////
+////////////////////////////*/
+
+.jwplayer
+  width: 100% !important
+
+// Fix initial flashing issue
+.wow
+  visibility: hidden
+
+// A general class which puts things in the middle of the page
 .limited-width
-  margin: auto
+  margin-left: auto
+  margin-right: auto
   max-width: $width
 
+// Only affect the frontend
 body.frontend
   margin: 0
   padding: 0
   font-family: $h-stack
   background-color: $background
 
+  // The dynamically loaded container on archive pages
+  div.ajax-container
+    transition: 0.1s
+
+  // The load more posts button
+  span.button#more-posts
+    display: block
+    margin: 0px auto 30px auto
+    width: 110px
+
+  .button
+    padding: 15px
+    background-color: #c55a66
+    color: $background
+    font-family: $h-stack
+    text-transform: uppercase
+    cursor: pointer
+    text-align: center
+    font-size: 1.3em
+    display: block
+    transition: 0.1s
+    font-weight: normal
+    border-radius: 2px
+    border: none
+
+  .button:hover
+    background-color: #b34652
+
+  // Basic typographic styles
   h2, h3, h4, h5
     font-family: $h-stack
     text-transform: uppercase
     color: $text
 
   h2.page-title
-    font-size: 3em
+    font-size: 5em
+    font-weight: normal
     margin: 20px auto
     letter-spacing: 0.5px
+    padding: 0px 10px
+    box-sizing: border-box
 
   p.category-desc
     margin: 20px auto
+    box-sizing: border-box
+    padding: 0px 10px
+    color: #969696
 
   p
     color: $text
@@ -37,26 +89,39 @@ body.frontend
     a:hover
       text-decoration: underline
 
+  // A pretty horizontal rule
   hr
     border: 2px #dfdfdf
     border-style: none none dotted none
 
+  // An alternative, bolder, horizontal rule
   hr.big
     border: 5px $brand
     border-style: none none solid none
 
+  /*////////////////////////////
+  ////
+  //// The header
+  ////
+  ////////////////////////////*/
+
+  // Site header styles
   header.site-header
     width: 100%
     background-color: $brand
 
+    // The two top menus
     div.top-bar
       display: flex
       flex-direction: row
+      padding: 0px 10px
+      box-sizing: border-box
       justify-content: space-between
 
       nav
         position: relative
 
+        // A search box linked with JS to a search icon, invisible by default
         div#search-box.visible
           display: block
 
@@ -83,12 +148,16 @@ body.frontend
               outline-width: 0
               width: 300px
 
+        // Display submenu ul on hover
         ul li:hover > ul
           display: block
+
         ul
           list-style-type: none
           margin: 0px
           padding: 0px
+
+          // Only display the below icon on the parent menu. Don't display it on submenu items.
           li.menu-item-has-children a:only-child::after
             content: none
             display: none
@@ -98,6 +167,7 @@ body.frontend
             border-right: 0
             border-top: 0
 
+          // A downward-pointing arrow applied to each menu item with a submenu
           li.menu-item-has-children a::after
             content: ""
             display: inline-block
@@ -106,6 +176,8 @@ body.frontend
             border-left: 0.25rem solid transparent
             border-right: 0.25rem solid transparent
             border-top: 0.5em solid #fafafa
+
+          // Parent menu item styling
           li
             display: inline
             text-transform: uppercase
@@ -126,7 +198,7 @@ body.frontend
               top: 20px
               background-color: #505050
               display: none
-              z-index: 11
+              z-index: 90
               border-radius: 2px
               border: 0.5px solid #505050
               li:last-of-type
@@ -156,16 +228,23 @@ body.frontend
             a:hover
               text-decoration: underline
 
+    // Site logo
     img
       width: 200px
       height: auto
       margin: 10px
 
+    // The main menu styles
     div.primary-menu
       background-color: #A83441
+
+      nav > ul > li:hover
+        box-shadow: inset 0px -5px 0px 0px #c55a66
+
       nav
         background-color: #AC3E4A
 
+        // Display submenu items on hover
         ul li:hover > ul
           display: block
 
@@ -174,6 +253,7 @@ body.frontend
           margin: 0px
           padding: 0px
 
+          // Only display the below icon on the parent menu. Don't display it on submenu items.
           li.menu-item-has-children a:only-child::after
             content: none
             display: none
@@ -183,6 +263,7 @@ body.frontend
             border-right: 0
             border-top: 0
 
+          // Downward-pointing arrow icon applied to menu items with submenus
           li.menu-item-has-children a::after
             content: ""
             display: inline-block
@@ -192,8 +273,12 @@ body.frontend
             border-right: 0.25rem solid transparent
             border-top: 0.5em solid #fafafa
 
+          li:hover
+            box-shadow: inset 0px -5px 0px 0px #c55a66
+            transition: 0.2s
+
           li
-            display: inline
+            display: inline-block
             text-transform: uppercase
             font-weight: 100
             font-size: 1.2em
@@ -201,6 +286,8 @@ body.frontend
             position: relative
             font-weight: normal
             z-index: 10
+            box-shadow: inset 0px 0px 0px 0px #c55a66
+            transition: 0.2s
 
             // Submenu items
             ul
@@ -209,11 +296,10 @@ body.frontend
               margin: 0px
               padding: 0px
               position: absolute
-              left: 10px
-              top: 27px
-              background-color: #505050
+              left: 0px
+              top: 43px
+              background-color: #c55a66
               display: none
-              border-radius: 2px
               li:last-of-type
                 a
                   padding: 10px 10px 10px 10px
@@ -226,12 +312,15 @@ body.frontend
                 display: block
                 z-index: 11
                 a
-                  color: #dfdfdf
+                  color: $background
                   text-decoration: none
                   padding: 10px 10px 0px 10px
                   display: inline-block
                 a:hover
                   text-decoration: underline
+
+              li:hover
+                box-shadow: inset 0px 0px 0px 0px #505050
 
             a
               color: $background
@@ -239,26 +328,29 @@ body.frontend
               padding: 10px
               display: inline-block
             a:hover
-              text-decoration: underline
+              text-decoration: none
 
-  article.full-width-template
-    main
-      background-color: #ffffff
-      margin-top: -220px
-      padding: 10px
-      margin-left: -10px
-      border-radius: 1px
+  /*////////////////////////////
+  ////
+  //// Single posts
+  ////
+  ////////////////////////////*/
 
   article
     background-color: #fff
-    min-height: 500px
     padding: 10px
     box-sizing: border-box
-    display: flex
-    flex-direction: row
 
+    // The main area on the left
     main
       flex: 1
+      max-width: 100%
+
+      // Make sure JW player is responsive
+      div#videoPlayer
+        max-width: 100%
+        padding-bottom: 56%
+        height: auto !important
 
       div.standfirst
         margin: 20px 0px
@@ -333,6 +425,21 @@ body.frontend
         flex-direction: row
         margin: 20px 0px
 
+        a:hover
+          text-decoration: underline
+
+        a
+          display: block
+          text-decoration: none
+          color: $brand
+          text-transform: uppercase
+          margin-top: 10px
+
+          i
+            margin-right: 5px
+
+
+
         img
           width: 150px
           border-radius: 150px
@@ -359,6 +466,7 @@ body.frontend
           p
             margin: 5px 0px
 
+      // The section containing the_content
       section.contents
 
         div.gallery
@@ -384,6 +492,7 @@ body.frontend
           width: 100% !important
           height: auto
 
+        // Make images span across the whole available area
         div.wp-caption.alignnone, div.wp-caption.aligncenter
           width: 100% !important
           position: relative
@@ -404,6 +513,36 @@ body.frontend
             padding: 5px 10px
             text-transform: uppercase
 
+        //Support left and right-aligned images, and images without captions
+        div.wp-caption.alignleft, img.alignleft
+          float: left
+          margin: 15px 15px 15px 0px
+
+        div.wp-caption.alignright, img.alignright
+          float: right
+          margin: 15px 0px 15px 15px
+
+        div.wp-caption.alignleft, div.wp-caption.alignright, img.alignright, img.alignleft
+          width: 50% !important
+          max-width: 50%
+          position: relative
+
+          img
+            width: 100%
+            height: auto
+
+          p.wp-caption-text
+            position: absolute
+            left: 0
+            bottom: -30px
+            font-family: $h-stack
+            color: #969696
+            font-style: italic
+            background-color: #efefef
+            padding: 5px 10px
+            text-transform: uppercase
+
+        // Pretty blockquotes with horizontal rules
         blockquote
           margin: 0
           padding: 0
@@ -425,6 +564,7 @@ body.frontend
             margin-top: -35px
             margin-left: -6px
 
+          // Override drop cap
           p:first-of-type::first-letter
             font-size: 100%
             font-weight: 300
@@ -433,29 +573,42 @@ body.frontend
             margin-right: 0px
             line-height: 100%
 
+        // Plain body text
         p
           color: $text
           font-family: $p-stack
           font-size: 1.1em
           font-style: normal
 
+          // Make hyperlinks in content red
           a
             text-decoration: none
             color: $brand
 
+          // And underline them on hover
           a:hover
             text-decoration: underline
 
-        // p:first-of-type::first-letter
-        //   font-size: 600%
-        //   font-weight: 700
-        //   float: left
-        //   color: $brand
-        //   margin-right: 15px
-        //   line-height: 100px
+        // A crosshead
+        h3
+          font-size: 2.5em
+          font-weight: normal
 
+        // A spoiler warning
+        span.spoiler
+          font-family: $h-stack
+          text-transform: uppercase
+          color: #969696
+          font-size: 1.2em
+          background: repeating-linear-gradient(45deg, #fff, #fff 5px, #efefef 5px, #efefef 10px)
+          padding: 5px 5px 3px 5px
+          text-align: center
+          display: block
+          margin: 30px 0px 10px
+
+      // The section above the content, containing feat image and title, plus other metadata
       section.meta
-
+        // The featured image
         figure
           padding: 0
           margin: 0px 0px 20px 0px
@@ -472,24 +625,32 @@ body.frontend
             font-style: italic
             letter-spacing: 0.4px
 
+          // If featured image is replaced by other media, make it stretch across whole available area
+          iframe
+            width: 100%
+
+          // Make images stretch across whole area and 300px tall on mobile (taller on desktop)
           img
-            height: 400px
+            height: 300px
             width: 100%
             margin: 0px
             object-fit: cover
 
+        // Post title
         h2
-          font-size: 4em
+          font-size: 3em
           margin: 0px
           letter-spacing: 1.4px
 
-          span
-            color: $brand
-
+          // Make TV letters on video posts red
           a
             text-decoration: none
-            color: $text
+            color: $brand
 
+          a:hover
+            text-decoration: underline
+
+        // Date, author and category meta
         h5
           font-style: italic
           color: #969696
@@ -497,11 +658,16 @@ body.frontend
           margin: 20px 0px
           font-weight: normal
 
+          span
+            margin: 0px 4px
+
+          // Make category uls pretty
           ul
             list-style-type: none
             display: inline
             margin: 0
             padding: 0
+            margin-right: 4px
             li
               display: inline
               a
@@ -510,38 +676,90 @@ body.frontend
               a:hover
                 text-decoration: underline
 
-    sidebar
+    // The right-hand sidebar
+    sidebar, aside:last-of-type
       flex: 0 0 33.3%
-      margin-left: 20px
 
-      div.widget
-        margin-bottom: 30px
-        background-color: #fafafa
-        position: relative
-        padding: 20px
-        margin-top: 50px
+  // Each widget in the sidebar
+  div.widget
+    margin-bottom: 70px
+    position: relative
+    margin-top: 50px
+    box-sizing: border-box
+    width: 100%
 
-        h2.widgettitle
-          font-size: 1.2em
-          position: absolute
-          left: 0
-          top: -50px
+    // The title of each widget
+    h2.widgettitle
+      font-size: 1.2em
+      position: absolute
+      left: 0
+      top: -50px
 
-        h2.widgettitle::before
-          content: ""
-          display: inline-block
-          margin-right: 12px
-          background-color: #9F1D2C
-          width: 8px
-          height: 20px
-          margin-bottom: -3px
+    // Add a red rectangle to the left of each title
+    h2.widgettitle::before
+      // content: ""
+      display: inline-block
+      margin-right: 12px
+      background-color: #9F1D2C
+      width: 8px
+      height: 20px
+      margin-bottom: -3px
 
+  // On full-width post templates, the main section should be bumped up with a negative margin, overlapping the featured image
+  article.full-width-template
+    main
+      background-color: #ffffff
+      margin-top: -220px
+      padding: 20px
+      margin-left: -10px
+      border-radius: 1px
+
+  // Styling for the full-width featured image template
+  section.full-width-image
+    width: 100%
+    height: 500px
+    overflow: hidden
+    position: relative
+    z-index: -1
+
+    // Display the image credit properly on the full-width layout
+    div.full-width-credit
+      position: absolute
+      bottom: 0px
+      right: 0
+      display: inline-block
+      z-index: 99
+      background-color: rgba(223,223,223,0.9)
+      padding: 6px 10px
+      text-transform: uppercase
+      color: #969696
+      font-style: italic
+      letter-spacing: 0.4px
+
+    img
+      height: 100%
+      width: 100%
+      object-fit: cover
+
+  // Mobile-first one-column layout, overridden on desktop
+  article:first-of-type
+    display: flex
+    flex-direction: column
+
+  /*////////////////////////////
+  ////
+  //// The footer
+  ////
+  ////////////////////////////*/
+
+  // The site footer
   footer.site-footer
     width: 100%
     background-color: $brand
 
+    // The bottom menu
     nav.corporate-menu
-      width: $width
+      max-width: $width
       margin: 0 auto
       ul
         list-style-type: none
@@ -566,6 +784,7 @@ body.frontend
           a:hover
             text-decoration: underline
 
+    // The copyright notice
     div.copyright
       background-color: #A83441
       width: 100%
@@ -578,6 +797,7 @@ body.frontend
         a
           color: $background
 
+    // A semitransparent logo in the footer
     a.custom-logo-link
       margin: 20px
       display: block
@@ -588,13 +808,13 @@ body.frontend
         height: auto
         opacity: 0.3
 
+    // The main menu, again, in the footer, but centered
     div.footer-menu
       background-color: #A83441
       width: 100%
 
       nav
         background-color: #AC3E4A
-        width: $width
         margin: 0 auto
         ul
           list-style-type: none
@@ -619,50 +839,51 @@ body.frontend
             a:hover
               text-decoration: underline
 
+  /*////////////////////////////
+  ////
+  //// The homepage video section
+  ////
+  ////////////////////////////*/
+
+  // A full-width strip with a background image
 
   section#videos
-    background-image: url(../img/login.png)
-    background-size: cover
+    background-image: url(../img/skulls.png)
     background-position: center
-    margin: 30px 0px
+    // background-size: cover
+    margin: 40px 0px
 
+  section#videos, section#audio
+    // The inner section
     section
-      background-color: rgba(255,255,255,0.3)
+      background-color: rgba(255,255,255,0.4)
       padding: 10px
+      box-sizing: border-box
 
       h2.section-title
-        margin: 20px 0px
+        margin: 15px 0px
+        background-color: rgba(0,0,0,0)
 
+      h2.section-title::before
+        margin-left: 0px
+
+      //The forward/back navigation buttons
       div.slide-nav
         display: flex
         flex-direction: row
-        width: 100px
+        width: 94px
         margin-left: auto
         margin-bottom: 20px
 
-        span:hover
-          border: 2px solid rgba(159, 29, 44, 0.7)
-
-          i
-            color: rgba(159, 29, 44, 0.7)
-
+        // The button
         span
-          width: 40px
-          height: 40px
-          border: 2px solid $brand
-          display: flex
-          justify-content: center
-          align-items: center
-          margin-left: 10px
-          border-radius: 2px
-          cursor: pointer
+          margin: 0px 0px 0px 10px
 
-          i
-            color: $brand
-
+      // Don't show the scrollbar on webkit browsers
       ul.slider::-webkit-scrollbar
         display: none
 
+      // The parent container for the slider, with fixed scroll snap points
       ul.slider
         list-style-type: none
         width: 100%
@@ -676,19 +897,20 @@ body.frontend
         scroll-snap-points-x: repeat(300px)
         scroll-snap-type: mandatory
 
+        // Get rid of the margin on the last video tile
         li.video-tile:last-of-type
           margin-right: 0px
 
+        // Animate video tile on hover
         li.video-tile:hover
           span.play-icon
             background: $brand
-
             i
               color: #fafafa
-
           a.cover:hover
             background-color: rgba(0,0,0,0.05)
 
+        // Styles for a video tile of fixed width
         li.video-tile
           margin-right: 10px
           background-color: #efefef
@@ -697,19 +919,30 @@ body.frontend
           flex: 0 0 300px
           overflow: hidden
 
+          h5
+            position: absolute
+            top: 0px
+            left: 0px
+            padding: 5px 7px
+            background: #efefef
+            color: #969696
+            font-style: italic
+            text-transform: uppercase
+            margin: 0px
+
+          // The central play icon
           span.play-icon
             position: absolute
-            left: 50%
-            transform: translateX(-50%)
-            top: 50px
-            padding: 20px
+            right: 0px
+            top: 100px
+            padding: 15px
             background: rgba(239,239,239,0.9)
             display: flex
             justify-content: center
             align-items: center
             width: 30px
             height: 30px
-            border-radius: 200px
+            border-radius: 0px
 
             i
               color: $brand
@@ -733,56 +966,455 @@ body.frontend
 
           h3
             font-size: 1.8em
-            margin: 20px 20px 10px 20px
+            margin: 15px 15px 5px 15px
             font-weight: normal
 
           p
             font-size: 0.8em
-            margin: 10px 20px 20px 20px
+            margin: 5px 15px 15px 15px
             color: #969696
 
-section.dateweather
+  section#audio
+    background-image: url(../img/skulls.png)
+    margin: 40px 0px
+
+  /*////////////////////////////
+  ////
+  //// The API-driven data bar at the top of the homepage
+  ////
+  ////////////////////////////*/
+
+  section.info-bar
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    margin: 25px auto 10px auto
+    color: #969696
+    box-sizing: border-box
+    font-style: italic
+    text-transform: uppercase
+    font-weight: normal
+    font-size: 1em
+    letter-spacing: 0.5px
+    padding: 0px 10px
+
+    aside
+      display: flex
+      flex-direction: row
+
+      div:last-of-type
+        margin-left: 10px
+
+    div
+      padding: 5px 7px 2px 5px
+      background-color: #efefef
+      display: flex
+      flex-direction: row
+
+
+      i
+        margin: 0px 5px 0px 0px
+        color: $brand
+
+      h4
+        margin: 0px 5px 0px
+
+ul.popular-headline-block
+  padding: 10px
+  display: block
+  width: 100%
+  box-sizing: border-box
+
+  li.headline-item
+    background-color: #efefef
+    display: flex
+    flex-direction: row
+    width: 100%
+    height: 90px
+    padding: 15px
+    box-sizing: border-box
+    margin-bottom: 10px
+    position: relative
+
+    a.cover:hover
+      background-color: rgba(0,0,0,0.05)
+
+    a.cover
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      z-index: 4
+      width: 100%
+      height: 100%
+
+    span
+      color: $brand
+      margin-right: 15px
+      margin-top: -5px
+      font-size: 3em
+
+    div
+      box-sizing: border-box
+
+      h3
+        font-size: 1.2em
+        margin: 0px 0px
+        font-weight: normal
+
+      p
+        font-size: 0.8em
+        margin: 5px 0px
+        color: #969696
+
+// Styling for the headline block container
+ul.headline-block
+  list-style-type: none
+  margin: 0px auto
+  padding: 20px 10px
+  box-sizing: border-box
+
+  i.media
+    color: #ac3e4a
+
+  li
+    position: relative
+    overflow: hidden
+    box-sizing: border-box
+    display: block
+    margin: 0px 0px 10px 0px
+    background-color: #efefef
+    // The absolutely positioned permalink div
+    a.cover:hover
+      background-color: rgba(0,0,0,0.05)
+
+    a.cover
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      z-index: 4
+      width: 100%
+      height: 100%
+
+  // The first two box items should be image tiles
+  li.headline-item
+    height: 200px
+
+    // The absolutely positioned category inset
+    ul.post-categories
+      list-style-type: none
+      position: absolute
+      top: 0
+      right: 0
+      margin: 0px
+      background-color: rgba(223,223,223,0.9)
+      padding: 5px 7px
+      z-index: 5
+      font-size: 0.8em
+
+      li:first-of-type
+        display: inline
+        font-style: italic
+        text-transform: uppercase
+        font-weight: normal
+        background-color: rgba(0,0,0,0)
+      // Hide any additional categories - display only one
+      li
+        display: none
+        a
+          text-decoration: none
+          color: #969696
+
+    // The background image, relying on object-fit
+    img
+      width: 100%
+      height: 100%
+      object-fit: cover
+      z-index: 1
+
+    // The semi-transparent gradient on top of the background image
+    div.grad
+      width: 100%
+      height: 100%
+      position: absolute
+      bottom: 0
+      background: -webkit-linear-gradient(top, rgba(239, 239, 239, 0) 0%, #2d2d2d 100%)
+      background: linear-gradient(to bottom, rgba(239, 239, 239, 0) 0%, #2d2d2d 100%)
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00efefef', endColorstr='#efefef',GradientType=0 )
+      -webkit-transition: 0.1s
+      transition: 0.1s
+      z-index: 2
+
+    // The article title
+    h3
+      position: absolute
+      bottom: 10px
+      left: 14px
+      right: 10px
+      margin: 0
+      color: #fafafa
+      z-index: 3
+      font-weight: normal
+      font-size: 1.8em
+      margin: 0px
+      text-shadow: 0px 0px 10px rgba(0,0,0,0.5)
+      max-width: 100%
+
+  ul.horizontal-list
+    margin: 0
+    padding: 0
+    display: flex
+    // The last two box items should hold more text
+    li
+      background-color: #efefef
+      display: flex
+      flex-direction: column
+      width: 50%
+
+      div
+        width: 100%
+        padding: 10px
+        box-sizing: border-box
+
+        h3
+          font-size: 1.2em
+          margin: 0px 0px
+          font-weight: normal
+
+        p
+          font-size: 0.8em
+          margin: 10px 0px
+          color: #969696
+
+      img
+        width: 100%
+        height: 150px
+        object-fit: cover
+        z-index: 1
+
+    li:first-of-type
+      margin-right: 10px
+
+  ul.horizontal-list.comment
+    margin: 0
+    padding: 0
+    display: flex
+    flex: 0 0 33.3%
+    // The last two box items should hold more text
+    li
+      div
+        width: 100%
+
+        h3::before
+          content: "“"
+          display: block
+          float: left
+          font-size: 300%
+          color: #9F1D2C
+          margin-top: -9px
+          margin-bottom: -50px
+          margin-right: 15px
+
+ul.headline-block#reviews
+  margin: 0
+  padding: 20px 10px
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+
+  li.horizontal-headline-item:nth-of-type(3)
+    margin-right: 10px
+
+  li.horizontal-headline-item:nth-of-type(3), li.horizontal-headline-item:nth-of-type(4)
+    flex: 0 0 calc(50% - 5px)
+
+    div
+      width: 100%
+
+  li.horizontal-headline-item
+    background-color: #efefef
+    display: flex
+    flex-direction: row
+    width: 100%
+    height: 130px
+    flex: 0 0 100%
+
+    div
+      width: 60%
+      padding: 15px
+      box-sizing: border-box
+
+      h3
+        font-size: 1.2em
+        margin: 0px 0px
+        font-weight: normal
+
+        ul
+          margin: 0
+          padding: 0
+          display: inline
+
+          li
+            display: inline
+
+            a
+              text-decoration: none
+              color: $brand
+
+      div
+        padding: 0
+        margin-top: 5px
+        color: #969696
+
+      p
+        font-size: 0.8em
+        margin: 5px 0px
+        color: #969696
+
+    img
+      width: 40%
+      height: 150px
+      object-fit: cover
+      z-index: 1
+
+h2.section-title
+  font-size: 1.5em
+  margin: 10px auto
+
+h2.section-title::before
+  content: ""
+  display: inline-block
+  margin-right: 12px
+  background-color: #9F1D2C
+  width: 8px
+  height: 21px
+  margin-bottom: -2px
+  margin-left: 10px
+
+  /*////////////////////////////
+  ////
+  //// Video category page
+  ////
+  ////////////////////////////*/
+
+ul.videos
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  width: 100%
+  padding: 0px
+
+  li.video-tile:hover
+    span.play-icon
+      background: $brand
+      i
+        color: #fafafa
+    a.cover:hover
+      background-color: rgba(0,0,0,0.05)
+
+  li.video-tile
+    flex: 0 0 calc(33.3% - 10px)
+    margin: 0px 0px 10px 10px
+    background-color: #efefef
+    position: relative
+    overflow: hidden
+
+    h5
+      position: absolute
+      top: 0px
+      left: 0px
+      padding: 5px 7px
+      background: #efefef
+      color: #969696
+      font-style: italic
+      text-transform: uppercase
+      margin: 0px
+
+    // The central play icon
+    span.play-icon
+      position: absolute
+      right: 0px
+      top: 100px
+      padding: 15px
+      background: rgba(239,239,239,0.9)
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 30px
+      height: 30px
+      border-radius: 0px
+
+      i
+        color: $brand
+        font-size: 1.5em
+
+    a.cover
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      z-index: 4
+      width: 100%
+      height: 100%
+
+    img
+      width: 100%
+      height: 160px
+      object-fit: cover
+      object-position: center
+
+    h3
+      font-size: 1.8em
+      margin: 15px 15px 5px 15px
+      font-weight: normal
+
+    p
+      font-size: 0.8em
+      margin: 5px 15px 15px 15px
+      color: #969696
+
+section#notification-bar
+  position: fixed
+  box-sizing: border-box
+  bottom: 0px
+  z-index: 999
   display: flex
   flex-direction: row
   justify-content: space-between
-  margin: 20px auto
-  color: #969696
-  box-sizing: border-box
-  font-style: italic
-  text-transform: uppercase
-  font-weight: normal
-  font-size: 1em
-  letter-spacing: 0.5px
-
-  div
-    padding: 5px 7px 2px 5px
-    background-color: #efefef
-
-    i
-      margin: 0px 5px
-      color: $brand
-
-section.full-width-image
+  align-items: center
+  background-color: #00456E
   width: 100%
-  height: 500px
-  overflow: hidden
-  position: relative
-  z-index: -1
+  padding: 10px
 
-  div.full-width-credit
+  h2
+    margin: 0
+    padding: 0
+    color: #fafafa
+    font-weight: normal
+
+    span
+      opacity: 0.3
+
+  i
+    border-radius: 100px
+    width: 30px
+    height: 30px
+    background-color: #fafafa
+    color: #00456e
+    display: flex
+    justify-content: center
+    align-items: center
+
+  a.cover
     position: absolute
-    bottom: 0px
+    top: 0
+    bottom: 0
+    left: 0
     right: 0
-    display: inline-block
-    z-index: 99
-    background-color: rgba(223,223,223,0.9)
-    padding: 6px 10px
-    text-transform: uppercase
-    color: #969696
-    font-style: italic
-    letter-spacing: 0.4px
-
-  img
-    height: 100%
+    z-index: 4
     width: 100%
-    object-fit: cover
+    height: 100%

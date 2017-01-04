@@ -7,9 +7,9 @@
   function add_theme_menu_items()
   {
   	add_menu_page("More settings", "More settings", "manage_options", "theme-panel", "theme_settings_page", null, 99);
+    add_menu_page("Front page settings", "Front page settings", "manage_options", "front_page_settings", "front_page_settings", null, 99);
   }
   add_action("admin_menu", "add_theme_menu_items");
-
 
 // Create theme options page
   function theme_settings_page()
@@ -28,6 +28,24 @@
   		</div>
   	<?php
   }
+  // Create second options page to configure front page only
+  function front_page_settings()
+  {
+      ?>
+  	    <div class="wrap">
+  	    <h1>Front Page Settings</h1>
+  			<p>Adjust front page sections and options.</p>
+  	    <form method="post" action="options.php">
+  	        <?php
+  	            settings_fields("front-page-fields");
+  	            do_settings_sections("front-page-sections");
+  	            submit_button();
+  	        ?>
+  	    </form>
+  		</div>
+  	<?php
+  }
+
 
 // Display HTML code of a category picker
   function vid_number_element()
@@ -59,6 +77,20 @@
     <?php
   }
 
+  function twitter_api_element()
+  {
+    ?>
+      <input type="text" name="twitter_api_key" id="twitter_api_key" value="<?php echo get_option('twitter_api_key'); ?>" />
+    <?php
+  }
+  function twitter_secret_element()
+  {
+    ?>
+      <input type="text" name="twitter_api_secret" id="twitter_api_secret" value="<?php echo get_option('twitter_api_secret'); ?>" />
+      <p class="description">This theme uses the Twitter API to serve up pretty timelines of tweets. These won't work without an API key and secret.</p>
+    <?php
+  }
+
   function issuu_api_element()
   {
     ?>
@@ -81,6 +113,14 @@
     <?php
   }
 
+  function audioboom_api_element()
+  {
+    ?>
+      <input type="text" name="audioboom_api_key" id="audioboom_api_key" value="<?php echo get_option('audioboom_api_key'); ?>" />
+      <p class="description">This theme uses functionality from Audioboom. Remove API key to disable this feature.</p>
+    <?php
+  }
+
 // Display HTML code of stream URL element
   function stream_url_element()
   {
@@ -96,7 +136,7 @@
       <option value="RTMP" <?php if('RTMP' === get_option('stream_type')){ echo "selected";}; ?>>RTMP</option>
       <option value="HTTP" <?php if('HTTP' === get_option('stream_type')){ echo "selected";}; ?>>HTTP</option>
     </select>
-  		<p class="description">This affects the player needed to play out the stream. Flash media streams are RTMP. Shoutcast/Icecast streams are HTTP.</p>
+  		<p class="description">This affects the player needed to play out the stream. Flash media streams are desktop-only and RTMP. Shoutcast/Icecast streams are HTTP and work on mobile devices.</p>
     <?php
   }
 
@@ -156,6 +196,18 @@ function display_theme_panel_fields()
   add_settings_field("issuu_api_secret", "Issuu API Secret", "issuu_secret_element", "theme-options", "typekit-section");
   // Automate saving of field to database
   register_setting("section", "issuu_api_secret");
+  // Add a single field
+  add_settings_field("audioboom_api_key", "Audioboom API Key", "audioboom_api_element", "theme-options", "typekit-section");
+  // Automate saving of field to database
+  register_setting("section", "audioboom_api_key");
+  add_settings_field("twitter_api_key", "Twitter API Key", "twitter_api_element", "theme-options", "typekit-section");
+  // Automate saving of field to database
+  register_setting("section", "twitter_api_key");
+  // Add a single field
+  add_settings_field("twitter_api_secret", "Twitter API Secret", "twitter_secret_element", "theme-options", "typekit-section");
+  // Automate saving of field to database
+  register_setting("section", "twitter_api_secret");
+  // Add a single field
 
 
   // Create a section of fields
@@ -183,6 +235,11 @@ function display_theme_panel_fields()
 	add_settings_field("yt_link", "Youtube Link", "yt_element", "theme-options", "social-section");
 	// Automate saving of field to database
   register_setting("section", "yt_link");
+
+
+
+
+
 
 }
 add_action("admin_init", "display_theme_panel_fields");

@@ -1,0 +1,1 @@
+console.log("AJAX script is enqueued"),function($){$(document).on("click","ul.pag-links a",function(n){n.preventDefault(),console.log("Pagination link was clicked")})}(jQuery);

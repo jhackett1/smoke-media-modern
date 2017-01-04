@@ -1,0 +1,404 @@
+
+header.site-header#radio
+  width: 100%
+  background-image: url(../img/skulls.png)
+  // background-color: #efefef
+
+  div.middle
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: flex-end
+
+    div#current-show
+      background-color: #fafafa
+      border-right: 5px solid #C55A66
+      padding: 10px
+      margin: 15px 0px
+      text-align: right
+      font-family: League Gothic, sans-serif
+      min-width: 250px
+      box-sizing: border-box
+      display: none
+      position: relative
+      display: none
+
+      h3, h4, h5
+        margin: 0
+        padding: 0
+        text-transform: uppercase
+
+      h3
+        color: #505050
+        font-size: 2em
+        line-height: 1em
+        margin: 5px 0px
+
+      h4
+        color: #969696
+
+      p
+        font-family: Adobe Garamond Pro, sans-serif
+        color: #969696
+        margin: 0
+        padding: 0
+        font-size: 0.8em
+
+
+  // The two top menus
+  div.top-bar
+    display: flex
+    flex-direction: row
+    justify-content: center
+
+    nav
+      position: relative
+
+      // A search box linked with JS to a search icon, invisible by default
+      div#search-box.visible
+        display: block
+
+      div#search-box
+        position: absolute
+        top: 30px
+        right: 10px
+        padding: 10px
+        box-sizing: border-box
+        background-color: #505050
+        display: none
+        border-radius: 2px
+        border: 0.5px solid #505050
+
+        form
+          input.text
+            padding: 5px
+            border: 0.5px solid #969696
+            background: none
+            border-radius: 2px
+            font-family: $h-stack
+            color: #969696
+            font-size: 1em
+            outline-width: 0
+            width: 300px
+
+      // Display submenu ul on hover
+      ul li:hover > ul
+        display: block
+
+      ul
+        list-style-type: none
+        margin: 0px
+        padding: 0px
+
+        // Only display the below icon on the parent menu. Don't display it on submenu items.
+        li.menu-item-has-children a:only-child::after
+          content: none
+          display: none
+          margin-bottom: 0
+          margin-left: 0
+          border-left: 0
+          border-right: 0
+          border-top: 0
+
+        // A downward-pointing arrow applied to each menu item with a submenu
+        li.menu-item-has-children a::after
+          content: ""
+          display: inline-block
+          margin-bottom: 0.125rem
+          margin-left: 0.25rem
+          border-left: 0.25rem solid transparent
+          border-right: 0.25rem solid transparent
+          border-top: 0.5em solid #fafafa
+
+        // Parent menu item styling
+        li
+          display: inline
+          text-transform: uppercase
+          font-weight: normal
+          font-size: 0.9em
+          letter-spacing: 0.5px
+          position: relative
+          z-index: 10
+
+          // Submenu items
+          ul
+            list-style-type: none
+            width: 100px
+            margin: 0px
+            padding: 0px
+            position: absolute
+            left: 10px
+            top: 20px
+            background-color: #505050
+            display: none
+            z-index: 90
+            border-radius: 2px
+            border: 0.5px solid #505050
+            li:last-of-type
+              a
+                padding: 10px 10px 10px 10px
+            li
+              text-transform: uppercase
+              display: block
+              font-weight: 100
+              font-size: 0.9em
+              font-weight: normal
+              font-style: italic
+              a
+                color: #dfdfdf
+                text-decoration: none
+                padding: 10px 10px 0px 10px
+                display: inline-block
+              a:hover
+                text-decoration: underline
+          i
+            margin-left: 0.25rem
+          a
+            color: #fafafa
+            text-decoration: none
+            padding: 7px 5px
+            display: inline-block
+          a:hover
+            text-decoration: underline
+
+  a#site-logo-link
+    margin: 15px auto
+
+    // Site logo
+    img
+      width: 160px
+      height: auto
+      margin: 0
+
+  // The main menu styles
+  div.primary-menu
+    background-color: #A83441
+
+    nav > ul > li:hover
+      box-shadow: inset 0px -5px 0px 0px #c55a66
+
+    nav
+      background-color: #AC3E4A
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: space-between
+
+      a#launch-player:hover
+        background-color: #9F1D2C
+
+      a#launch-player
+        text-transform: uppercase
+        color: #fafafa
+        display: inline-block
+        font-weight: 100
+        font-size: 1.4em
+        letter-spacing: 0.5px
+        font-weight: normal
+        z-index: 10
+        padding: 15px 30px
+        background-color: #C55A66
+        text-decoration: none
+        transition: 0.2s
+        width: 100%
+        text-align: center
+        box-sizing: border-box
+
+        i
+          margin-left: 5px
+
+
+      // Display submenu items on hover
+      ul li:hover > ul
+        display: block
+
+      ul
+        list-style-type: none
+        margin: 0px
+        padding: 0px
+
+        // Only display the below icon on the parent menu. Don't display it on submenu items.
+        li.menu-item-has-children a:only-child::after
+          content: none
+          display: none
+          margin-bottom: 0
+          margin-left: 0
+          border-left: 0
+          border-right: 0
+          border-top: 0
+
+        // Downward-pointing arrow icon applied to menu items with submenus
+        li.menu-item-has-children a::after
+          content: ""
+          display: inline-block
+          margin-bottom: 0.125rem
+          margin-left: 0.25rem
+          border-left: 0.25rem solid transparent
+          border-right: 0.25rem solid transparent
+          border-top: 0.5em solid #fafafa
+
+        li:hover
+          box-shadow: inset 0px -5px 0px 0px #c55a66
+
+        li
+          display: inline-block
+          text-transform: uppercase
+          font-weight: 100
+          font-size: 1.2em
+          letter-spacing: 0.5px
+          position: relative
+          font-weight: normal
+          z-index: 10
+
+          // Submenu items
+          ul
+            list-style-type: none
+            width: 150px
+            margin: 0px
+            padding: 0px
+            position: absolute
+            left: 0px
+            top: 43px
+            background-color: #c55a66
+            display: none
+            li:last-of-type
+              a
+                padding: 10px 10px 10px 10px
+            li
+              text-transform: uppercase
+              font-weight: 100
+              font-size: 0.9em
+              font-weight: normal
+              font-style: italic
+              display: block
+              z-index: 11
+              a
+                color: $background
+                text-decoration: none
+                padding: 10px 10px 0px 10px
+                display: inline-block
+              a:hover
+                text-decoration: underline
+
+            li:hover
+              box-shadow: inset 0px 0px 0px 0px #505050
+
+          a
+            color: $background
+            text-decoration: none
+            padding: 10px
+            display: inline-block
+          a:hover
+            text-decoration: none
+
+// Schedule grid styles
+
+div.schedule
+  display: flex
+  flex-direction: row
+  max-width: 100%
+  margin: 20px 0px
+
+  *
+    box-sizing: border-box
+
+  ul.day-labels
+    margin: 0
+    padding: 0
+    list-style-type: none
+
+    li
+      height: 50px
+      width: 70px
+      margin-bottom: 3px
+      background-color: #dfdfdf
+      padding: 5px
+      font-style: italic
+      color: #505050
+      text-transform: uppercase
+
+    li:first-of-type
+      margin-top: 53px
+
+  ul.show-grid
+    margin: 0px
+    padding: 0px
+    position: relative
+    width: calc(24 * 153px)
+    overflow-y: scroll
+    overflow-y: hidden
+    margin-left: 3px
+
+    ul.day, ul.hour-labels
+      list-style-type: none
+      width: calc(24 * 153px)
+      margin: 0
+      padding: 0
+      box-sizing: border-box
+      display: flex
+      flex-direction: row
+      flex-wrap: nowrap
+      margin-bottom: 3px
+
+      // Special styling for the show that's on now
+
+      li.on-today.on-air
+        background-color: rgb(202, 114, 124)
+
+      li.on-today.on-air::after
+        content: "On Air"
+        display: block
+        position: absolute
+        bottom: -7px
+        right: -7px
+        text-transform: uppercase
+        font-style: italic
+        color: #fafafa
+        padding: 5px
+        background-color: #AC3E4A
+        z-index: 99
+        font-size: 0.8em
+
+
+
+      li
+        background-color: #efefef
+        display: inline-block
+        width: 150px
+        padding: 5px
+        box-sizing: border-box
+        margin-right: 3px
+        height: 50px
+        position: relative
+
+        a.cover:hover
+          background-color: rgba(0,0,0,0.05)
+
+
+        a.cover
+          position: absolute
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
+          z-index: 4
+          width: 100%
+          height: 100%
+
+
+        h4
+          margin: 0px
+          font-size: 1.1em
+
+        p
+          margin: 0px
+          font-size: 0.8em
+          color: #969696
+
+    ul.hour-labels
+      li
+        font-style: italic
+        color: #505050
+        text-transform: uppercase
+        background-color: #dfdfdf
+        font-weight: normal

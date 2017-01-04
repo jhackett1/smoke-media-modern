@@ -5,13 +5,24 @@ function the_weather(){
   // Don't do anything unless API is set
   if (get_option('weather_api_key')) {
     // Get a five-day forecast for the Westminster (id 354160) area, using a theme option field to pass in API key
-    $resp = file_get_contents('http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/354160?res=daily&key='. get_option('weather_api_key'));
-    // Turn the json response into an associative array
-    $weather_array = json_decode($resp, true);
-    // Check you've actually recieved something from the API before proceeding
-    if ($weather_array) {
+      $url = 'http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/354160?res=daily&key='. get_option('weather_api_key');
+    // Get a response from API using cURL
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_HEADER, false);
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+      curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_REFERER, $url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+      // Save the response as $result
+      $resp = curl_exec($ch);
+      // Your work is done, cURL
+      curl_close($ch);
 
-      echo '<section class="dateweather limited-width"><div>' . date( 'l j F Y' ) . '</div>';
+    // Check you've actually recieved something from the API before proceeding
+    if ($resp) {
+      // Turn the json response into an associative array
+      $weather_array = json_decode($resp, true);
 
       // Start a container
       echo '<div class="weather">';
@@ -126,9 +137,7 @@ function the_weather(){
       }
       // Echo out temperature
       echo $temperature . '°C ';
-      echo 'in London';
-      // Close the container element
-      echo '</div></section>';
+      echo 'in London</div>';
       // Finish the if statement
     }
   }
