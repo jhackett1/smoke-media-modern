@@ -3,7 +3,7 @@
 	defined( 'ABSPATH' ) or die( 'No direct access allowed!' );
 
 	// Include the editor page file
-		require_once( __DIR__ . '/now-next.php');
+		require_once( __DIR__ . '/schedule.php');
 
 	add_action( 'init', 'marconi_init_internal' );
   // Rewrite URLS

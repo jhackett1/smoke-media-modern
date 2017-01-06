@@ -21,6 +21,7 @@
       // Convert the result into an associative array
       $boo_array = json_decode($result, true);
 
+      if ($boo_array) {
       ?>
       <section id="audio">
         <section class="limited-width">
@@ -71,6 +72,6 @@
          </section>
       </section>
       <?php
-
+      }
   // End the if statement
   }

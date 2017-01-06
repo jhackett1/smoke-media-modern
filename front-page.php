@@ -1,10 +1,20 @@
 <? get_header();
 
-// Display the weather and date
-info_bar();
-
 // Make an empty array to store post IDs, avoiding replicate post display
 $do_not_replicate = array();
+
+// Don't do anything unless the option is set
+if (get_option('campaign_section')) {
+  $cat = get_option('campaign_cat');
+  $title = get_option('campaign_name');
+  get_template_part('campaign-block');
+  echo "<section id='campaign-block'>";
+  campaign_block($cat, $title, $do_not_replicate);
+  echo "</section>";
+}
+
+// Display the weather and date
+info_bar();
 
 // Display a block of posts
 function headlines_section($cat, $title, &$do_not_replicate){

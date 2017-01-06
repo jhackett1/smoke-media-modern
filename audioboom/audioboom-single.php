@@ -42,7 +42,7 @@ if (get_option('audioboom_api_key')) {
     <hr class="big">
 	</main>
 	<sidebar>
-    <?php dynamic_sidebar('video'); ?>
+    <?php dynamic_sidebar('radio'); ?>
 	</sidebar>
 </article>
 

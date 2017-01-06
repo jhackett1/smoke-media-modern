@@ -94,13 +94,10 @@ if ($layout === on) {
     	<!-- Post content -->
   		<?php the_content(); ?>
     </section>
-    <?php comments_template(); ?>
     <hr>
     <!-- Share buttons-->
     <?php smoke_share_buttons(); ?>
     <hr class="big">
-    <!-- Author profile -->
-		<?php smoke_author_box($post->ID); ?>
 	</main>
 	<sidebar>
     <?php
@@ -125,7 +122,7 @@ echo '</article>';
 // What if there are no posts to show?
 endwhile; else :
 ?>
-	<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
+<h3 id="notfound"><?php _e( "Sorry, we couldn't find what you're looking for." ); ?></h3>
 <?php
 // End the loop
 endif;

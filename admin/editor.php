@@ -18,6 +18,7 @@
           QTags.addButton( 'eg_hr', 'horizontal rule', '<hr />', '', 'h', 'Horizontal rule line', 201 );
           QTags.addButton( 'eg_ch', 'crosshead', '<h3>', '</h3>', 'h', 'Crossheading', 201 );
           QTags.addButton( 'eg_sp', 'spoiler warning', '<span class="spoiler">Spoiler Warning</span>', '', 'q', 'Preformatted text tag', 111 );
+          QTags.addButton( 'eg_ch', 'schedule', '[schedule]', '', 'h', 'Schedule grid', 201 );
           QTags.addButton( 'eg_sp', 'tabbed content', '\
 <section class="tabbed"> \
 <ul class="labels">\

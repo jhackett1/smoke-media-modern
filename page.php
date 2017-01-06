@@ -28,7 +28,7 @@ if ( have_posts() ) :
 // What if there are no posts to show?
 endwhile; else :
 ?>
-	<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
+<h3 id="notfound"><?php _e( "Sorry, we couldn't find what you're looking for." ); ?></h3>
 <?php
 // End the loop
 endif;

@@ -47,18 +47,60 @@
   }
 
 
+  // Display HTML code of a category picker
+    function campaign_section_element()
+    {
+    	?>
+        <select name="campaign_section" id="campaign_section">
+          <option value="1" <?php if('1' === get_option('campaign_section')){ echo "selected";}; ?>>Yes</option>
+          <option value="0" <?php if('0' === get_option('campaign_section')){ echo "selected";}; ?>>No</option>
+        </select>
+    		<p class="description">Would you like to enable a block of special posts on the homepage for a special campaign?</p>
+      <?php
+    }
+
+  // Display HTML code of Typekit ID field
+    function campaign_cat_element()
+    {
+    	?>
+      	<input type="text" name="campaign_cat" id="campaign_cat" value="<?php echo get_option('campaign_cat'); ?>" />
+    		<p class="description">Give the numerical ID of your campaign's category.</p>
+      <?php
+    }
+
+  // Display HTML code of Typekit ID field
+    function campaign_name_element()
+    {
+    	?>
+      	<input type="text" name="campaign_name" id="campaign_name" value="<?php echo get_option('campaign_name'); ?>" />
+    		<p class="description">Give the title to display above the campaign block.</p>
+      <?php
+    }
+
 // Display HTML code of a category picker
-  function vid_number_element()
+  function notification_bar_element()
   {
   	?>
-      <select name="vid_number" id="vid_number">
-        <option value="6" <?php if('6' === get_option('vid_number')){ echo "selected";}; ?>>6</option>
-        <option value="9" <?php if('9' === get_option('vid_number')){ echo "selected";}; ?>>9</option>
-        <option value="12" <?php if('12' === get_option('vid_number')){ echo "selected";}s; ?>>12</option>
+      <select name="notification_bar" id="notification_bar">
+        <option value="1" <?php if('1' === get_option('notification_bar')){ echo "selected";}; ?>>Yes</option>
+        <option value="0" <?php if('0' === get_option('notification_bar')){ echo "selected";}; ?>>No</option>
       </select>
-  		<p class="description">How many video tiles should be displayed on the homepage?</p>
+  		<p class="description">Would you like to enable a notification bar for recent stories?</p>
     <?php
   }
+
+  // Display HTML code of a category picker
+    function vid_number_element()
+    {
+    	?>
+        <select name="vid_number" id="vid_number">
+          <option value="6" <?php if('6' === get_option('vid_number')){ echo "selected";}; ?>>6</option>
+          <option value="9" <?php if('9' === get_option('vid_number')){ echo "selected";}; ?>>9</option>
+          <option value="12" <?php if('12' === get_option('vid_number')){ echo "selected";}s; ?>>12</option>
+        </select>
+    		<p class="description">How many video tiles should be displayed on the homepage?</p>
+      <?php
+    }
 
 // Display HTML code of Typekit ID field
   function typekit_id_element()
@@ -102,6 +144,14 @@
     ?>
       <input type="text" name="issuu_api_secret" id="wissuu_api_secret" value="<?php echo get_option('issuu_api_secret'); ?>" />
       <p class="description">This theme uses the <a href="http://developers.issuu.com/api/" target="blank">Issuu API</a> to integrate printed issues. This will not work correctly without a valid API key & secret.</p>
+    <?php
+  }
+
+  function issuu_page_element()
+  {
+    ?>
+      <input type="text" name="issuu_page" id="issuu_page" value="<?php echo get_option('issuu_page'); ?>" />
+      <p class="description">Give the URL for the Issuu page where back-issues can be found. Remove this to deactivate past issue functionality.</p>
     <?php
   }
 
@@ -171,6 +221,27 @@ function display_theme_panel_fields()
 	add_settings_field("vid_number", "How many videos to display?", "vid_number_element", "theme-options", "frontpage-section");
 	// Automate saving of field to database
   register_setting("section", "vid_number");
+  // Add a single field
+	add_settings_field("notification_bar", "Display the notification bar?", "notification_bar_element", "theme-options", "frontpage-section");
+	// Automate saving of field to database
+  register_setting("section", "notification_bar");
+
+
+	// Create a section of fields
+	add_settings_section("campaign-section", "Campaign block", null, "theme-options");
+	// Add a single field
+	add_settings_field("campaign_section", "Campaign block on?", "campaign_section_element", "theme-options", "campaign-section");
+	// Automate saving of field to database
+  register_setting("section", "campaign_section");
+  // Add a single field
+	add_settings_field("campaign_cat", "Campaign category", "campaign_cat_element", "theme-options", "campaign-section");
+	// Automate saving of field to database
+  register_setting("section", "campaign_cat");
+  // Add a single field
+  add_settings_field("campaign_name", "Campaign block title", "campaign_name_element", "theme-options", "campaign-section");
+	// Automate saving of field to database
+  register_setting("section", "campaign_name");
+
 
 	// Create a section of fields
 	add_settings_section("typekit-section", "API keys and codes", null, "theme-options");
@@ -196,6 +267,10 @@ function display_theme_panel_fields()
   add_settings_field("issuu_api_secret", "Issuu API Secret", "issuu_secret_element", "theme-options", "typekit-section");
   // Automate saving of field to database
   register_setting("section", "issuu_api_secret");
+  // Add a single field
+  add_settings_field("issuu_page", "Issuu Page", "issuu_page_element", "theme-options", "typekit-section");
+  // Automate saving of field to database
+  register_setting("section", "issuu_page");
   // Add a single field
   add_settings_field("audioboom_api_key", "Audioboom API Key", "audioboom_api_element", "theme-options", "typekit-section");
   // Automate saving of field to database

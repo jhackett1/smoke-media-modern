@@ -102,9 +102,11 @@ if ($layout === on) {
 	</main>
 	<sidebar>
     <?php
-		// Get the right sidebar based on whether this is a radio article or not
+		// Get the right sidebar based on whether this is a radio article, live event or not
 		if (in_category("radio")) {
 			dynamic_sidebar("radio");
+		} elseif (in_category("training")) {
+			dynamic_sidebar("page");
 		} else {
 			dynamic_sidebar("post");
 		}
@@ -123,7 +125,7 @@ echo '</article>';
 // What if there are no posts to show?
 endwhile; else :
 ?>
-	<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
+<h3 id="notfound"><?php _e( "Sorry, we couldn't find what you're looking for." ); ?></h3>
 <?php
 // End the loop
 endif;

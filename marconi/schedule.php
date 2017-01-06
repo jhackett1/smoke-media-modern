@@ -1,6 +1,5 @@
 <?php
-
-function now_next() {
+function schedule() {
   // The API endpoint URL for the schedule
   $url = 'https://marconi.smokeradio.co.uk/api/schedule.php';
   // Get a response from Marconi API using cURL
@@ -99,14 +98,15 @@ function now_next() {
             // Process a show permalink
             $link = get_site_url() . "/shows/" . $show[0]['code'];
             // Display show data
-            echo "<li>";
+
             if (!empty($show)) {
+              echo "<li class='show'>";
               echo "<h4>" . $show[0]['title'] . "</h4>";
               echo "<p>" . substr($show[0]['tx_time'], 0, -3) . "</p>";
               echo "<a href='" . $link . "' class='cover'></a>";
+            } else{
+              echo "<li>";
             }
-
-
             echo "</li>";
 
         // Finish the hourly for loop
@@ -190,4 +190,8 @@ function now_next() {
   }
 }
 // Register the shortcode, awkwardly
-add_shortcode("now-next", now_next);
+// add_shortcode("schedule", schedule);
+
+
+
+add_shortcode( 'schedule', 'schedule' );

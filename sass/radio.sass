@@ -62,22 +62,20 @@ header.site-header#radio
         position: absolute
         top: 30px
         right: 10px
-        padding: 10px
+        padding-top: 5px
         box-sizing: border-box
-        background-color: #505050
         display: none
-        border-radius: 2px
-        border: 0.5px solid #505050
+        border-radius: 1px
 
         form
           input.text
             padding: 5px
-            border: 0.5px solid #969696
+            border: 0.5px solid #efefef
             background: none
-            border-radius: 2px
+            border-radius: 1px
             font-family: $h-stack
-            color: #969696
-            font-size: 1em
+            color: #dfdfdf
+            font-size: 1.2em
             outline-width: 0
             width: 300px
 
@@ -345,7 +343,7 @@ div.schedule
       li.on-today.on-air
         background-color: rgb(202, 114, 124)
 
-      li.on-today.on-air::after
+      li.show.on-today.on-air::after
         content: "On Air"
         display: block
         position: absolute

@@ -209,6 +209,225 @@ add_action('wp_ajax_nopriv_more_post_ajax', 'more_post_ajax');
 add_action('wp_ajax_more_post_ajax', 'more_post_ajax');
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Server-side post grid 'load-more' AJAX handler
+function author_ajax(){
+		// Check what offset has been requested
+    $offset = $_POST["offset"];
+		// Check how many posts are requested
+    $ppp = $_POST["ppp"];
+		// Check the current category
+    $author = $_POST["author_id"];
+    header("Content-Type: text/html");
+
+    $args = array(
+        'author' => $author,
+        'posts_per_page' => $ppp,
+        'offset' => $offset,
+    );
+
+		$ajax_query = new WP_Query($args);
+		// Begin the loop
+		if ($ajax_query->have_posts() ):
+		// Create a counter variable to keep track of post numbers
+		$counter = 1;
+		?>
+		  <ul id="category" class="limited-width headline-block wow fadeIn animated">
+		<?php
+		  // Start looping
+		  while ( $ajax_query->have_posts() ): $ajax_query->the_post();
+		    // Save post ID as var
+		    $ID = get_the_ID();
+		    // If current post ID exists in array, skip post and continue with loop
+		    if (in_array($ID, $do_not_replicate)) { continue; };
+		    // Stop looping after fourth post
+		    if ($counter>8) { break; };
+		    // Save current post ID to array
+		    array_push($do_not_replicate, $ID);
+		    ?>
+		    <!--  -->
+		    <!-- Display output here -->
+				<?php
+		    switch ($counter) {
+		        case 1:
+		            ?>
+		            <li class="headline-item">
+		              <?php the_post_thumbnail('large'); ?>
+		              <h3><?php the_title(); ?></h3>
+		              <?php the_category(); ?>
+		              <div class="grad"></div>
+		              <a class="cover" href="<?php the_permalink(); ?>"></a>
+		            </li>
+		            <?php
+		            break;
+		        case 2:
+		            ?>
+		            <li class="headline-item">
+		              <?php the_post_thumbnail('large'); ?>
+		              <h3><?php the_title(); ?></h3>
+		              <?php the_category(); ?>
+		              <div class="grad"></div>
+		              <a class="cover" href="<?php the_permalink(); ?>"></a>
+		            </li>
+		            <?php
+		            break;
+		        case 3:
+		            ?>
+		              <ul class="horizontal-list">
+		                <li class="horizontal-headline-item">
+		                  <?php the_post_thumbnail('medium'); ?>
+		                  <div>
+		                    <h3><?php the_title(); ?></h3>
+		                    <?php the_excerpt(); ?>
+		                  </div>
+		                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+		                </li>
+		            <?php
+		            break;
+		        case 4:
+		            ?>
+		                <li class="horizontal-headline-item">
+		                  <?php the_post_thumbnail('medium'); ?>
+		                  <div>
+		                    <h3><?php the_title(); ?></h3>
+		                    <?php the_excerpt(); ?>
+		                  </div>
+		                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+		                </li>
+		              </ul>
+		            <?php
+		            break;
+		        case 5:
+		            ?>
+		              <ul class="horizontal-list">
+		                <li class="horizontal-headline-item">
+		                  <?php the_post_thumbnail('medium'); ?>
+		                  <div>
+		                    <h3><?php the_title(); ?></h3>
+		                    <?php the_excerpt(); ?>
+		                  </div>
+		                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+		                </li>
+		            <?php
+		            break;
+		        case 6:
+		            ?>
+		                <li class="horizontal-headline-item">
+		                  <?php the_post_thumbnail('medium'); ?>
+		                  <div>
+		                    <h3><?php the_title(); ?></h3>
+		                    <?php the_excerpt(); ?>
+		                  </div>
+		                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+		                </li>
+		              </ul>
+		            <?php
+		            break;
+		        case 7:
+		            ?>
+		            <li class="headline-item">
+		              <?php the_post_thumbnail('large'); ?>
+		              <h3><?php the_title(); ?></h3>
+		              <?php the_category(); ?>
+		              <div class="grad"></div>
+		              <a class="cover" href="<?php the_permalink(); ?>"></a>
+		            </li>
+		            <?php
+		            break;
+		        case 8:
+		            ?>
+		            <li class="headline-item">
+		              <?php the_post_thumbnail('large'); ?>
+		              <h3><?php the_title(); ?></h3>
+		              <?php the_category(); ?>
+		              <div class="grad"></div>
+		              <a class="cover" href="<?php the_permalink(); ?>"></a>
+		            </li>
+		            <?php
+		            break;
+		        default:
+		            echo "";
+		    }
+		    // Advance the counter by one with each post
+		    $counter++;
+		    // Finish looping
+		  endwhile;
+		?>
+		  </ul>
+
+		<?php
+		// And close out the loop completely
+		endif;
+
+    exit;
+}
+
+add_action('wp_ajax_nopriv_author_ajax', 'author_ajax');
+add_action('wp_ajax_author_ajax', 'author_ajax');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Register four navigation menu locations
 register_nav_menus( array(
 	'primary' => 'Primary',
@@ -241,12 +460,6 @@ function register_widgets() {
 		'before_widget' => '<div class="widget %2$s">',
 		'after_widget'  => '</div>',
 	) );
-	register_sidebar( array(
-		'name'          => 'Video Sidebar',
-		'id'            => 'video',
-		'before_widget' => '<div class="widget %2$s">',
-		'after_widget'  => '</div>',
-	) );
   register_sidebar( array(
 		'name'          => 'Member Portal Sidebar',
 		'id'            => 'member',
@@ -268,29 +481,53 @@ function register_widgets() {
 };
 add_action( 'widgets_init', 'register_widgets' );
 
-$args = array(
-	'label' 						 => "Live events",
-	'description' 			 => "Liveblogs and livestreams",
-	'public' 					   => true,
-	'show_ui'            => true,
-	'show_in_menu'       => true,
-	'query_var'          => true,
-	'rewrite'            => array( 'slug' => 'live event' ),
-	'capability_type'    => 'post',
-	'has_archive'        => true,
-	'hierarchical'       => false,
-	'menu_position'      => null,
-	'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'liveblog')
 
-);
+add_action( 'init', 'liveblogs_init' );
+function liveblogs_init() {
 
-register_post_type( 'live', $args );
-
-add_action( 'init', 'no_liveblogs' );
-function no_liveblogs() {
+	$labels = array(
+		'name'               => _x( 'Live Events', 'post type general name', 'your-plugin-textdomain' ),
+		'singular_name'      => _x( 'Live Event', 'post type singular name', 'your-plugin-textdomain' ),
+		'menu_name'          => _x( 'Live Events', 'admin menu', 'your-plugin-textdomain' ),
+		'name_admin_bar'     => _x( 'Live Event', 'add new on admin bar', 'your-plugin-textdomain' ),
+		'add_new'            => _x( 'Add New', 'live event', 'your-plugin-textdomain' ),
+		'add_new_item'       => __( 'Add New Live Event', 'your-plugin-textdomain' ),
+		'new_item'           => __( 'New Live Event', 'your-plugin-textdomain' ),
+		'edit_item'          => __( 'Edit Live Event', 'your-plugin-textdomain' ),
+		'view_item'          => __( 'View Live Event', 'your-plugin-textdomain' ),
+		'all_items'          => __( 'All Live Events', 'your-plugin-textdomain' ),
+		'search_items'       => __( 'Search Live Events', 'your-plugin-textdomain' ),
+		'parent_item_colon'  => __( 'Parent Live Events:', 'your-plugin-textdomain' ),
+		'not_found'          => __( 'No live events found.', 'your-plugin-textdomain' ),
+		'not_found_in_trash' => __( 'No live events found in Trash.', 'your-plugin-textdomain' )
+	);
+	$args = array(
+		'labels'             => $labels,
+    'description'        => __( 'Liveblogs and audio/video streams.', 'your-plugin-textdomain' ),
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array( 'slug' => 'live' ),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => null,
+		'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'liveblog' ),
+		// This is where we add taxonomies to our CPT
+		'taxonomies'          => array( 'category' )
+	);
+	register_post_type( 'live', $args );
 	// Don't let liveblogs be added to vanilla posts, only live events
 	remove_post_type_support( 'post', 'liveblog' );
 }
+
+
+// Show live events on category pages
+
+
+
 
 // Theme supports logos
 add_theme_support( 'custom-logo', array(
@@ -377,8 +614,8 @@ add_action ('wp_head', 'add_jw_license_key');
 			 if ( get_option('yt_link') ) {
 					$items = '<li class="right"><a target="blank" href="'. get_option('yt_link') .'">' . '<i class="fa fa-youtube-play"></i></a></li>' . $items;
 			 }
-      if ( get_option('facelive event_link') ) {
-         $items = '<li class="right"><a target="blank" href="'. get_option('facelive event_link') .'">' . '<i class="fa fa-facelive event"></i></a></li>' . $items;
+      if ( get_option('facebook_link') ) {
+         $items = '<li class="right"><a target="blank" href="'. get_option('facebook_link') .'">' . '<i class="fa fa-facebook"></i></a></li>' . $items;
       }
 
 	   }
@@ -403,7 +640,7 @@ add_action ('wp_head', 'add_jw_license_key');
 		if($byline){
 			echo $byline;
 		}else{
-			the_author();
+			the_author_posts_link();
 		}
 	}
 
@@ -537,7 +774,7 @@ add_action ('wp_head', 'add_jw_license_key');
 			<section class="author-profile">
 	      <? echo get_avatar( get_the_author_meta( 'ID' ) ); ?>
 	      <div>
-	        <h4><?php the_author(); ?></h4>
+	        <h4><?php the_author_posts_link(); ?></h4>
 	        <h5><?php the_author_meta( 'position'); ?></h5>
 	        <p><?php the_author_meta( 'description'); ?></p>
 					<?php
@@ -569,7 +806,7 @@ add_action ('wp_head', 'add_jw_license_key');
 			var post_thumb = "<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' )[0]; ?>";
 
 			// Process vars into uniform sharing urls
-			var facelive eventURL = "http://www.facelive event.com/sharer/sharer.php?u=" + post_url;
+			var facebookURL = "http://www.facebook.com/sharer/sharer.php?u=" + post_url;
 			var twitterURL = "https://twitter.com/intent/tweet?text=" + post_title + "&amp;url=" + post_url + "&amp;via=Media_Smoke";
 			// If image exists, set a pinterest url too
 			if (post_thumb) {
@@ -580,9 +817,9 @@ add_action ('wp_head', 'add_jw_license_key');
 
 			// Put it into practice, giving Pinterest special treatment
 			if (pinterestURL) {
-				document.getElementById("share-buttons").innerHTML = "<span>Share</span><a href='" + facelive eventURL + "' target='blank'><i class='fa fa-facelive event'></i></a><a href='" + twitterURL + "' target='blank'><i class='fa fa-twitter'></i></a><a href='" + pinterestURL + "' target='blank'><i class='fa fa-pinterest'></i></a><a href='" + whatsappURL + "' target='blank'><i class='fa fa-whatsapp'></i></a><a href='" + emailURL + "' target='blank'><i class='fa fa-envelope'></i></a>";
+				document.getElementById("share-buttons").innerHTML = "<span>Share</span><a href='" + facebookURL + "' target='blank'><i class='fa fa-facebook'></i></a><a href='" + twitterURL + "' target='blank'><i class='fa fa-twitter'></i></a><a href='" + pinterestURL + "' target='blank'><i class='fa fa-pinterest'></i></a><a href='" + whatsappURL + "' target='blank'><i class='fa fa-whatsapp'></i></a><a href='" + emailURL + "' target='blank'><i class='fa fa-envelope'></i></a>";
 			} else {
-				document.getElementById("share-buttons").innerHTML = "<span>Share</span><a href='" + facelive eventURL + "' target='blank'><i class='fa fa-facelive event'></i></a><a href='" + twitterURL + "' target='blank'><i class='fa fa-twitter'></i></a><a href='" + whatsappURL + "' target='blank'><i class='fa fa-whatsapp'></i></a><a href='" + emailURL + "' target='blank'><i class='fa fa-envelope'></i></a>";
+				document.getElementById("share-buttons").innerHTML = "<span>Share</span><a href='" + facebookURL + "' target='blank'><i class='fa fa-facebook'></i></a><a href='" + twitterURL + "' target='blank'><i class='fa fa-twitter'></i></a><a href='" + whatsappURL + "' target='blank'><i class='fa fa-whatsapp'></i></a><a href='" + emailURL + "' target='blank'><i class='fa fa-envelope'></i></a>";
 			}
 			</script>
 			<?php
@@ -592,6 +829,7 @@ add_action ('wp_head', 'add_jw_license_key');
 	add_filter( 'wp_nav_menu_items', 'smoke_loginout_menu_link', 10, 2 );
 	add_filter( 'wp_nav_menu_items', 'smoke_listen_menu_link', 10, 2 );
 	add_filter( 'wp_nav_menu_items', 'smoke_back_menu_link', 10, 2 );
+	add_filter( 'wp_nav_menu_items', 'smoke_issues_menu_link', 10, 2 );
 
 	function smoke_loginout_menu_link( $items, $args ) {
 	   if ($args->theme_location == 'top-right') {
@@ -610,7 +848,7 @@ add_action ('wp_head', 'add_jw_license_key');
 			$listen_live = <<<EOD
 			<li>
 			<a href="javascript: void(0)"
-							 onclick="window.open('player',
+							 onclick="window.open('http://localhost/wordpress/player',
 							'windowname1',
 							'width=350, height=600');
 							 return false;">Listen live<i class="fa fa-headphones"></i></a></li>
@@ -627,6 +865,16 @@ EOD;
  			$items .= $go_back ;
 		}
 	   return $items;
+	}
+
+	function smoke_issues_menu_link( $items, $args ) {
+		if (get_option('issuu_page')) {
+			if ($args->theme_location == 'top-left') {
+ 			$go_back = '<li><a href="' . get_site_url() . '/issues">Print editions</a></li>';
+ 			$items = $go_back .= $items ;
+ 			}
+ 		 return $items;
+		}
 	}
 
 // Register a meta box to contain fields for adding custom post meta
@@ -855,9 +1103,6 @@ EOD;
 //To keep the view count accurate, lets get rid of prefetching
 	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
 
-
-
-
 // Display a block of six popular posts from the last month
 	function popular_headlines_section(){
 		// Set up arguments for WP_query
@@ -910,6 +1155,62 @@ EOD;
 	  ?>
 	  <?php endif;
 	}
+
+		// Display a block of six popular posts from the last month
+			function author_popular_headlines_section($author_id){
+				// Set up arguments for WP_query
+				$args = array(
+					'meta_key'		=> 'smoke_post_views',
+					'orderby'			=> 'meta_value_num',
+					'author' 		=> $author_id
+				);
+			  // Create the WP_query and pass in $cat parameter
+			  $the_query = new WP_Query( $args );
+			  if ( $the_query->have_posts() ) :
+			  // Create a counter variable to track number of posts and set it to one
+			  $counter = 1;
+			  // Display the title as a <h2>
+			    echo "<h2 class='section-title limited-width'>Popular by " . get_author_name($author_id) . "</h2>";
+			  // Output a container <section> element
+			  ?>
+			    <ul class="limited-width popular-headline-block">
+			  <?php
+			  // Start the loop
+			  while ( $the_query->have_posts() ) : $the_query->the_post();
+			  // Save post ID as var
+			  $ID = get_the_ID();
+			  // Stop looping after fourth post
+			  if ($counter>6) { break; };
+			  // Display posts, conditional on $counter value
+			  ?>
+
+				<li class="headline-item">
+					<span><?php echo $counter; ?></span>
+					<div>
+						<h3><?php the_title(); ?></h3>
+						<?php the_excerpt(); ?>
+					</div>
+					<a class="cover" href="<?php the_permalink(); ?>"></a>
+				</li>
+
+			  <?php
+			  // Increase the counter with every post to keep an accurate count
+			  $counter++;
+			  // Finish looping
+			  endwhile;
+			  // Clean up after WP_Query
+			  wp_reset_postdata();
+			  // Close the container element
+			  ?>
+			    </ul>
+			  <?php
+			  // What if there are no posts returned?
+			  else :
+			  ?>
+			  <?php endif;
+			}
+
+
 
 
 	// Display a block of six popular posts from the last month
@@ -966,12 +1267,10 @@ EOD;
 		  <?php endif;
 		}
 
-
 // Display an info bar on the homepage
 	function info_bar(){
 		// Open section
     echo '<section class="info-bar limited-width mobile-hide">';
-
 		// Display date
 		echo '<div>' . date( 'l j F Y' ) . '</div>';
 		// Display weather
@@ -1018,3 +1317,382 @@ EOD;
 		echo '</section>';
 
 	}
+
+	// Server-side post grid 'load-more' AJAX handler
+	function search_ajax(){
+			// Check what offset has been requested
+	    $offset = $_POST["offset"];
+			// Check how many posts are requested
+	    $ppp = $_POST["ppp"];
+			// Check the current query
+	    $query = $_POST["query"];
+	    header("Content-Type: text/html");
+			// Query args
+	    $args = array(
+					's' => $query,
+	        'posts_per_page' => $ppp,
+	        'offset' => $offset,
+	    );
+			// Create WP_Query
+			$ajax_query = new WP_Query($args);
+			// Begin the loop
+			if ($ajax_query->have_posts() ):
+			// Create a counter variable to keep track of post numbers
+			$counter = 1;
+			?>
+			  <ul id="category" class="limited-width headline-block wow fadeIn animated">
+			<?php
+			  // Start looping
+			  while ( $ajax_query->have_posts() ): $ajax_query->the_post();
+			    // Save post ID as var
+			    $ID = get_the_ID();
+			    // If current post ID exists in array, skip post and continue with loop
+			    if (in_array($ID, $do_not_replicate)) { continue; };
+			    // Stop looping after fourth post
+			    if ($counter>8) { break; };
+			    // Save current post ID to array
+			    array_push($do_not_replicate, $ID);
+			    ?>
+			    <!--  -->
+			    <!-- Display output here -->
+					<?php
+			    switch ($counter) {
+			        case 1:
+			            ?>
+			            <li class="headline-item">
+			              <?php the_post_thumbnail('large'); ?>
+			              <h3><?php the_title(); ?></h3>
+			              <?php the_category(); ?>
+			              <div class="grad"></div>
+			              <a class="cover" href="<?php the_permalink(); ?>"></a>
+			            </li>
+			            <?php
+			            break;
+			        case 2:
+			            ?>
+			            <li class="headline-item">
+			              <?php the_post_thumbnail('large'); ?>
+			              <h3><?php the_title(); ?></h3>
+			              <?php the_category(); ?>
+			              <div class="grad"></div>
+			              <a class="cover" href="<?php the_permalink(); ?>"></a>
+			            </li>
+			            <?php
+			            break;
+			        case 3:
+			            ?>
+			              <ul class="horizontal-list">
+			                <li class="horizontal-headline-item">
+			                  <?php the_post_thumbnail('medium'); ?>
+			                  <div>
+			                    <h3><?php the_title(); ?></h3>
+			                    <?php the_excerpt(); ?>
+			                  </div>
+			                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+			                </li>
+			            <?php
+			            break;
+			        case 4:
+			            ?>
+			                <li class="horizontal-headline-item">
+			                  <?php the_post_thumbnail('medium'); ?>
+			                  <div>
+			                    <h3><?php the_title(); ?></h3>
+			                    <?php the_excerpt(); ?>
+			                  </div>
+			                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+			                </li>
+			              </ul>
+			            <?php
+			            break;
+			        case 5:
+			            ?>
+			              <ul class="horizontal-list">
+			                <li class="horizontal-headline-item">
+			                  <?php the_post_thumbnail('medium'); ?>
+			                  <div>
+			                    <h3><?php the_title(); ?></h3>
+			                    <?php the_excerpt(); ?>
+			                  </div>
+			                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+			                </li>
+			            <?php
+			            break;
+			        case 6:
+			            ?>
+			                <li class="horizontal-headline-item">
+			                  <?php the_post_thumbnail('medium'); ?>
+			                  <div>
+			                    <h3><?php the_title(); ?></h3>
+			                    <?php the_excerpt(); ?>
+			                  </div>
+			                  <a class="cover" href="<?php the_permalink(); ?>"></a>
+			                </li>
+			              </ul>
+			            <?php
+			            break;
+			        case 7:
+			            ?>
+			            <li class="headline-item">
+			              <?php the_post_thumbnail('large'); ?>
+			              <h3><?php the_title(); ?></h3>
+			              <?php the_category(); ?>
+			              <div class="grad"></div>
+			              <a class="cover" href="<?php the_permalink(); ?>"></a>
+			            </li>
+			            <?php
+			            break;
+			        case 8:
+			            ?>
+			            <li class="headline-item">
+			              <?php the_post_thumbnail('large'); ?>
+			              <h3><?php the_title(); ?></h3>
+			              <?php the_category(); ?>
+			              <div class="grad"></div>
+			              <a class="cover" href="<?php the_permalink(); ?>"></a>
+			            </li>
+			            <?php
+			            break;
+			        default:
+			            echo "";
+			    }
+			    // Advance the counter by one with each post
+			    $counter++;
+			    // Finish looping
+			  endwhile;
+			?>
+			  </ul>
+			<?php
+			// And close out the loop completely
+			endif;
+	    exit;
+	}
+	add_action('wp_ajax_nopriv_search_ajax', 'search_ajax');
+	add_action('wp_ajax_search_ajax', 'search_ajax');
+
+	// Server-side post grid 'load-more' AJAX handler
+	function training_ajax(){
+			// Check what offset has been requested
+	    $offset = $_POST["offset"];
+			// Check how many posts are requested
+	    $ppp = $_POST["ppp"];
+			// Check the current query
+	    $cat = $_POST["cat"];
+	    header("Content-Type: text/html");
+			// Query args
+	    $args = array(
+					'cat' => $cat,
+	        'posts_per_page' => $ppp,
+	        'offset' => $offset,
+	    );
+			// Create WP_Query
+			$ajax_query = new WP_Query($args);
+			// Begin the loop
+			if ($ajax_query->have_posts() ):
+			// Create a counter variable to keep track of post numbers
+			$counter = 1;
+			?>
+          <ul class="training-block wow fadeIn animated" data-wow-duration="0.3s">
+			<?php
+			  // Start looping
+			  while ( $ajax_query->have_posts() ): $ajax_query->the_post();
+			    // Save post ID as var
+			    $ID = get_the_ID();
+			    // Stop looping after fourth post
+			    if ($counter>8) { break; };
+			    ?>
+						<li class="training-item wow fadeIn animated" data-wow-duration="0.3s">
+	            <?php the_post_thumbnail('large'); ?>
+	            <h3><?php the_title(); ?></h3>
+	            <p><?php the_excerpt(); ?></p>
+	            <a class="cover" href="<?php the_permalink(); ?>"></a>
+	          </li>
+			    <?php
+			    // Advance the counter by one with each post
+			    $counter++;
+			    // Finish looping
+			  endwhile;
+			?>
+			  </ul>
+			<?php
+			// And close out the loop completely
+			endif;
+	    exit;
+	}
+	add_action('wp_ajax_nopriv_training_ajax', 'training_ajax');
+	add_action('wp_ajax_training_ajax', 'training_ajax');
+
+// Server-side post grid 'load-more' AJAX handler
+function more_vids_ajax(){
+	// Check what offset has been requested
+	$token = $_POST["token"];
+	header("Content-Type: text/html");
+	// Don't do anything unless API key is set
+	if (get_option('youtube_api_key')) {
+	  // The API endpoint URL with max-results and API key specified by theme option variables
+	  $url = 'https://www.googleapis.com/youtube/v3/search?channelId=UCxxVjVWC381ysuaZc9dgU1Q&pageToken=' . $token . '&part=snippet&key=' . get_option('youtube_api_key') . '&order=date&maxResults=' . get_option('vid_number');
+	  // Get a response from Youtube Data API using cURL
+	  $ch = curl_init();
+	  // This API needs SSL to work
+	  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+	  curl_setopt($ch, CURLOPT_HEADER, false);
+	  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	  curl_setopt($ch, CURLOPT_URL, $url);
+	  curl_setopt($ch, CURLOPT_REFERER, $url);
+	  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	  // Save the response as $result
+	  $result = curl_exec($ch);
+	  // Your work is done, cURL
+	  curl_close($ch);
+	  // Convert the result into an associative array
+	  $video_array = json_decode($result, true);
+		?> <ul class="videos limited-width"> <?php
+		// Create a counter variable and leave it at 1 for now
+		$counter = 1;
+		// Get every video, store as array $video and display in a loop
+		foreach($video_array["items"] as $video){
+		  // Set the description as a var
+		  $description = $video["snippet"]["description"];
+		  // Shorten the descriptions to a sensible length
+		  if (strlen($description) > 200) {
+		      $descriptionCut = substr($description, 0, 200);
+		      // make sure it ends in a whole word
+		      $description = substr($descriptionCut, 0, strrpos($descriptionCut, ' ')).'...';
+		  }
+		  // Set the URL as a var
+		  $video_permalink = get_site_url() . "/video/" . $video["id"]["videoId"];
+		  ?>
+		    <li class="video-tile">
+		      <img src="<?php echo $video["snippet"]["thumbnails"]["high"]["url"]; ?>"/>
+		      <h3><?php echo $video["snippet"]["title"]; ?></h3>
+		      <p><?php echo $description; ?></p>
+		      <span class="play-icon"><i class="fa fa-play"></i></span>
+		      <a class="cover" href="<?php echo $video_permalink; ?>"></a>
+		    </li>
+		  <?php
+		// Iterate the counter
+		$counter++;
+		}
+		}
+		?>
+		</ul>
+		<script>
+		var next_page_token = '<?php echo $video_array["nextPageToken"]; ?>';
+		</script>
+	<?php
+	exit;
+}
+add_action('wp_ajax_nopriv_more_vids_ajax', 'more_vids_ajax');
+add_action('wp_ajax_more_vids_ajax', 'more_vids_ajax');
+
+// Server-side post grid 'load-more' AJAX handler
+function more_audio_ajax(){
+	// Check what offset has been requested
+	$page = $_POST["page"];
+	header("Content-Type: text/html");
+
+	// Don't do anything unless API key is set
+	  if (get_option('audioboom_api_key')) {
+	    // The API endpoint URL
+	      $url = 'http://audioboom.com/api/audio_clips?username=smokeradio&page[items]=9&page[number]=' . $page;
+	    // Get a response from Audioboom API using cURL
+	      $ch = curl_init();
+	      // This API needs SSL to work
+	      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+	      curl_setopt($ch, CURLOPT_HEADER, false);
+	      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	      curl_setopt($ch, CURLOPT_URL, $url);
+	      curl_setopt($ch, CURLOPT_REFERER, $url);
+	      curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	      // Save the response as $result
+	      $result = curl_exec($ch);
+	      // Your work is done, cURL
+	      curl_close($ch);
+	      // Convert the result into an associative array
+	      $boo_array = json_decode($result, true);
+
+		echo '<ul class="videos limited-width">';
+	// Create a counter variable and leave it at 1 for now
+	  $counter = 1;
+	// Get every video, store as array $video and display in a loop
+	  foreach($boo_array["body"]["audio_clips"] as $boo){
+	    // Stop looping after fourth post
+	    if ($counter>9) { break; };
+	    // Set the description as a var
+	    $description = $boo["description"];
+	    // Shorten the descriptions to a sensible length
+	    if (strlen($description) > 100) {
+        $descriptionCut = substr($description, 0, 100);
+        // make sure it ends in a whole word
+        $description = substr($descriptionCut, 0, strrpos($descriptionCut, ' ')).'...';
+	    }
+	    $duration = round($boo["duration"] / 60) . " mins";
+	    // Set the URL as a var
+	    $audio_permalink = get_site_url() . "/audio/" . $boo["id"];
+	  	?>
+	    <li class="video-tile">
+	      <img src="<?php echo $boo["urls"]["post_image"]["original"]; ?>"/>
+	      <h3><?php echo $boo["title"]; ?></h3>
+	      <p><?php echo $description; ?></p>
+	      <span class="play-icon"><i class="fa fa-headphones"></i></span>
+	      <a class="cover" href="<?php echo $audio_permalink; ?>"></a>
+	    </li>
+		  <?php
+			// Iterate the counter
+			$counter++;
+		}
+
+	?>
+	</ul>
+	<script>
+	var page = page + 1;
+	</script>
+	<?php
+	echo '</ul>';
+}
+	exit;
+}
+add_action('wp_ajax_nopriv_more_audio_ajax', 'more_audio_ajax');
+add_action('wp_ajax_more_audio_ajax', 'more_audio_ajax');
+
+// Function to set up share buttons
+function social_cards_tags(){
+	// Echo out empty container for script to work on
+	?>
+  <meta property="fb:app_id" content="1134129026651501" />
+
+  <!-- if page is content page -->
+  <?php if (is_single()) {
+  $feat = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'ogimg' );
+  $feat = $feat[0];
+  ?>
+
+    <meta property="og:url" content="<?php the_permalink() ?>"/>
+    <meta property="og:title" content="<?php single_post_title(''); ?>" />
+    <meta property="og:description" content="<?php echo strip_tags(get_the_excerpt($post->ID)); ?>" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="<?php echo $feat; ?>" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Smoke_Radio">
+    <meta name="twitter:creator" content="@Smoke_Radio">
+    <meta name="twitter:title" content="<?php the_title(); ?>">
+    <meta name="twitter:description" content="<?php the_excerpt(); ?>">
+    <meta name="twitter:image" content="<?php echo $feat; ?>">
+
+  <?php } else{ ?>
+
+    <meta property="og:site_name" content="<?php bloginfo('name'); ?>" />
+    <meta property="og:description" content="<?php bloginfo('description'); ?>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="<?php echo get_template_directory_uri() ?>/img/poster.jpg" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Media_Smoke">
+    <meta name="twitter:creator" content="@Media_Smoke">
+    <meta name="twitter:title" content="<?php bloginfo('name'); ?>">
+    <meta name="twitter:description" content="<?php bloginfo('description'); ?>">
+    <meta name="twitter:image" content="<?php echo get_template_directory_uri() ?>/img/poster.jpg" >
+
+		<?php
+	}
+}
+add_action('wp_head','social_cards_tags');

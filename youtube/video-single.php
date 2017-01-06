@@ -72,7 +72,7 @@ echo get_query_var('video');
     <hr class="big">
 	</main>
 	<sidebar>
-    <?php dynamic_sidebar('video'); ?>
+    <?php dynamic_sidebar('page'); ?>
 	</sidebar>
 </article>
 

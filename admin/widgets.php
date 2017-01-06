@@ -148,6 +148,8 @@ class smoke_video_widget extends WP_Widget {
       curl_close($ch);
       // Convert the result into an associative array
       $video_array = json_decode($result, true);
+
+      if ($video_array) {
     }
 
     // Create a counter variable and leave it at 1 for now
@@ -180,6 +182,7 @@ class smoke_video_widget extends WP_Widget {
     $counter++;
     }
     echo '</ul>';
+    }
     // Display post-widget content, eg title
     echo $args['after_widget'];
   }
@@ -283,25 +286,7 @@ class smoke_subscribe_widget extends WP_Widget {
 // Class video_widget ends here
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Videos widget
+//Audioboom widget
 class smoke_audio_widget extends WP_Widget {
   // Constructor to create new instance of class
   function __construct() {
@@ -311,7 +296,7 @@ class smoke_audio_widget extends WP_Widget {
     // Widget name will appear in UI
     __('Smoke Audioboom Widget', 'wpb_widget_domain'),
     // Widget description
-    array( 'description' => __( 'Display three recent Audioboom uploads', 'wpb_widget_domain' ), )
+    array( 'description' => __( 'Display three recent Audioboom podcasts', 'wpb_widget_domain' ), )
     );
   }
 
@@ -326,10 +311,10 @@ class smoke_audio_widget extends WP_Widget {
     // Widget content
 
     // Don't do anything unless API key is set
-      if (get_option('audioboom_api_key')) {
-        // The API endpoint URL
+    if (get_option('audioboom_api_key')) {
+      // The API endpoint URL
         $url = 'http://audioboom.com/api/audio_clips?username=smokeradio';
-        // Get a response from Audioboom API using cURL
+      // Get a response from Audioboom API using cURL
         $ch = curl_init();
         // This API needs SSL to work
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -345,35 +330,43 @@ class smoke_audio_widget extends WP_Widget {
         // Convert the result into an associative array
         $boo_array = json_decode($result, true);
     }
-
+    if ($boo_array) {
+      echo "";
     // Create a counter variable and leave it at 1 for now
-    $counter = 1;
-    echo '<ul>';
+      $counter = 1;
+      echo '<ul>';
     // Get every video, store as array $video and display in a loop
-    foreach($video_array["items"] as $video){
-
-      // Shorten the descriptions to a sensible length
-      if (strlen($description) > 100) {
-          $descriptionCut = substr($description, 0, 100);
-          // make sure it ends in a whole word
-          $description = substr($descriptionCut, 0, strrpos($descriptionCut, ' ')).'...';
-      }
-      // Set the URL as a var
-      $video_permalink = get_site_url() . "/video/" . $video["id"]["videoId"];
+      foreach($boo_array["body"]["audio_clips"] as $boo){
+        // Stop looping after third post
+        if ($counter>3) { break; };
+        // Set the description as a var
+        $description = $boo["description"];
+        // Shorten the descriptions to a sensible length
+        if (strlen($description) > 100) {
+            $descriptionCut = substr($description, 0, 100);
+            // make sure it ends in a whole word
+            $description = substr($descriptionCut, 0, strrpos($descriptionCut, ' ')).'...';
+        }
+        $duration = round($boo["duration"] / 60) . " mins";
+        // Set the URL as a var
+        $audio_permalink = get_site_url() . "/audio/" . $boo["id"];
 
       ?>
+
         <li class="video-tile">
-          <img src="<?php echo $video["snippet"]["thumbnails"]["high"]["url"]; ?>"/>
-          <h3><?php echo $video["snippet"]["title"]; ?></h3>
+          <img src="<?php echo $boo["urls"]["post_image"]["original"]; ?>"/>
+          <h3><?php echo $boo["title"]; ?></h3>
           <p><?php echo $description; ?></p>
-          <span class="play-icon"><i class="fa fa-play"></i></span>
-          <a class="cover" href="<?php echo $video_permalink; ?>"></a>
+          <span class="play-icon"><i class="fa fa-headphones"></i></span>
+          <a class="cover" href="<?php echo $audio_permalink; ?>"></a>
         </li>
+
       <?php
     // Iterate the counter
     $counter++;
     }
     echo '</ul>';
+  }
     // Display post-widget content, eg title
     echo $args['after_widget'];
   }
@@ -401,16 +394,7 @@ class smoke_audio_widget extends WP_Widget {
     return $instance;
   }
 }
-// Class video_widget ends here
-
-
-
-
-
-
-
-
-
+// Class audio_widget ends here
 
 
 

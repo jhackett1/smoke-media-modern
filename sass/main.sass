@@ -21,6 +21,14 @@
   margin-right: auto
   max-width: $width
 
+h3#notfound
+  text-align: center
+  text-transform: uppercase
+  font-size: 5em
+  max-width: 500px
+  margin: 40px auto
+  color: #969696
+
 // Only affect the frontend
 body.frontend
   margin: 0
@@ -37,6 +45,9 @@ body.frontend
     display: block
     margin: 0px auto 30px auto
     width: 110px
+
+  a#issuu
+    text-decoration: none
 
   .button
     padding: 15px
@@ -69,6 +80,9 @@ body.frontend
     letter-spacing: 0.5px
     padding: 0px 10px
     box-sizing: border-box
+
+    span
+      color: #dfdfdf
 
   p.category-desc
     margin: 20px auto
@@ -129,22 +143,20 @@ body.frontend
           position: absolute
           top: 30px
           right: 10px
-          padding: 10px
+          padding-top: 5px
           box-sizing: border-box
-          background-color: #505050
           display: none
           border-radius: 2px
-          border: 0.5px solid #505050
 
           form
             input.text
               padding: 5px
-              border: 0.5px solid #969696
+              border: 0.5px solid #efefef
               background: none
-              border-radius: 2px
+              border-radius: 1px
               font-family: $h-stack
-              color: #969696
-              font-size: 1em
+              color: #dfdfdf
+              font-size: 1.2em
               outline-width: 0
               width: 300px
 
@@ -659,6 +671,13 @@ body.frontend
           margin: 20px 0px
           font-weight: normal
 
+          a
+            color: #969696
+            text-decoration: none
+
+          a:hover
+            text-decoration: underline
+
           span
             margin: 0px 4px
 
@@ -842,11 +861,15 @@ body.frontend
 
   /*////////////////////////////
   ////
-  //// The homepage video section
+  //// The homepage video section and campaign block
   ////
   ////////////////////////////*/
 
   // A full-width strip with a background image
+
+  section#campaign-block
+    margin: 40px 0px -25px 0px
+
 
   section#videos
     background-image: url(../img/skulls.png)
@@ -1303,7 +1326,7 @@ h2.section-title::before
 
 ul.videos
   display: flex
-  flex-direction: row
+  flex-direction: column
   flex-wrap: wrap
   width: 100%
   padding: 0px
@@ -1317,8 +1340,8 @@ ul.videos
       background-color: rgba(0,0,0,0.05)
 
   li.video-tile
-    flex: 0 0 calc(33.3% - 10px)
-    margin: 0px 0px 10px 10px
+    flex: 0 0 1
+    margin: 10px
     background-color: #efefef
     position: relative
     overflow: hidden
@@ -1377,8 +1400,6 @@ ul.videos
       font-size: 0.8em
       margin: 5px 15px 15px 15px
       color: #969696
-
-
 
 section#notification-bar
   position: fixed
@@ -1472,3 +1493,142 @@ section.tabbed
       box-sizing: border-box
     li.active
       display: block
+
+ul.training-block
+  list-style-type: none
+  margin: 0
+  padding: 0
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+
+  li.training-item:hover
+    a.cover:hover
+      background-color: rgba(0,0,0,0.05)
+
+  li.training-item:nth-of-type(2), li.training-item:nth-of-type(4)
+    margin-right: 0px
+
+  li.training-item
+    margin-right: 10px
+    background-color: #efefef
+    position: relative
+    flex: 0 0 calc(50% - 5px)
+    overflow: hidden
+    margin-bottom: 10px
+
+    h5
+      position: absolute
+      top: 0px
+      left: 0px
+      padding: 5px 7px
+      background: #efefef
+      color: #969696
+      font-style: italic
+      text-transform: uppercase
+      margin: 0px
+
+    a.cover
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      z-index: 4
+      width: 100%
+      height: 100%
+
+    img
+      width: 100%
+      height: 160px
+      object-fit: cover
+      object-position: center
+
+    h3
+      font-size: 1.8em
+      margin: 15px 15px 5px 15px
+      font-weight: normal
+
+    p
+      font-size: 0.8em
+      margin: 5px 15px 15px 15px
+      color: #969696
+
+
+// Issuu page
+
+ul.issues
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  width: 100%
+  padding: 20px
+  list-style-type: none
+  box-sizing: border-box
+
+  li.issue-tile:hover
+    span.play-icon
+      background: $brand
+      i
+        color: #fafafa
+    a.cover:hover
+      background-color: rgba(0,0,0,0.05)
+
+  li.issue-tile
+    flex: 1
+    margin: 20px
+    background-color: #efefef
+    position: relative
+
+    h5
+      position: absolute
+      top: 0px
+      left: 0px
+      padding: 5px 7px
+      background: #efefef
+      color: #969696
+      font-style: italic
+      text-transform: uppercase
+      margin: 0px
+
+    // The central play icon
+    span.play-icon
+      position: absolute
+      right: 0px
+      top: 0px
+      padding: 15px
+      background: rgba(239,239,239,0.9)
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 30px
+      height: 30px
+      border-radius: 0px
+
+      i
+        color: $brand
+        font-size: 1.5em
+
+    a.cover
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      z-index: 4
+      width: 100%
+      height: 100%
+
+    img
+      width: 100%
+      height: auto
+
+    h3
+      font-size: 1.8em
+      margin: 15px 15px 5px 15px
+      font-weight: normal
+
+    p
+      font-size: 0.8em
+      margin: 5px 15px 15px 15px
+      color: #969696

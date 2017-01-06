@@ -19,8 +19,9 @@ if (get_option('youtube_api_key')) {
     curl_close($ch);
     // Convert the result into an associative array
     $video_array = json_decode($result, true);
-    ?>
 
+    if ($video_array) {
+    ?>
 
     <section id="videos">
       <section class="limited-width">
@@ -68,6 +69,6 @@ if (get_option('youtube_api_key')) {
        </section>
     </section>
     <?php
-
+}
 // End the if statement
 }

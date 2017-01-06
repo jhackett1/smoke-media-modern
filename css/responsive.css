@@ -3,6 +3,32 @@
   .mobile-hide {
     display: none !important; } }
 @media screen and (min-width: 650px) and (max-width: 899px) {
+  ul.issues {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    padding: 0px; }
+    ul.issues li.issue-tile {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 calc(50% - 40px);
+          -ms-flex: 0 0 calc(50% - 40px);
+              flex: 0 0 calc(50% - 40px); }
+
+  ul.videos {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row; }
+    ul.videos li.video-tile {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 calc(50% - 10px);
+          -ms-flex: 0 0 calc(50% - 10px);
+              flex: 0 0 calc(50% - 10px);
+      margin: 0px 0px 10px 10px; }
+
   div.schedule ul.day-labels li {
     width: 150px; }
 
@@ -158,6 +184,35 @@
     font-weight: normal;
     letter-spacing: normal; } }
 @media screen and (min-width: 900px) {
+  ul.issues {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    padding: 0px; }
+    ul.issues li.issue-tile {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 calc(33.3% - 40px);
+          -ms-flex: 0 0 calc(33.3% - 40px);
+              flex: 0 0 calc(33.3% - 40px);
+      margin: 20px;
+      background-color: #efefef;
+      position: relative; }
+
+  ul.videos {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row; }
+    ul.videos li.video-tile {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 calc(33.3% - 10px);
+          -ms-flex: 0 0 calc(33.3% - 10px);
+              flex: 0 0 calc(33.3% - 10px);
+      margin: 0px 0px 10px 10px; }
+
   div.schedule ul.day-labels li {
     width: 150px; }
 

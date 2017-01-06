@@ -43,5 +43,4 @@ jQuery( document ).ready(function() {
       jQuery("ul.content li:nth-of-type(" + index + ")").addClass("active");
   });
 
-
 });

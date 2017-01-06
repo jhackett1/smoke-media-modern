@@ -3,7 +3,8 @@
 // Don't do anything unless API key is set
 if (get_option('youtube_api_key')) {
   // The API endpoint URL with max-results and API key specified by theme option variables
-  $url = 'https://www.googleapis.com/youtube/v3/search?channelId=UCxxVjVWC381ysuaZc9dgU1Q&part=snippet&key=' . get_option('youtube_api_key') . '&order=date&maxResults=' . get_option('vid_number');
+  $url = 'https://www.googleapis.com/youtube/v3/search?channelId=UCxxVjVWC381ysuaZc9dgU1Q&pagetoken=&part=snippet&key=' . get_option('youtube_api_key') . '&order=date&maxResults=' . get_option('vid_number');
+
   // Get a response from Youtube Data API using cURL
   $ch = curl_init();
   // This API needs SSL to work
@@ -20,10 +21,14 @@ if (get_option('youtube_api_key')) {
   // Convert the result into an associative array
   $video_array = json_decode($result, true);
 }
+
+    if ($video_array) {
 ?>
 
 <h2 class="limited-width page-title">Smoke TV</h2>
-<hr class="limited-width"/>
+<div class="limited-width">
+<hr class="limited-width big" style="margin: 0 10px;"/>
+</div>
 <p class="limited-width category-desc">Videos and films from Smoke TV </p>
 <ul class="videos limited-width">
 
@@ -57,6 +62,41 @@ foreach($video_array["items"] as $video){
 // Iterate the counter
 $counter++;
 }
+  echo "</ul>";
+// Display an empty container to fill with ajaxed content
+  echo '<div id="ajax-container"></div>';
+// Display a button to trigger the ajax call
+  echo '<span class="button" id="more-posts">Load more</span>';
+// And close out the loop completely
 ?>
 
-</ul>
+
+
+
+
+<script>
+// Client-side AJAX handler
+  var ajaxUrl = '<?php echo admin_url('admin-ajax.php')?>';
+  var next_page_token = '<?php echo $video_array["nextPageToken"]; ?>';
+
+// On click, make the AJAX call and display response
+  jQuery("#more-posts").on("click",function(){ // When btn is pressed.
+      jQuery("#more-posts").attr("disabled",true); // Disable the button, temp.
+      jQuery.post(ajaxUrl, {
+          action: "more_vids_ajax",
+          token: next_page_token
+      }).success(function(posts){
+          jQuery("#ajax-container").append(posts);
+          jQuery("#more_posts").attr("disabled",false);
+      });
+  });
+</script>
+
+<?php
+} else{
+  ?>
+  <h3 id="notfound"><?php _e( "Sorry, we couldn't find what you're looking for." ); ?></h3>
+  <?php
+}
+
+get_footer();
