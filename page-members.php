@@ -18,7 +18,7 @@ if ( have_posts() ) :
     	<!-- Post content -->
   		<?php the_content(); ?>
 		</section>
-
+		
 	    <?php
       // Display a block of posts
       function training_headlines_section($cat){
@@ -63,7 +63,13 @@ if ( have_posts() ) :
         <?php endif;
       }
 
-    training_headlines_section(4);
+			if (get_option('training_cat')) {
+			  $cat = get_option('training_cat');
+			} else {
+			  $cat = 'training';
+			}
+
+    training_headlines_section($cat);
 		// Display an empty container to fill with ajaxed content
 		  echo '<div id="ajax-container"></div>';
 		// Display a button to trigger the ajax call
@@ -74,7 +80,7 @@ if ( have_posts() ) :
 		  var ajaxUrl = '<?php echo admin_url('admin-ajax.php')?>';
 		  var page = 1; // What page we are on.
 		  var ppp = 4; // Post per page
-		  var category = 4
+		  var category = '<?php echo $cat; ?>';
 
 		// On click, make the AJAX call and display response
 		  jQuery("#more-posts").on("click",function(){ // When btn is pressed.

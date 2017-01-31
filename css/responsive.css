@@ -441,4 +441,8 @@
       width: 150px; } }
 @media screen and (min-width: 1500px) {
   .limited-width {
-    max-width: 1200px; } }
+    max-width: 1200px; }
+
+  body.frontend article main section.meta h2 {
+    font-size: 6em;
+    line-height: 1em; } }

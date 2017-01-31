@@ -17,7 +17,12 @@ if ( have_posts() ) :
 
 <?php
 // Save layout at 1 if full width, 0 if standard
-$layout = get_post_meta( get_the_id(), 'full_width_image')[0];
+if (get_post_meta( get_the_id(), 'full_width_image')) {
+	$layout = get_post_meta( get_the_id(), 'full_width_image')[0];
+} else {
+	$layout = 0;
+}
+
 
 // Save post ID as var
 $ID = get_the_ID();
@@ -27,7 +32,7 @@ array_push($do_not_replicate, $ID);
 track_post_views( $ID );
 
 // If layout is on, get a full-width feature layout, else return the standard layout
-if ($layout === on) {
+if ($layout === 'on') {
 	?>
 	<section class="full-width-image">
 		<?php

@@ -3,11 +3,20 @@
 // Include the options page file
 	require_once( __DIR__ . '/admin/options.php');
 
+	// Include the options page file
+		require_once( __DIR__ . '/admin/front-page-settings.php');
+
+	// Include the branding page file
+		require_once( __DIR__ . '/gallery.php');
+
 // Include the branding page file
 	require_once( __DIR__ . '/admin/branding.php');
 
 // Include the editor page file
 	require_once( __DIR__ . '/admin/widgets.php');
+
+	// Include the editor page file
+		require_once( __DIR__ . '/admin/live-meta-box.php');
 
 // Include the editor page file
 	require_once( __DIR__ . '/admin/editor.php');
@@ -27,20 +36,57 @@
 // Include Issuu API functionality
 	require_once( __DIR__ . '/issuu/issuu.php');
 
+	// Include radio Youtube functionality
+		require_once( __DIR__ . '/radio-video/radio-video.php');
+
 // Register scripts and styles
-wp_enqueue_style( 'Styles', get_stylesheet_uri() );
-wp_enqueue_style( 'FontAwesome', get_stylesheet_directory_uri() . '/font-awesome-4.7.0/css/font-awesome.min.css' );
-wp_enqueue_style( 'WeatherIcons', get_stylesheet_directory_uri() . '/weather/css/weather-icons.min.css' );
-wp_enqueue_style( 'Player skin', get_stylesheet_directory_uri() . '/css/smokeplayerskin.css' );
-wp_enqueue_script( 'jquery', get_template_directory_uri() . '/js/jquery-3.1.1.min.js');
-wp_enqueue_script( 'app', get_template_directory_uri() . '/js/app.js');
-wp_enqueue_script( 'wow', get_template_directory_uri() . '/js/wow.js');
-wp_enqueue_script( 'jwplayer', get_template_directory_uri() . '/jwplayer-7.7.4/jwplayer.js');
-wp_enqueue_script( 'wavesurfer', get_template_directory_uri() . '/js/wavesurfer.js');
+function get_styles(){
+	wp_enqueue_style( 'Styles', get_stylesheet_uri() );
+	wp_enqueue_style( 'FontAwesome', get_stylesheet_directory_uri() . '/font-awesome-4.7.0/css/font-awesome.min.css' );
+	wp_enqueue_style( 'WeatherIcons', get_stylesheet_directory_uri() . '/weather/css/weather-icons.min.css' );
+	wp_enqueue_style( 'Player skin', get_stylesheet_directory_uri() . '/css/smokeplayerskin.css' );
+}
+function get_scripts(){
+	wp_enqueue_script( 'jquery', get_template_directory_uri() . '/js/jquery-3.1.1.min.js');
+	wp_enqueue_script( 'app', get_template_directory_uri() . '/js/app.js');
+	wp_enqueue_script( 'wow', get_template_directory_uri() . '/js/wow.js');
+	wp_enqueue_script( 'jwplayer', get_template_directory_uri() . '/jwplayer-7.7.4/jwplayer.js');
+	wp_enqueue_script( 'wavesurfer', get_template_directory_uri() . '/js/wavesurfer.js');
+}
+add_action( 'wp_enqueue_scripts', 'get_styles');
+add_action( 'wp_enqueue_scripts', 'get_scripts');
+
+//Fix user roles
+function add_theme_caps() {
+    // gets the author role
+    $role = get_role( 'contributor' );
+    $role->add_cap( 'upload_files' );
+}
+add_action( 'admin_init', 'add_theme_caps');
+function add_theme_caps2() {
+    // gets the author role
+    $role = get_role( 'contributor' );
+    $role->add_cap( 'edit_others_posts' );
+}
+add_action( 'admin_init', 'add_theme_caps2');
+function add_theme_caps3() {
+    // gets the author role
+    $role = get_role( 'contributor' );
+    $role->add_cap( 'edit_published_posts' );
+}
+add_action( 'admin_init', 'add_theme_caps3');
+function remove_theme_caps() {
+    // gets the author role
+    $role = get_role( 'editor' );
+    $role->remove_cap( 'publish_posts' );
+}
+add_action( 'admin_init', 'remove_theme_caps');
+
+//Hide visual editor for everyone
+add_filter('user_can_richedit' , create_function('' , 'return false;') , 50);
 
 // Support catgory-specific single.php templates
 add_filter('single_template', create_function('$t', 'foreach( (array) get_the_category() as $cat ) { if ( file_exists(TEMPLATEPATH . "/single-{$cat->term_id}.php") ) return TEMPLATEPATH . "/single-{$cat->term_id}.php"; } return $t;' ));
-
 
 // Server-side livestream URL player AJAX handler
 	function stream_ajax(){
@@ -209,38 +255,6 @@ add_action('wp_ajax_nopriv_more_post_ajax', 'more_post_ajax');
 add_action('wp_ajax_more_post_ajax', 'more_post_ajax');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Server-side post grid 'load-more' AJAX handler
 function author_ajax(){
 		// Check what offset has been requested
@@ -397,37 +411,6 @@ add_action('wp_ajax_nopriv_author_ajax', 'author_ajax');
 add_action('wp_ajax_author_ajax', 'author_ajax');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Register four navigation menu locations
 register_nav_menus( array(
 	'primary' => 'Primary',
@@ -478,6 +461,12 @@ function register_widgets() {
 		'before_widget' => '<div class="widget %2$s">',
 		'after_widget'  => '</div>',
 	) );
+	register_sidebar( array(
+		'name'          => 'Live Event Sidebar',
+		'id'            => 'live',
+		'before_widget' => '<div class="widget %2$s">',
+		'after_widget'  => '</div>',
+	) );
 };
 add_action( 'widgets_init', 'register_widgets' );
 
@@ -499,7 +488,8 @@ function liveblogs_init() {
 		'search_items'       => __( 'Search Live Events', 'your-plugin-textdomain' ),
 		'parent_item_colon'  => __( 'Parent Live Events:', 'your-plugin-textdomain' ),
 		'not_found'          => __( 'No live events found.', 'your-plugin-textdomain' ),
-		'not_found_in_trash' => __( 'No live events found in Trash.', 'your-plugin-textdomain' )
+		'not_found_in_trash' => __( 'No live events found in Trash.', 'your-plugin-textdomain' ),
+		'register_meta_box_cb' => 'add_events_metaboxes'
 	);
 	$args = array(
 		'labels'             => $labels,
@@ -543,13 +533,21 @@ add_theme_support( 'post-thumbnails' );
 //Turn off TinyMCE
 add_filter('user_can_richedit' , create_function('' , 'return false;') , 50);
 
+
+
+
 // Eneque Typekit fonts
 function theme_typekit() {
 	$typekid_raw_id = get_option('typekit_id');
 	$typekit_url = "https://use.typekit.net/" . $typekid_raw_id . ".js";
   wp_enqueue_script( 'theme_typekit', $typekit_url);
 }
-add_action( 'wp_enqueue_scripts', 'theme_typekit' );
+// add_action( 'wp_enqueue_scripts', 'theme_typekit' );
+
+
+
+
+
 
 function theme_typekit_inline() {
   if ( wp_script_is( 'theme_typekit', 'done' ) ) { ?>
@@ -603,28 +601,13 @@ add_action ('wp_head', 'add_jw_license_key');
 	}
 	add_action('admin_init', 'wpb_imagelink_setup', 10);
 
-// Add social links to the top-right menu
-	add_filter( 'wp_nav_menu_items', 'smoke_social_links', 10, 2 );
-
-	function smoke_social_links( $items, $args ) {
-	   if ($args->theme_location == 'top-right') {
-			 if ( get_option('twitter_link') ) {
-					$items = '<li class="right"><a target="blank" href="'. get_option('twitter_link') .'">' . '<i class="fa fa-twitter"></i></a></li>' . $items;
-			 }
-			 if ( get_option('yt_link') ) {
-					$items = '<li class="right"><a target="blank" href="'. get_option('yt_link') .'">' . '<i class="fa fa-youtube-play"></i></a></li>' . $items;
-			 }
-      if ( get_option('facebook_link') ) {
-         $items = '<li class="right"><a target="blank" href="'. get_option('facebook_link') .'">' . '<i class="fa fa-facebook"></i></a></li>' . $items;
-      }
-
-	   }
-	   return $items;
-	}
-
 // Function to display standfirst
 	function smoke_standfirst($ID){
-		$standfirst = get_post_meta( $ID, 'standfirst')[0];
+		if (get_post_meta( $ID, 'standfirst')) {
+			$standfirst = get_post_meta( $ID, 'standfirst')[0];
+		} else {
+			$standfirst = 0;
+		}
 		if ( $standfirst ){
 			// Replace return key with p tags
 			$standfirst = str_replace('
@@ -636,7 +619,13 @@ add_action ('wp_head', 'add_jw_license_key');
 
 //Function to display the byline
 	function smoke_byline($ID){
-		$byline = get_post_meta( $ID, 'byline')[0];
+		if (get_post_meta( $ID, 'byline')) {
+			$byline = get_post_meta( $ID, 'byline')[0];
+		} else {
+			$byline = 0;
+		}
+
+
 		if($byline){
 			echo $byline;
 		}else{
@@ -647,7 +636,12 @@ add_action ('wp_head', 'add_jw_license_key');
 	//Function to display star ratings on front page and category pages
 		function smoke_rating_headline($ID){
 			// Retrieve metadata and save as var
-				$star_rating = get_post_meta( $ID, 'star_rating')[0];
+				if (get_post_meta( $ID, 'star_rating')) {
+					$star_rating = get_post_meta( $ID, 'star_rating')[0];
+				} else {
+					$star_rating = 0;
+				}
+
 				if ( $star_rating ){
 					// Display container element
 					echo "<div>";
@@ -690,10 +684,18 @@ add_action ('wp_head', 'add_jw_license_key');
 // A function to add a media icon to the post title
 	function add_media_icon($the_title, $id){
 		// Only show on archive and front pages
-		if(!is_single()){
+		if(!is_single() && !is_admin()){
 			// Save the retrieved metadata as a var
-			$featured_video_url = get_post_meta( $id, 'feat_video_url')[0];
-			$featured_audio_embed = get_post_meta( $id, 'feat_audio_embed')[0];
+			if (get_post_meta( $id, 'feat_video_url')) {
+				$featured_video_url = get_post_meta( $id, 'feat_video_url')[0];
+			} else {
+				$featured_video_url = 0;
+			}
+			if ($featured_audio_embed = get_post_meta( $id, 'feat_audio_embed')) {
+				$featured_audio_embed = get_post_meta( $id, 'feat_audio_embed')[0];
+			} else {
+				$featured_audio_embed = 0;
+			}
 			// Depending on which meta is set, add icons to the post title
 			if($featured_video_url){
 				$the_title =  '<i class="media fa fa-play-circle"></i> ' . $the_title;
@@ -735,11 +737,45 @@ add_action ('wp_head', 'add_jw_license_key');
 	    return $classes;
 	}
 
+	// Function to retrieve featured video with image fallback
+		function live_video_image($ID){
+			// Save the retrieved metadata as a var
+			$featured_video_url = get_post_meta( $ID, 'feat_video_url')[0];
+			// If the var is set and the URL is valid, then display a player
+			if($featured_video_url){
+				echo '<div class="yt-container">';
+				echo wp_oembed_get( $featured_video_url );
+				echo '</div>';
+			}elseif($featured_audio_embed){
+				echo wp_oembed_get( $featured_audio_embed );
+			}else{
+				// If the var is not set (i.e. no video specified), display the featured image
+				the_post_thumbnail('large');
+				// And its caption, if set
+				if( get_post_meta( $ID, 'feat_image_credit', true ) ){ ?>
+					<figcaption>Image: <?php echo get_post_meta( $ID, 'feat_image_credit', true )?></figcaption>
+				<?php }
+			}
+		}
+
+
+
 // Function to retrieve featured video with image fallback
 	function featured_video_image($ID){
 		// Save the retrieved metadata as a var
-		$featured_video_url = get_post_meta( $ID, 'feat_video_url')[0];
-		$featured_audio_embed = get_post_meta( $ID, 'feat_audio_embed')[0];
+		if (get_post_meta( $ID, 'feat_video_url')) {
+			$featured_video_url = get_post_meta( $ID, 'feat_video_url')[0];
+		} else {
+			$featured_video_url = 0;
+		}
+		if (get_post_meta( $ID, 'feat_audio_embed')) {
+			$featured_audio_embed = get_post_meta( $ID, 'feat_audio_embed')[0];
+		} else {
+			$featured_audio_embed = 0;
+		}
+
+
+
 		// If the var is set and the URL is valid, then display a player
 		if($featured_video_url){
 			?>
@@ -766,9 +802,21 @@ add_action ('wp_head', 'add_jw_license_key');
 		}
 	}
 
+// Responsive youtube container
+function alx_embed_html( $html ) {
+    return '<div class="yt-container">' . $html . '</div>';
+}
+add_filter( 'embed_oembed_html', 'alx_embed_html', 10, 3 );
+add_filter( 'video_embed_html', 'alx_embed_html' ); // Jetpack
+
 // Function to show the author box unless a byline is set
 	function smoke_author_box($ID){
-		$byline = get_post_meta( $ID, 'byline')[0];
+		if ( get_post_meta( $ID, 'byline')) {
+			$byline = get_post_meta( $ID, 'byline')[0];
+		} else {
+			$byline = 0;
+		}
+
 		if (!$byline){
 			?>
 			<section class="author-profile">
@@ -829,7 +877,23 @@ add_action ('wp_head', 'add_jw_license_key');
 	add_filter( 'wp_nav_menu_items', 'smoke_loginout_menu_link', 10, 2 );
 	add_filter( 'wp_nav_menu_items', 'smoke_listen_menu_link', 10, 2 );
 	add_filter( 'wp_nav_menu_items', 'smoke_back_menu_link', 10, 2 );
-	add_filter( 'wp_nav_menu_items', 'smoke_issues_menu_link', 10, 2 );
+	add_filter( 'wp_nav_menu_items', 'smoke_social_links', 10, 2 );
+
+	function smoke_social_links( $items, $args ) {
+		 if ($args->theme_location == 'top-right') {
+			 if ( get_option('twitter_link') ) {
+					$items = '<li class="right"><a target="blank" href="'. get_option('twitter_link') .'">' . '<i class="fa fa-twitter"></i></a></li>' . $items;
+			 }
+			 if ( get_option('yt_link') ) {
+					$items = '<li class="right"><a target="blank" href="'. get_option('yt_link') .'">' . '<i class="fa fa-youtube-play"></i></a></li>' . $items;
+			 }
+			if ( get_option('facebook_link') ) {
+				 $items = '<li class="right"><a target="blank" href="'. get_option('facebook_link') .'">' . '<i class="fa fa-facebook"></i></a></li>' . $items;
+			}
+
+		 }
+		 return $items;
+	}
 
 	function smoke_loginout_menu_link( $items, $args ) {
 	   if ($args->theme_location == 'top-right') {
@@ -844,16 +908,19 @@ add_action ('wp_head', 'add_jw_license_key');
 	}
 
 	function smoke_listen_menu_link( $items, $args ) {
+		if ($args->theme_location == 'top-left') {
+		 $issues= '<li><a href="' . get_site_url() . '/issues">Print editions</a></li>';
+		 $items .= $issues ;
+	 }
 	   if ($args->theme_location == 'top-left') {
 			$listen_live = <<<EOD
 			<li>
 			<a href="javascript: void(0)"
-							 onclick="window.open('http://localhost/wordpress/player',
+							 onclick="window.open('http://smoke.media/player',
 							'windowname1',
 							'width=350, height=600');
 							 return false;">Listen live<i class="fa fa-headphones"></i></a></li>
 EOD;
-
  		$items .= $listen_live ;
 		}
 	   return $items;
@@ -865,16 +932,6 @@ EOD;
  			$items .= $go_back ;
 		}
 	   return $items;
-	}
-
-	function smoke_issues_menu_link( $items, $args ) {
-		if (get_option('issuu_page')) {
-			if ($args->theme_location == 'top-left') {
- 			$go_back = '<li><a href="' . get_site_url() . '/issues">Print editions</a></li>';
- 			$items = $go_back .= $items ;
- 			}
- 		 return $items;
-		}
 	}
 
 // Register a meta box to contain fields for adding custom post meta
@@ -1585,6 +1642,98 @@ function more_vids_ajax(){
 add_action('wp_ajax_nopriv_more_vids_ajax', 'more_vids_ajax');
 add_action('wp_ajax_more_vids_ajax', 'more_vids_ajax');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Server-side post grid 'load-more' AJAX handler
+function more_radio_vids_ajax(){
+	// Check what offset has been requested
+	$token = $_POST["token"];
+	header("Content-Type: text/html");
+	// Don't do anything unless API key is set
+	if (get_option('youtube_api_key')) {
+	  // The API endpoint URL with max-results and API key specified by theme option variables
+	  $url = 'https://www.googleapis.com/youtube/v3/search?channelId=UCCG_RzmGLUFQsm4aVyh76KQ&pageToken=' . $token . '&part=snippet&key=' . get_option('youtube_api_key') . '&order=date&maxResults=' . get_option('vid_number');
+	  // Get a response from Youtube Data API using cURL
+	  $ch = curl_init();
+	  // This API needs SSL to work
+	  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+	  curl_setopt($ch, CURLOPT_HEADER, false);
+	  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	  curl_setopt($ch, CURLOPT_URL, $url);
+	  curl_setopt($ch, CURLOPT_REFERER, $url);
+	  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	  // Save the response as $result
+	  $result = curl_exec($ch);
+	  // Your work is done, cURL
+	  curl_close($ch);
+	  // Convert the result into an associative array
+	  $video_array = json_decode($result, true);
+		?> <ul class="videos limited-width"> <?php
+		// Create a counter variable and leave it at 1 for now
+		$counter = 1;
+		// Get every video, store as array $video and display in a loop
+		foreach($video_array["items"] as $video){
+		  // Set the description as a var
+		  $description = $video["snippet"]["description"];
+		  // Shorten the descriptions to a sensible length
+		  if (strlen($description) > 200) {
+		      $descriptionCut = substr($description, 0, 200);
+		      // make sure it ends in a whole word
+		      $description = substr($descriptionCut, 0, strrpos($descriptionCut, ' ')).'...';
+		  }
+		  // Set the URL as a var
+		  $video_permalink = get_site_url() . "/radio/video/" . $video["id"]["videoId"];
+		  ?>
+		    <li class="video-tile">
+		      <img src="<?php echo $video["snippet"]["thumbnails"]["high"]["url"]; ?>"/>
+		      <h3><?php echo $video["snippet"]["title"]; ?></h3>
+		      <p><?php echo $description; ?></p>
+		      <span class="play-icon"><i class="fa fa-play"></i></span>
+		      <a class="cover" href="<?php echo $video_permalink; ?>"></a>
+		    </li>
+		  <?php
+		// Iterate the counter
+		$counter++;
+		}
+		}
+		?>
+		</ul>
+		<script>
+		var next_page_token = '<?php echo $video_array["nextPageToken"]; ?>';
+		</script>
+	<?php
+	exit;
+}
+add_action('wp_ajax_nopriv_more_radio_vids_ajax', 'more_radio_vids_ajax');
+add_action('wp_ajax_more_radio_vids_ajax', 'more_radio_vids_ajax');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Server-side post grid 'load-more' AJAX handler
 function more_audio_ajax(){
 	// Check what offset has been requested
@@ -1655,44 +1804,8 @@ function more_audio_ajax(){
 add_action('wp_ajax_nopriv_more_audio_ajax', 'more_audio_ajax');
 add_action('wp_ajax_more_audio_ajax', 'more_audio_ajax');
 
-// Function to set up share buttons
-function social_cards_tags(){
-	// Echo out empty container for script to work on
-	?>
-  <meta property="fb:app_id" content="1134129026651501" />
 
-  <!-- if page is content page -->
-  <?php if (is_single()) {
-  $feat = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'ogimg' );
-  $feat = $feat[0];
-  ?>
-
-    <meta property="og:url" content="<?php the_permalink() ?>"/>
-    <meta property="og:title" content="<?php single_post_title(''); ?>" />
-    <meta property="og:description" content="<?php echo strip_tags(get_the_excerpt($post->ID)); ?>" />
-    <meta property="og:type" content="article" />
-    <meta property="og:image" content="<?php echo $feat; ?>" />
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@Smoke_Radio">
-    <meta name="twitter:creator" content="@Smoke_Radio">
-    <meta name="twitter:title" content="<?php the_title(); ?>">
-    <meta name="twitter:description" content="<?php the_excerpt(); ?>">
-    <meta name="twitter:image" content="<?php echo $feat; ?>">
-
-  <?php } else{ ?>
-
-    <meta property="og:site_name" content="<?php bloginfo('name'); ?>" />
-    <meta property="og:description" content="<?php bloginfo('description'); ?>" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="<?php echo get_template_directory_uri() ?>/img/poster.jpg" />
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@Media_Smoke">
-    <meta name="twitter:creator" content="@Media_Smoke">
-    <meta name="twitter:title" content="<?php bloginfo('name'); ?>">
-    <meta name="twitter:description" content="<?php bloginfo('description'); ?>">
-    <meta name="twitter:image" content="<?php echo get_template_directory_uri() ?>/img/poster.jpg" >
-
-		<?php
-	}
+function my_login_stylesheet() {
+    wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/style.css' );
 }
-add_action('wp_head','social_cards_tags');
+add_action( 'login_enqueue_scripts', 'my_login_stylesheet' );

@@ -1,6 +1,22 @@
 @import "variables.sass"
 @import "widgets.sass"
 @import "radio.sass"
+@import "admin.sass"
+@import "team.sass"
+
+@keyframes flash
+  15%
+    opacity: 1
+  50%
+    opacity: 0
+  85%
+    opacity: 1
+
+span#live
+  animation-name: flash !important
+  animation-duration: 3s !important
+  animation-iteration-count: infinite !important
+
 
 /*////////////////////////////
 ////
@@ -21,13 +37,35 @@
   margin-right: auto
   max-width: $width
 
-h3#notfound
+h3.notfound
   text-align: center
   text-transform: uppercase
   font-size: 5em
   max-width: 500px
   margin: 40px auto
-  color: #969696
+  color: #dfdfdf !important
+  font-weight: normal
+
+h4.notfound
+  text-align: center
+  font-size: 2em
+  color: #505050
+  margin: 10px
+
+div.notfound
+  display: inline
+  text-align: center
+  margin-bottom: 20px
+  form
+    input
+      padding: 5px
+      font-size: 1em
+      margin-bottom: 60px
+      font-family: $h-stack
+      color: #969696
+      border: 1px solid #969696
+      background-color: rgba(0,0,0,0)
+      min-width: 200px
 
 // Only affect the frontend
 body.frontend
@@ -46,10 +84,15 @@ body.frontend
     margin: 0px auto 30px auto
     width: 110px
 
+  button.liveblog-load-more
+    display: block
+    margin: 0px auto 30px auto
+    width: 200px
+
   a#issuu
     text-decoration: none
 
-  .button
+  .button, button.liveblog-load-more
     padding: 15px
     background-color: #c55a66
     color: $background
@@ -64,7 +107,7 @@ body.frontend
     border-radius: 2px
     border: none
 
-  .button:hover
+  .button:hover, button.liveblog-load-more:hover
     background-color: #b34652
 
   // Basic typographic styles
@@ -468,40 +511,111 @@ body.frontend
           h4
             font-size: 2em
             margin: 5px 0px
+            font-weight: normal
 
           h5
             font-size: 1em
             margin: 5px 0px
             color: #969696
             font-style: italic
+            font-weight: normal
 
           p
             margin: 5px 0px
 
+      div.yt-container
+        position: relative
+        padding-bottom: 56.25%
+        height: 0
+        overflow: hidden
+
+        iframe
+          position: absolute
+          top: 0
+          left: 0
+          width: 100%
+          height: 100%
+
       // The section containing the_content
       section.contents
-
         div.gallery
-          dl
-            position: relative
-            dd
-              position: absolute
-              left: 0
-              bottom: -20px
-              font-family: $h-stack
+          position: relative
+          width: 100%
+
+          span.nav.off
+            opacity: 0.4
+            pointer-events: none
+            cursor: default
+
+          span.nav:first-of-type
+            left: 15px
+          span.nav:last-of-type
+            right: 15px
+          span.nav:hover
+            background: rgba(239,239,239,1)
+          span.nav
+            position: absolute
+            top: 50%
+            transform: translateY(-50%)
+            padding: 15px
+            background: rgba(239,239,239,0.9)
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 30px
+            height: 30px
+            border-radius: 60px
+            cursor: pointer
+            z-index: 90
+            i
               color: #969696
-              font-style: italic
-              background-color: #efefef
-              padding: 5px 10px
-              text-transform: uppercase
-              margin: 0px
-            dt
+              font-size: 1.5em
+
+          ul.content::-webkit-scrollbar
+            display: none
+          ul.content
+            overflow: hidden
+            margin: 0
+            padding: 0
+            list-style-type: none
+            position: relative
+            height: auto
+            width: 100%
+            height: auto
+            display: flex
+
+
+            li.gallery-item:first-of-type
+              left: 0
+
+            li
+              display: inline-block
+              float: left
+              width: 100%
+              flex: 0 0 100%
+              position: relative
               img
-                border-width: 0px
-                border-style: none
+                width: 100%
+                height: 400px
+                object-fit: cover
+                margin: 0
+                padding: 0
+              span
+                position: absolute
+                bottom: 10px
+                left: 10px
+                font-family: $h-stack
+                color: #969696
+                font-style: italic
+                background-color: #efefef
+                padding: 5px 10px
+                text-transform: uppercase
+
+            li:first-of-type
+              margin-left: 0px
 
         img
-          width: 100% !important
+          max-width: 100% !important
           height: auto
 
         // Make images span across the whole available area
@@ -553,6 +667,43 @@ body.frontend
             background-color: #efefef
             padding: 5px 10px
             text-transform: uppercase
+
+
+
+        div#liveblog-container
+          div#liveblog-entries
+            div.liveblog-entry
+              border-top: 0.5px dotted #dfdfdf
+              padding: 10px
+
+              .liveblog-entry-text
+                img
+                  margin: 15px 0px
+
+              span.liveblog-author-avatar
+                img
+                  border-radius: 50px
+
+              span.liveblog-author-name
+                font-style: italic
+                font-family: $h-stack
+                color: #969696
+                text-transform: uppercase
+                font-size: 1em
+                line-height: 30px
+
+              span.liveblog-meta-time
+                font-style: italic
+                font-family: $h-stack
+                text-transform: uppercase
+                font-size: 1em
+                line-height: 30px
+
+                a
+                  color: #dfdfdf
+
+        iframe
+          max-width: 100%
 
         // Pretty blockquotes with horizontal rules
         blockquote
@@ -612,9 +763,9 @@ body.frontend
           font-family: $h-stack
           text-transform: uppercase
           color: #969696
-          font-size: 1.2em
+          font-size: 1.5em
           background: repeating-linear-gradient(45deg, #fff, #fff 5px, #efefef 5px, #efefef 10px)
-          padding: 5px 5px 3px 5px
+          padding: 10px 5px 10px 5px
           text-align: center
           display: block
           margin: 30px 0px 10px
@@ -653,7 +804,10 @@ body.frontend
         h2
           font-size: 3em
           margin: 0px
-          letter-spacing: 1.4px
+          font-weight: normal
+
+          span
+            color: #dfdfdf
 
           // Make TV letters on video posts red
           a
@@ -670,6 +824,14 @@ body.frontend
           font-size: 1.2em
           margin: 20px 0px
           font-weight: normal
+
+          span#live
+            width: 15px
+            height: 15px
+            display: inline-block
+            border-radius: 40px
+            background-color: $brand
+            animation-name: flashing
 
           a
             color: #969696
@@ -1059,6 +1221,7 @@ ul.popular-headline-block
     box-sizing: border-box
     margin-bottom: 10px
     position: relative
+    overflow: hidden
 
     a.cover:hover
       background-color: rgba(0,0,0,0.05)
@@ -1226,7 +1389,7 @@ ul.headline-block
     margin: 0
     padding: 0
     display: flex
-    flex: 0 0 33.3%
+    flex: 0 1 33.3%
     // The last two box items should hold more text
     li
       div

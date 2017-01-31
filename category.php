@@ -1,4 +1,4 @@
-<?
+<?php
 
 if (is_category(array('radio-news', 'radio-music', 'radio-sport',))) {
   get_header('radio');

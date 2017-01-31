@@ -30,7 +30,8 @@ class smoke_popular_widget extends WP_Widget {
 
     $args = array(
 			'meta_key'		=> 'smoke_post_views',
-			'orderby'			=> 'meta_value_num'
+			'orderby'			=> 'meta_value_num',
+      'cat'         => -309
 		);
 	  // Create the WP_query and pass in $cat parameter
 	  $the_query = new WP_Query( $args );
@@ -76,7 +77,6 @@ class smoke_popular_widget extends WP_Widget {
     ?>
     <?php endif;
     // Display post-widget content, eg title
-    echo $args['after_widget'];
   }
 
   // Save backend form options
@@ -398,11 +398,198 @@ class smoke_audio_widget extends WP_Widget {
 
 
 
+
+
+
+//Subscribe widget
+class smoke_tweets_widget extends WP_Widget {
+  // Constructor to create new instance of class
+  function __construct() {
+    parent::__construct(
+    // Base ID of your widget
+    'smoke_tweets_widget',
+    // Widget name will appear in UI
+    __('Smoke Twitter Widget', 'wpb_widget_domain'),
+    // Widget description
+    array( 'description' => __( 'See recent tweets from Smoke.', 'wpb_widget_domain' ), )
+    );
+  }
+
+  // Creating widget front-end
+  public function widget( $args, $instance ) {
+    $title = apply_filters( 'widget_title', $instance['title'] );
+    // Display pre-widget content, eg title
+    echo $args['before_widget'];
+    if ( ! empty( $title ) )
+    echo $args['before_title'] . $title . $args['after_title'];
+
+    // Widget content
+		?>
+    <a class="twitter-timeline" data-chrome="transparent noheader nofooter" data-height="500" href="https://twitter.com/dinosaurlord/lists/smoke"></a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+		<?php
+    // Display post-widget content, eg title
+    echo $args['after_widget'];
+  }
+
+  // Save backend form options
+  public function form( $instance ) {
+    if ( isset( $instance[ 'title' ] ) ) {
+      $title = $instance[ 'title' ];
+    } else {
+      $title = __( 'New title', 'wpb_widget_domain' );
+    }
+    // Display backend form options
+    ?>
+    <p>
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+      <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+    </p>
+    <?php
+  }
+
+  // Update the widget in customiser on the fly
+  public function update( $new_instance, $old_instance ) {
+    $instance = array();
+    $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+    return $instance;
+  }
+}
+// Class video_widget ends here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Subscribe widget
+class smoke_jobs_widget extends WP_Widget {
+  // Constructor to create new instance of class
+  function __construct() {
+    parent::__construct(
+    // Base ID of your widget
+    'smoke_jobs_widget',
+    // Widget name will appear in UI
+    __('Smoke Jobs Widget', 'wpb_widget_domain'),
+    // Widget description
+    array( 'description' => __( 'See recent jobs, powered by Journalism.co.uk.', 'wpb_widget_domain' ), )
+    );
+  }
+
+  // Creating widget front-end
+  public function widget( $args, $instance ) {
+    $title = apply_filters( 'widget_title', $instance['title'] );
+    // Display pre-widget content, eg title
+    echo $args['before_widget'];
+    if ( ! empty( $title ) )
+    echo $args['before_title'] . $title . $args['after_title'];
+
+    // Widget content
+    // This is where the data comes from
+    $url = 'http://www.holdthefrontpage.co.uk/jobsboard/rss/all/';
+    // Get a response from the RSS feed using cURL
+    $ch = curl_init();
+    // This API needs SSL to work
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_REFERER, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    // Save the response as $result
+    $result = curl_exec($ch);
+    // Your work is done, cURL
+    curl_close($ch);
+    // Get the XML as a var
+    $xml=simplexml_load_string($result) or die();
+    // Turn the XML into JSON
+    $json = json_encode($xml);
+    // Then turn the JSON into an array
+    $array = json_decode($json, true);
+    // Create a counter
+    $counter = 1;
+    // Container
+    echo "<ul class='jobs'>";
+    foreach ($array["channel"]["item"] as $job) {
+      // Process added date
+      $added = substr($job['pubDate'], 0, -15);
+      // Stop after fifth loop
+      if ($counter>4) { break; };
+      echo "<li class='job'>";
+      echo "<h4>" . $job['title'] . "</h4>";
+      echo "<a class='cover' target='blank' href=" . $job['link'] . "></a>";
+      echo "<p>Added " . $added . "</p>";
+      echo "</li>";
+      // Iterate counter
+      $counter++;
+    }
+    // Close container
+    echo "</ul>";
+    echo "<a href='http://www.holdthefrontpage.co.uk' target='blank'><span>More on Hold the Front Page<i class='fa fa-arrow-right'></i></span></a>";
+    // Display post-widget content, eg title
+    echo $args['after_widget'];
+  }
+
+  // Save backend form options
+  public function form( $instance ) {
+    if ( isset( $instance[ 'title' ] ) ) {
+      $title = $instance[ 'title' ];
+    } else {
+      $title = __( 'New title', 'wpb_widget_domain' );
+    }
+    // Display backend form options
+    ?>
+    <p>
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+      <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+    </p>
+    <?php
+  }
+
+  // Update the widget in customiser on the fly
+  public function update( $new_instance, $old_instance ) {
+    $instance = array();
+    $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+    return $instance;
+  }
+}
+// Class video_widget ends here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Register and load the widgets
 function smoke_load_widgets() {
 	register_widget( 'smoke_video_widget' );
   register_widget( 'smoke_subscribe_widget' );
   register_widget( 'smoke_popular_widget' );
   register_widget( 'smoke_audio_widget' );
+  register_widget( 'smoke_tweets_widget' );
+    register_widget( 'smoke_jobs_widget' );
 }
 add_action( 'widgets_init', 'smoke_load_widgets' );

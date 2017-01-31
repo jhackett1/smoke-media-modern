@@ -6,7 +6,7 @@
 // Add a menu option for the options page we create
   function add_theme_menu_items()
   {
-  	add_menu_page("More settings", "More settings", "manage_options", "theme-panel", "theme_settings_page", null, 99);
+  	add_menu_page("More settings", "Theme settings", "manage_options", "theme-panel", "theme_settings_page", null, 99);
     add_menu_page("Front page settings", "Front page settings", "manage_options", "front_page_settings", "front_page_settings", null, 99);
   }
   add_action("admin_menu", "add_theme_menu_items");
@@ -16,7 +16,7 @@
   {
       ?>
   	    <div class="wrap">
-  	    <h1>More Theme Settings</h1>
+  	    <h1>Theme Settings</h1>
   			<p>Adjust advanced aspects of the Smoke Media website. Only for people who know what they're doing.</p>
   	    <form method="post" action="options.php">
   	        <?php
@@ -34,7 +34,7 @@
       ?>
   	    <div class="wrap">
   	    <h1>Front Page Settings</h1>
-  			<p>Adjust front page sections and options.</p>
+  			<p>Supply the IDs of the categories you wish to display on the front page. Don't touch unless you know what you're doing.</p>
   	    <form method="post" action="options.php">
   	        <?php
   	            settings_fields("front-page-fields");
@@ -171,6 +171,15 @@
     <?php
   }
 
+  // Display HTML code of stream URL element
+    function training_element()
+    {
+    	?>
+      	<input type="text" name="training_cat" id="training_cat" value="<?php echo get_option('training_cat'); ?>" />
+    		<p class="description">Give the category ID of training materials, which will appear on the member portal.</p>
+      <?php
+    }
+
 // Display HTML code of stream URL element
   function stream_url_element()
   {
@@ -187,6 +196,20 @@
       <option value="HTTP" <?php if('HTTP' === get_option('stream_type')){ echo "selected";}; ?>>HTTP</option>
     </select>
   		<p class="description">This affects the player needed to play out the stream. Flash media streams are desktop-only and RTMP. Shoutcast/Icecast streams are HTTP and work on mobile devices.</p>
+    <?php
+  }
+  function schedule_override_element()
+  {
+  	?>
+    	<input type="text" name="schedule_override" id="schedule_override" value="<?php echo get_option('schedule_override'); ?>" />
+  		<p class="description">For special one-off shows, you can override the normal Marconi data displayed in the player here.</p>
+    <?php
+  }
+  function schedule_override_desc_element()
+  {
+  	?>
+    	<input type="text" name="schedule_override_desc" id="schedule_override_desc" value="<?php echo get_option('schedule_override_desc'); ?>" />
+  		<p class="description">Provide a description for the one-off override event.</p>
     <?php
   }
 
@@ -242,6 +265,13 @@ function display_theme_panel_fields()
 	// Automate saving of field to database
   register_setting("section", "campaign_name");
 
+  // Create a section of fields
+	add_settings_section("training-section", "Training content", null, "theme-options");
+	// Add a single field
+	add_settings_field("training_cat", "Training category ID", "training_element", "theme-options", "training-section");
+	// Automate saving of field to database
+  register_setting("section", "training_cat");
+
 
 	// Create a section of fields
 	add_settings_section("typekit-section", "API keys and codes", null, "theme-options");
@@ -295,6 +325,14 @@ function display_theme_panel_fields()
 	add_settings_field("stream type", "Output Stream Type", "stream_type_element", "theme-options", "broadcast-section");
 	// Automate saving of field to database
   register_setting("section", "stream_type");
+  // Add a single field
+	add_settings_field("schedule override", "Schedule Override", "schedule_override_element", "theme-options", "broadcast-section");
+	// Automate saving of field to database
+  register_setting("section", "schedule_override");
+  // Add a single field
+	add_settings_field("schedule override description", "Schedule Override Description", "schedule_override_desc_element", "theme-options", "broadcast-section");
+	// Automate saving of field to database
+  register_setting("section", "schedule_override_desc");
 
   // Create a section of fields
 	add_settings_section("social-section", "Social media links", null, "theme-options");

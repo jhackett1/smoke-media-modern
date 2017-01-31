@@ -1,4 +1,4 @@
-<? get_header();
+<?php get_header();
 
 ?>
 <h2 class="limited-width page-title"><span>Author / </span><?php  the_author(); ?></h2>
