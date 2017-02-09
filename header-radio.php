@@ -66,7 +66,6 @@
 				</a>
 
 
-
 				<script>
 				function showInfoData(){
 		      // Make the ajax request
@@ -81,6 +80,7 @@
 		          // Pull specific fields from API and process for display
 		          var title = result.show.title;
 							var desc = result.show.short_desc;
+							var desc = desc.split(/\s+/).slice(1,10).join(" ");
 							var link = '<?php echo get_site_url() ?>' + '/shows/' + result.show.code;
 		          // Display processed data
 		          jQuery("#current-show h3").html(title);

@@ -82,7 +82,7 @@ if ($layout === 'on') {
 		<section class="meta">
 			<h2><?php the_title(); ?></h2>
 			<hr class="big">
-      <h5><?php the_category(); ?> &middot; <?php echo human_time_diff( get_the_time('U'), current_time('timestamp') ) . ' ago'; ?> &middot; By <?php	smoke_byline($post->ID); ?> </h5>
+      <h5><?php the_category( ', ' ); ?> &middot; <?php echo human_time_diff( get_the_time('U'), current_time('timestamp') ) . ' ago'; ?> &middot; By <?php	smoke_byline($post->ID); ?> </h5>
       <figure>
 				<!-- Featured media -->
 				<?php featured_video_image($post->ID); ?>

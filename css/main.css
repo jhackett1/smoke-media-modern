@@ -2453,3 +2453,55 @@ ul.issues {
       font-size: 0.8em;
       margin: 5px 15px 15px 15px;
       color: #969696; }
+
+section.ad-trails {
+  border-top: 1px solid #dfdfdf;
+  margin-top: 10px; }
+  section.ad-trails div.limited-width {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row; }
+    section.ad-trails div.limited-width aside {
+      width: 50%;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+              flex-direction: row;
+      -webkit-box-align: end;
+      -webkit-align-items: flex-end;
+          -ms-flex-align: end;
+              align-items: flex-end; }
+      section.ad-trails div.limited-width aside img {
+        width: 250px; }
+      section.ad-trails div.limited-width aside div {
+        padding: 20px; }
+        section.ad-trails div.limited-width aside div h3 {
+          font-size: 1.7em;
+          color: #969696;
+          font-weight: 100;
+          margin: 5px 0px; }
+        section.ad-trails div.limited-width aside div p {
+          font-size: 0.9em; }
+        section.ad-trails div.limited-width aside div a {
+          text-decoration: none; }
+        section.ad-trails div.limited-width aside div span.button {
+          display: block;
+          margin: 0px auto 10px 0px;
+          width: 110px; }
+    section.ad-trails div.limited-width aside:first-of-type {
+      border-right: 1px solid #dfdfdf; }
+      section.ad-trails div.limited-width aside:first-of-type div h3, section.ad-trails div.limited-width aside:first-of-type div p {
+        text-align: right; }
+      section.ad-trails div.limited-width aside:first-of-type div span.button {
+        margin: 0px 0px 10px auto; }

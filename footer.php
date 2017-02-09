@@ -1,3 +1,5 @@
+<?php get_template_part('ad-trails'); ?>
+
 <footer class="site-footer">
   <div class="footer-menu">
     <nav class="primary-menu limited-width"><?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?></nav>

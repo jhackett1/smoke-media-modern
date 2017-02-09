@@ -11,6 +11,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/ad-trails.php": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/ad-trails.php",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/admin\/branding.php": {
 		"fileType": 8192,
 		"ignore": 0,
@@ -849,6 +858,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/img\/mobile.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 175402,
+		"inputAbbreviatedPath": "\/img\/mobile.png",
+		"outputAbbreviatedPath": "\/img\/mobile.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/img\/poster.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -856,6 +876,17 @@
 		"initialSize": 154331,
 		"inputAbbreviatedPath": "\/img\/poster.jpg",
 		"outputAbbreviatedPath": "\/img\/poster.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/img\/print.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 221868,
+		"inputAbbreviatedPath": "\/img\/print.png",
+		"outputAbbreviatedPath": "\/img\/print.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0

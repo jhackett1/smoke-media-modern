@@ -928,7 +928,7 @@ EOD;
 
 	function smoke_back_menu_link( $items, $args ) {
 	   if ($args->theme_location == 'top-left-radio') {
-			$go_back = '<li><a href="' . get_site_url() . '"><i class="fa fa-caret-left"></i> Back to Smoke Media</a></li>';
+			$go_back = '<li><a href="' . get_site_url() . '">Smoke Media</a></li>';
  			$items .= $go_back ;
 		}
 	   return $items;
