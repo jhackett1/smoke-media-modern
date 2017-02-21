@@ -3,7 +3,7 @@
 
 // Fetch the custom branded header
 get_header('radio');
-// Make an empty array to store post IDs, avoiding replicate post display
+// Make an empty array to store post IDsWe, avoiding replicate post display
 $do_not_replicate = array();
 
 

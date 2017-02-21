@@ -18,7 +18,7 @@ if ( have_posts() ) :
     	<!-- Post content -->
   		<?php the_content(); ?>
 		</section>
-
+		
 	    <?php
       // Display a block of posts
       function training_headlines_section($cat){

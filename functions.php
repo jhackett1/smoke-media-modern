@@ -1807,6 +1807,7 @@ add_action('wp_ajax_more_audio_ajax', 'more_audio_ajax');
 
 function my_login_stylesheet() {
     wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/style.css' );
+<<<<<<< HEAD
 }
 add_action( 'login_enqueue_scripts', 'my_login_stylesheet' );
 
@@ -1819,3 +1820,7 @@ function add_custom_post_type_to_query( $query ) {
     }
 }
 add_action( 'pre_get_posts', 'add_custom_post_type_to_query');
+=======
+}
+add_action( 'login_enqueue_scripts', 'my_login_stylesheet' );
+>>>>>>> origin/master

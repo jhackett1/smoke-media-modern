@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <section class="ad-trails phone-hide">
+=======
+<section class="ad-trails mobile-hide">
+>>>>>>> origin/master
   <div class="limited-width">
 
     <!-- Read us -->

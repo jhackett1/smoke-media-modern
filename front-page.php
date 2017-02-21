@@ -424,5 +424,10 @@ echo '</aside><aside>';
 echo '</aside></section>';
 headlines_section($features, 'Features', $do_not_replicate);
 headlines_section($sports, 'Sport', $do_not_replicate);
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/master
 
 get_footer();
