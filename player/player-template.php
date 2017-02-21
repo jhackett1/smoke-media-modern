@@ -7,6 +7,8 @@ Template Name: Radio Player
 <head>
   <title>Listen live | Smoke Radio</title>
   <link href="<?php echo get_template_directory_uri(); ?>/css/player.css" rel="stylesheet"/>
+  <script src="https://use.typekit.net/twm4qpo.js"></script>
+  <script>try{Typekit.load({ async: true });}catch(e){}</script>
   <?php wp_head(); ?>
 </head>
 <body>
@@ -70,8 +72,10 @@ Template Name: Radio Player
             // Split var into track name and artist
             var processedInfo = rawInfo.split(" - ");
             // Display the result string in a div of given ID
-            jQuery("#now-playing h3").html(processedInfo[1]);
-            jQuery("#now-playing h4 span").html(processedInfo[0]);
+            if (showExists == 0){
+              jQuery("#now-playing h3").html(processedInfo[1]);
+              jQuery("#now-playing h4 span").html(processedInfo[0]);
+            }
           }
         }});
         // Check for new data every 10 seconds
@@ -155,11 +159,26 @@ Template Name: Radio Player
     </section>
     <section id="data">
       <!-- Marconi-powered progamme info widget -->
-      <div id="programme-info">
-        <h4></h4>
-        <h3></h3>
-        <p></p>
-      </div>
+      <?php
+      if (get_option('schedule_override')) {
+        ?>
+        <div id="programme-info-override" style="display:block;">
+          <h4>Special</h4>
+          <h3><?php echo get_option('schedule_override'); ?></h3>
+          <p><?php echo get_option('schedule_override_desc'); ?></p>
+        </div>
+        <?php
+      } else{
+        ?>
+        <div id="programme-info">
+          <h4></h4>
+          <h3></h3>
+          <p></p>
+        </div>
+        <?php
+      }
+      ?>
+
       <!-- Icecast-powered current track widget -->
       <div id="now-playing">
         <h4><i class='fa fa-music'></i> <span></span></h4>

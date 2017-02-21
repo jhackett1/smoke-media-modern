@@ -1,8 +1,19 @@
 @charset "UTF-8";
 @media screen and (max-width: 650px) {
-  .mobile-hide {
+  .mobile-hide, .phone-hide {
     display: none !important; } }
 @media screen and (min-width: 650px) and (max-width: 899px) {
+  ul.headline-block.elections li.headline-item {
+    width: calc(50% - 10px) !important;
+    -webkit-box-flex: inherit !important;
+    -webkit-flex: inherit !important;
+        -ms-flex: inherit !important;
+            flex: inherit !important;
+    margin-right: 10px !important; }
+
+  .phone-hide {
+    display: none !important; }
+
   ul.issues {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
@@ -438,7 +449,19 @@
     header.site-header#radio div.primary-menu nav a#launch-player {
       font-size: 1.2em;
       padding: 10px 30px;
-      width: 150px; } }
+      width: 150px; }
+
+  ul.headline-block.elections li.headline-item {
+    width: calc(33.3% - 10px) !important;
+    -webkit-box-flex: inherit !important;
+    -webkit-flex: inherit !important;
+        -ms-flex: inherit !important;
+            flex: inherit !important;
+    margin-right: 10px !important; } }
 @media screen and (min-width: 1500px) {
   .limited-width {
-    max-width: 1200px; } }
+    max-width: 1200px; }
+
+  body.frontend article main section.meta h2 {
+    font-size: 6em;
+    line-height: 1em; } }

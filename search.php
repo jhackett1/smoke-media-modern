@@ -1,4 +1,4 @@
-<?get_header();?>
+<?php get_header();?>
 <h2 class="limited-width page-title"><span>Results / </span><?php echo get_search_query(); ?></h2>
 <hr class="limited-width"/>
 <?php
@@ -137,10 +137,19 @@ $counter = 1;
         default:
             echo "";
     }
+
     // Advance the counter by one with each post
     $counter++;
     // Finish looping
   endwhile;
+  // Fix the annoying unclosed markup problem that happens if only three posts are retrieved
+  if ($counter === 4 || $counter === 6 ) {
+    ?>
+    <li class="horizontal-headline-item" style="background-color:rgba(0,0,0,0)">
+    </li>
+    </ul>
+    <?php
+  }
 ?>
   </ul>
 
@@ -175,7 +184,7 @@ endif;
       jQuery("#more-posts").attr("disabled",true); // Disable the button, temp.
       jQuery.post(ajaxUrl, {
           action: "search_ajax",
-          offset: (page * ppp) + 1,
+          offset: (page * ppp),
           ppp: ppp,
           query: q
       }).success(function(posts){

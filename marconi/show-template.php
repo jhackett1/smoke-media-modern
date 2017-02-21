@@ -1,4 +1,4 @@
-<? get_header("radio");
+<?php get_header("radio");
 
 // Get show info from Marconi API
 $resp = file_get_contents('https://marconi.smokeradio.co.uk/api/programme_info.php?code='.$pcode);

@@ -1,9 +1,10 @@
 <?php
 
+
   // Display a block of posts
   function campaign_block($cat, $title , &$do_not_replicate){
     // Create the WP_query and pass in $cat parameter
-    $the_query = new WP_Query( array('cat' => $cat ) );
+    $the_query = new WP_Query( array('cat' => $cat,'post_type' => array('post','live') ) );
     if ( $the_query->have_posts() ) :
     // Create a counter variable to track number of posts and set it to one
     $counter = 1;
@@ -52,13 +53,9 @@
     <?php else:
       //The fourth/last post, with the closing horizontal container
     ?>
-        <li class="horizontal-headline-item">
-          <?php the_post_thumbnail('medium'); ?>
-          <div>
-            <h3><?php the_title(); ?></h3>
-            <?php the_excerpt(); ?>
-          </div>
-          <a class="cover" href="<?php the_permalink(); ?>"></a>
+        <li class="horizontal-headline-item see-more">
+            <h3>More <?php echo get_cat_name( $cat ) ?> <i class="fa fa-arrow-right"></i></h3>
+          <a class="cover" href="<?php echo get_category_link( $cat ) ?>"></a>
         </li>
       </ul>
     <?php endif; ?>

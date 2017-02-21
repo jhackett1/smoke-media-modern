@@ -10,7 +10,7 @@ $do_not_replicate = array();
 // Display a block of posts
 function headlines_section($cat, $title, &$do_not_replicate){
   // Create the WP_query and pass in $cat parameter
-  $the_query = new WP_Query( array('cat' => $cat ) );
+  $the_query = new WP_Query( array('meta_key'		=> 'smoke_promoted', 'meta_value'	=> 'on', 'cat' => $cat ) );
   if ( $the_query->have_posts() ) :
   // Create a counter variable to track number of posts and set it to one
   $counter = 1;
@@ -88,12 +88,12 @@ function headlines_section($cat, $title, &$do_not_replicate){
   <?php endif;
 }
 
-headlines_section(487, '', $do_not_replicate);
+headlines_section(308, '', $do_not_replicate);
 get_template_part('audioboom/audioboom-section');
 
 ?>
 
-<section id="shows-twitter" class="limited-width">
+<section id="shows-twitter" class="limited-width" style="margin-bottom: 30px">
   <aside>
     <?php
         // Display a block of posts
@@ -176,7 +176,7 @@ get_template_part('audioboom/audioboom-section');
           <?php endif;
         }
 
-      interview_headlines_section(4, 'Latest', $do_not_replicate);
+      interview_headlines_section(308, 'Latest', $do_not_replicate);
   ?>
 
   </aside>

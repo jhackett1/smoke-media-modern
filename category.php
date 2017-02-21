@@ -1,4 +1,4 @@
-<?
+<?php
 
 if (is_category(array('radio-news', 'radio-music', 'radio-sport',))) {
   get_header('radio');
@@ -28,7 +28,7 @@ $subcats = get_term_children( $current_cat, 'category' );
 foreach ($subcats as $subcat) {
   // Set up query arguments
   $args = array(
-    'cat' => $subcat
+    'cat' => $subcat,'post_type' => array('post','live')
   );
   // Create the query object
   $subcat_query = new WP_Query( $args );
@@ -286,7 +286,7 @@ endif;
       jQuery("#more-posts").attr("disabled",true); // Disable the button, temp.
       jQuery.post(ajaxUrl, {
           action: "more_post_ajax",
-          offset: (page * ppp) + 1,
+          offset: (page * ppp),
           ppp: ppp,
           cat: category
       }).success(function(posts){

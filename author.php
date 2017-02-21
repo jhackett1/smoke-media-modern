@@ -1,4 +1,4 @@
-<? get_header();
+<?php get_header();
 
 ?>
 <h2 class="limited-width page-title"><span>Author / </span><?php  the_author(); ?></h2>
@@ -173,7 +173,7 @@ endif;
       jQuery("#more-posts").attr("disabled",true); // Disable the button, temp.
       jQuery.post(ajaxUrl, {
           action: "author_ajax",
-          offset: (page * ppp) + 1,
+          offset: (page * ppp),
           ppp: ppp,
           author_id: author_id
       }).success(function(posts){

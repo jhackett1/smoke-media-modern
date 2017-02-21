@@ -2,11 +2,21 @@
 
 // First mobile-first breakpoint
 @media screen and (max-width: 650px)
-  .mobile-hide
+  .mobile-hide, .phone-hide
     display: none !important
 
 // First mobile-first breakpoint
 @media screen and (min-width: 650px) and (max-width: 899px)
+
+  ul.headline-block.elections
+
+    li.headline-item
+      width: calc(50% - 10px) !important
+      flex: inherit !important
+      margin-right: 10px !important
+
+  .phone-hide
+    display: none !important
 
   ul.issues
     flex-direction: row
@@ -161,6 +171,8 @@
 
 // Second mobile-first breakpoint
 @media screen and (min-width: 900px)
+
+
 
   ul.issues
     flex-direction: row
@@ -372,7 +384,23 @@
           padding: 10px 30px
           width: 150px
 
+  ul.headline-block.elections
+
+    li.headline-item
+      width: calc(33.3% - 10px) !important
+      flex: inherit !important
+      margin-right: 10px !important
+
+
 // Special gift for the big-screen weirdos
 @media screen and (min-width: 1500px)
   .limited-width
     max-width: 1200px
+
+  body.frontend
+    article
+      main
+        section.meta
+          h2
+            font-size: 6em
+            line-height: 1em

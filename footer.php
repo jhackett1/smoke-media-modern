@@ -1,3 +1,5 @@
+<?php get_template_part('ad-trails'); ?>
+
 <footer class="site-footer">
   <div class="footer-menu">
     <nav class="primary-menu limited-width"><?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?></nav>
@@ -11,6 +13,7 @@
   <nav class="corporate-menu"><?php wp_nav_menu( array( 'theme_location' => 'footer' ) ); ?></nav>
   <div class="copyright">
     <p>&copy; <?php echo date('Y'); ?> <?php echo get_bloginfo('name'); ?> &middot; Developed by <a href="http://joshuahackett.com" target="blank">Joshua Hackett</a></p>
+    <p class="disclaimer">Information and views expressed here are those of Smoke Media contributors and volunteers, and are not necessarily shared or endorsed by Westminster SU.</p>
   </div>
 </footer>
 <?php get_template_part('notification-bar'); ?>

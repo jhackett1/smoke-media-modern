@@ -1,4 +1,4 @@
-<? get_header();
+<?php get_header();
 
 // Make an empty array to store post IDs, avoiding replicate post display
 $do_not_replicate = array();
@@ -19,7 +19,7 @@ info_bar();
 // Display a block of posts
 function headlines_section($cat, $title, &$do_not_replicate){
   // Create the WP_query and pass in $cat parameter
-  $the_query = new WP_Query( array('cat' => $cat ) );
+  $the_query = new WP_Query( array('cat' => $cat,'post_type' => array('post','live') ) );
   if ( $the_query->have_posts() ) :
   // Create a counter variable to track number of posts and set it to one
   $counter = 1;
@@ -153,7 +153,7 @@ function interview_headlines_section($cat, $title, &$do_not_replicate){
 // Display a block of posts
 function reviews_headlines_section($cat, $title, &$do_not_replicate){
   // Create the WP_query and pass in $cat parameter
-  $the_query = new WP_Query( array('cat' => $cat ) );
+  $the_query = new WP_Query( array('cat' => $cat, 'post_type' => array('post','live'), ) );
   if ( $the_query->have_posts() ) :
   // Create a counter variable to track number of posts and set it to one
   $counter = 1;
@@ -221,7 +221,7 @@ function reviews_headlines_section($cat, $title, &$do_not_replicate){
 // Display a block of posts
 function comment_headlines_section($cat, $title, &$do_not_replicate){
   // Create the WP_query and pass in $cat parameter
-  $the_query = new WP_Query( array('cat' => $cat ) );
+  $the_query = new WP_Query( array('cat' => $cat, 'post_type' => array('post','live'), ) );
   if ( $the_query->have_posts() ) :
   // Create a counter variable to track number of posts and set it to one
   $counter = 1;
@@ -300,7 +300,7 @@ function comment_headlines_section($cat, $title, &$do_not_replicate){
 // Display a block of posts
 function promoted_headlines_section($title, &$do_not_replicate){
   // Create the WP_query and pass in $cat parameter
-  $the_query = new WP_Query( array('meta_key'		=> 'smoke_promoted', 'meta_value'	=> 'on' ) );
+  $the_query = new WP_Query( array('meta_key'		=> 'smoke_promoted', 'meta_value'	=> 'on', 'post_type' => array('post','live'), ) );
   if ( $the_query->have_posts() ) :
   // Create a counter variable to track number of posts and set it to one
   $counter = 1;
@@ -371,25 +371,58 @@ function promoted_headlines_section($title, &$do_not_replicate){
   ?>
     </ul>
   <?php
-  // What if there are no posts returned?
+  // What if there are no posts $ =ed?
   else :
   ?>
   	<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
   <?php endif;
 }
 
-// Call the functions and populat the homepage
+
+// Retrieve the categories saved in the admin menus, if they exist, else, save the section name as a string
+if (get_option('news_block')) {
+  $news = get_option('news_block');
+} else {
+  $news = 'news';
+}
+if (get_option('comment_block')) {
+  $comment = get_option('comment_block');
+} else {
+  $comment = 'comment';
+}
+if (get_option('interviews_block')) {
+  $interviews = get_option('interviews_block');
+} else {
+  $interviews = 'interviews';
+}
+if (get_option('interviews_block')) {
+  $reviews = get_option('reviews_block');
+} else {
+  $reviews = 'reviews';
+}
+if (get_option('features_block')) {
+  $features = get_option('features_block');
+} else {
+  $features = 'features';
+}
+if (get_option('sports_block')) {
+  $sports = get_option('sports_block');
+} else {
+  $sports = 'sport';
+}
+
+// Call the functions and populate the homepage
 promoted_headlines_section(0, $do_not_replicate);
-headlines_section('news', 'News', $do_not_replicate);
+headlines_section($news, 'News', $do_not_replicate);
 get_template_part('youtube/youtube-section');
-comment_headlines_section('news', 'Comment', $do_not_replicate);
+comment_headlines_section($comment, 'Comment', $do_not_replicate);
 // Output a flexbox container to place interviews and reviews side by side on larger screens
 echo '<section id="interviews-reviews" class="limited-width"><aside>';
-  interview_headlines_section('4', 'Interviews', $do_not_replicate);
+  interview_headlines_section($interviews, 'Interviews', $do_not_replicate);
 echo '</aside><aside>';
-  reviews_headlines_section('4', 'Reviews', $do_not_replicate);
+  reviews_headlines_section($reviews, 'Reviews', $do_not_replicate);
 echo '</aside></section>';
-headlines_section(4, 'Features', $do_not_replicate);
-headlines_section(40, 'Sport', $do_not_replicate);
+headlines_section($features, 'Features', $do_not_replicate);
+headlines_section($sports, 'Sport', $do_not_replicate);
 
-get_footer(); ?>
+get_footer();

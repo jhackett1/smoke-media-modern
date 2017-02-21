@@ -1,4 +1,4 @@
-<?php get_header();
+<?php get_header('radio');
 
 echo get_query_var("video");
 
@@ -31,7 +31,7 @@ if (get_option('youtube_api_key')) {
     // Create a title and save as a var
     $video_title = $video_array["items"][0]["snippet"]["title"];
 
-    $vid_category = get_site_url() . "/videos";
+    $vid_category = get_site_url() . "/radio/videos";
 
 
 
@@ -43,7 +43,7 @@ echo get_query_var('video');
 <article class="limited-width video" <?php post_class(); ?>>
 	<main>
 		<section class="meta">
-			<h2><a href="<?php echo $vid_category; ?>">TV</a> / <?php echo $video_title; ?></h2>
+			<h2><a href="<?php echo $vid_category; ?>">Video</a> / <?php echo $video_title; ?></h2>
 			<hr class="big">
       <h5><?php echo human_time_diff( strtotime($video_array["items"][0]["snippet"]["publishedAt"]), current_time('timestamp') ) . ' ago'; ?> </h5>
       <hr>

@@ -43,4 +43,67 @@ jQuery( document ).ready(function() {
       jQuery("ul.content li:nth-of-type(" + index + ")").addClass("active");
   });
 
+
+
+
+
+
+
+
+
+  // For the slider
+
+
+
+
+  // Get number of slides and save as var
+  slideQuant = jQuery("div.gallery ul.content").children().size();
+  // Get the width of a single slide and save as a var
+  slideWidth = parseInt(jQuery("div.gallery ul.content li:first-of-type").width());
+  // Total width of the gallery slides
+  maxWidth = slideWidth * slideQuant;
+  maxLeft = -maxWidth;
+
+  // What do do when the "advance slide" button is clicked
+  jQuery('div.gallery span.nav:last-of-type').click(function () {
+      // Get the current scroll position of the scrollbar
+      var currentLeft = parseInt(jQuery('div.gallery ul.content li.gallery-item:first-of-type').css( "margin-left" ));
+      // Calculate the new scroll position of the scrollbar
+      var newLeft = currentLeft - slideWidth;
+      // Action the thing if there is a slide to scroll to
+      if (newLeft > maxLeft) {
+        // Set the scrollbar of the slider to the new position
+        jQuery('div.gallery ul.content li.gallery-item:first-of-type').animate({'margin-left':newLeft}, 100);
+        jQuery('div.gallery span.nav:first-of-type').removeClass('off');
+      } else {
+        jQuery('div.gallery span.nav:last-of-type').addClass('off');
+      }
+      return false;
+  });
+
+
+
+  // What do do when the "previous slide" button is clicked
+  jQuery('div.gallery span.nav:first-of-type').click(function () {
+      // Get the current scroll position of the scrollbar
+      var currentLeft = parseInt(jQuery('div.gallery ul.content li.gallery-item:first-of-type').css( "margin-left" ));
+      // Calculate the new scroll position of the scrollbar
+      var newLeft = currentLeft + slideWidth;
+      // Action the thing if there is a slide to scroll to
+      if (newLeft <= 0) {
+        // Set the scrollbar of the slider to the new position
+        jQuery('div.gallery ul.content li.gallery-item:first-of-type').animate({'margin-left':newLeft}, 100);
+        jQuery('div.gallery span.nav:last-of-type').removeClass('off');
+      } else {
+        jQuery('div.gallery span.nav:first-of-type').addClass('off');
+      }
+      return false;
+  });
+
+
+
+
+
+
+
 });
