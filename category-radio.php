@@ -3,14 +3,14 @@
 
 // Fetch the custom branded header
 get_header('radio');
-// Make an empty array to store post IDsWe, avoiding replicate post display
+// Make an empty array to store post IDs, avoiding replicate post display
 $do_not_replicate = array();
 
 
 // Display a block of posts
 function headlines_section($cat, $title, &$do_not_replicate){
   // Create the WP_query and pass in $cat parameter
-  $the_query = new WP_Query( array('meta_key'		=> 'smoke_promoted', 'meta_value'	=> 'on', 'cat' => $cat ) );
+  $the_query = new WP_Query( array('meta_key'		=> 'smoke_promoted', 'meta_value'	=> 'on', 'cat' => $cat, 'post_type' => array('post','live') ) );
   if ( $the_query->have_posts() ) :
   // Create a counter variable to track number of posts and set it to one
   $counter = 1;
@@ -99,7 +99,7 @@ get_template_part('audioboom/audioboom-section');
         // Display a block of posts
         function interview_headlines_section($cat, $title, &$do_not_replicate){
           // Create the WP_query and pass in $cat parameter
-          $the_query = new WP_Query( array('cat' => $cat ) );
+          $the_query = new WP_Query( array('cat' => $cat,'post_type' => array('post','live') ) );
           if ( $the_query->have_posts() ) :
           // Create a counter variable to track number of posts and set it to one
           $counter = 1;

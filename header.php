@@ -18,21 +18,26 @@
 	  <?php if (is_single()){
 	  $feat = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'ogimg' );
 	  $feat = $feat[0];
+		$excerpt = strip_tags( get_the_excerpt($post->ID) );
 	  ?>
+
+			<!-- post -->
 
 	    <meta property="og:url" content="<?php the_permalink() ?>"/>
 	    <meta property="og:title" content="<?php single_post_title(''); ?>" />
-	    <meta property="og:description" content="<?php echo strip_tags(get_the_excerpt()); ?>" />
+	    <meta property="og:description" content="<?php echo $excerpt; ?>" />
 	    <meta property="og:type" content="article" />
 	    <meta property="og:image" content="<?php echo $feat; ?>" />
 	    <meta name="twitter:card" content="summary_large_image">
 	    <meta name="twitter:site" content="@Smoke_Radio">
 	    <meta name="twitter:creator" content="@Smoke_Radio">
 	    <meta name="twitter:title" content="<?php the_title(); ?>">
-	    <meta name="twitter:description" content="<?php echo strip_tags(get_the_excerpt()); ?>">
+	    <meta name="twitter:description" content="<?php echo $excerpt; ?>">
 	    <meta name="twitter:image" content="<?php echo $feat; ?>">
 
 	  <?php } else { ?>
+
+			<!-- post -->
 
 	    <meta property="og:site_name" content="<?php bloginfo('name'); ?>" />
 	    <meta property="og:description" content="<?php bloginfo('description'); ?>" />

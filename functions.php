@@ -802,12 +802,12 @@ add_action ('wp_head', 'add_jw_license_key');
 		}
 	}
 
-// Responsive youtube container
-function alx_embed_html( $html ) {
-    return '<div class="yt-container">' . $html . '</div>';
-}
-add_filter( 'embed_oembed_html', 'alx_embed_html', 10, 3 );
-add_filter( 'video_embed_html', 'alx_embed_html' ); // Jetpack
+// // Responsive youtube container
+// function alx_embed_html( $html ) {
+//     return '<div class="yt-container">' . $html . '</div>';
+// }
+// add_filter( 'embed_oembed_html', 'alx_embed_html', 10, 3 );
+// add_filter( 'video_embed_html', 'alx_embed_html' ); // Jetpack
 
 // Function to show the author box unless a byline is set
 	function smoke_author_box($ID){
@@ -1807,7 +1807,6 @@ add_action('wp_ajax_more_audio_ajax', 'more_audio_ajax');
 
 function my_login_stylesheet() {
     wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/style.css' );
-<<<<<<< HEAD
 }
 add_action( 'login_enqueue_scripts', 'my_login_stylesheet' );
 
@@ -1820,7 +1819,3 @@ function add_custom_post_type_to_query( $query ) {
     }
 }
 add_action( 'pre_get_posts', 'add_custom_post_type_to_query');
-=======
-}
-add_action( 'login_enqueue_scripts', 'my_login_stylesheet' );
->>>>>>> origin/master

@@ -2489,12 +2489,7 @@ ul.issues {
       color: #969696; }
 
 section.ad-trails {
-<<<<<<< HEAD
   border-top: 1px solid #dfdfdf; }
-=======
-  border-top: 1px solid #dfdfdf;
-  margin-top: 10px; }
->>>>>>> origin/master
   section.ad-trails div.limited-width {
     display: -webkit-box;
     display: -webkit-flex;
@@ -2504,12 +2499,8 @@ section.ad-trails {
     -webkit-box-direction: normal;
     -webkit-flex-direction: row;
         -ms-flex-direction: row;
-<<<<<<< HEAD
             flex-direction: row;
     background-color: #ffffff; }
-=======
-            flex-direction: row; }
->>>>>>> origin/master
     section.ad-trails div.limited-width aside {
       width: 50%;
       display: -webkit-box;
