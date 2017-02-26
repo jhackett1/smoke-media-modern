@@ -46,7 +46,7 @@ if ($layout === 'on') {
 			<section class="meta">
 				<h2><?php the_title(); ?></h2>
 				<hr class="big">
-	      <h5><?php the_category(); ?> &middot; <span><?php echo human_time_diff( get_the_time('U'), current_time('timestamp') ) . ' ago'; ?></span> &middot; <span>By <?php	smoke_byline($post->ID); ?></span></h5>
+	      <h5><?php the_category(','); ?> &middot; <span><?php echo human_time_diff( get_the_time('U'), current_time('timestamp') ) . ' ago'; ?></span> &middot; <span>By <?php	smoke_byline($post->ID); ?></span></h5>
 	      <hr>
 			</section>
 	    <section class="contents">

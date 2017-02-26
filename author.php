@@ -22,6 +22,10 @@ $counter = 1;
   while ( have_posts() ): the_post();
     // Save post ID as var
     $ID = get_the_ID();
+    // Is there a byline set? If so, skip the post
+    $byline = get_post_meta( $ID, 'byline')[0];
+    if ($byline != '') { continue; }
+
     // If current post ID exists in array, skip post and continue with loop
     if (in_array($ID, $do_not_replicate)) { continue; };
     // Stop looping after fourth post

@@ -1167,7 +1167,11 @@ body.frontend {
         -webkit-flex-direction: row;
             -ms-flex-direction: row;
                 flex-direction: row;
-        margin: 20px 0px; }
+        margin: 20px 0px;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+            -ms-flex-align: center;
+                align-items: center; }
         body.frontend article main section.author-profile a:hover {
           text-decoration: underline; }
         body.frontend article main section.author-profile a {
@@ -1490,6 +1494,10 @@ body.frontend {
           margin: 0;
           padding: 0;
           margin-right: 4px; }
+          body.frontend article main section.meta h5 ul li:last-of-type::after {
+            content: ""; }
+          body.frontend article main section.meta h5 ul li::after {
+            content: ","; }
           body.frontend article main section.meta h5 ul li {
             display: inline; }
             body.frontend article main section.meta h5 ul li a {

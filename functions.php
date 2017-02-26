@@ -820,7 +820,7 @@ add_action ('wp_head', 'add_jw_license_key');
 		if (!$byline){
 			?>
 			<section class="author-profile">
-	      <? echo get_avatar( get_the_author_meta( 'ID' ) ); ?>
+	      <?php echo get_avatar( get_the_author_meta( 'ID' ) ); ?>
 	      <div>
 	        <h4><?php the_author_posts_link(); ?></h4>
 	        <h5><?php the_author_meta( 'position'); ?></h5>

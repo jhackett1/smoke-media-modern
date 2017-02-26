@@ -479,6 +479,7 @@ body.frontend
         display: flex
         flex-direction: row
         margin: 20px 0px
+        align-items: center
 
         a:hover
           text-decoration: underline
@@ -850,6 +851,13 @@ body.frontend
             margin: 0
             padding: 0
             margin-right: 4px
+
+            li:last-of-type::after
+              content: ''
+
+            li::after
+              content: ','
+
             li
               display: inline
               a
