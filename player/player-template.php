@@ -6,9 +6,29 @@ Template Name: Radio Player
 <!doctype HTML>
 <head>
   <title>Listen live | Smoke Radio</title>
-  <link href="<?php echo get_template_directory_uri(); ?>/css/player.css" rel="stylesheet"/>
+  <link href="<?php echo get_template_directory_uri(); ?>/player/player.css" rel="stylesheet"/>
   <script src="https://use.typekit.net/twm4qpo.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+
+	<meta property="fb:app_id" content="1134129026651501" />
+  <meta property="og:url" content="http://smokeradio.co.uk/"/>
+  <meta property="og:title" content="Listen Live | Smoke Radio" />
+  <meta property="og:site_name" content="Smoke Radio" />
+  <meta property="og:description" content="On campus, online, and on your mobile." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="<?php echo get_template_directory_uri() ?>/img/poster-radio.jpg" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@Smoke_Radio">
+  <meta name="twitter:creator" content="@Smoke_Radio">
+  <meta name="twitter:title" content="Smoke Radio">
+  <meta name="twitter:description" content="On campus, online, and on your mobile.">
+  <meta name="twitter:image" content="<?php echo get_template_directory_uri() ?>/img/poster-radio.jpg" >
+
+
+
+
+
   <?php wp_head(); ?>
 </head>
 <body>
@@ -34,6 +54,14 @@ Template Name: Radio Player
             jQuery("#programme-info h3").html(title);
             jQuery("#programme-info p").html(desc);
           } else {
+            jQuery("#programme-info").css("display", "block");
+
+            var h = new Date().getHours();
+            var hend = h + 1;
+            jQuery("#programme-info h4").html(h + ":00 - " + hend + ":00");
+
+            jQuery("#programme-info h3").html("Non-stop music");
+            jQuery("#programme-info p").html("The best tracks from Smoke Radio's catalogue.");
           }
         }});
         // Check for new data every 60 seconds
@@ -73,8 +101,8 @@ Template Name: Radio Player
             var processedInfo = rawInfo.split(" - ");
             // Display the result string in a div of given ID
             if (showExists == 0){
-              jQuery("#now-playing h3").html(processedInfo[1]);
-              jQuery("#now-playing h4 span").html(processedInfo[0]);
+              jQuery("#now-playing h3").html('aaaar');
+              jQuery("#now-playing h4 span").html('aaaaa');
             }
           }
         }});
@@ -82,7 +110,7 @@ Template Name: Radio Player
         setTimeout(nowPlayingData, 10000);
       }
       // Call the function
-      nowPlayingData();
+      //nowPlayingData();
   // End document-ready function
   });
   </script>
@@ -91,6 +119,55 @@ Template Name: Radio Player
     <section id="ident">
       <img src="<?php echo get_template_directory_uri(); ?>/img/radio.png" alt="Smoke Radio">
     </section>
+
+
+<!-- HERE'S THE TRICKY BIT -->
+
+<?php
+if (get_option('second_stream')) {
+// If a second stream is specified, do this
+?>
+
+  <section id="media">
+    <!-- Default audio element. Switch managed with JS -->
+    <audio id="audio" src="<?php echo get_option('stream_url'); ?>" autoplay>
+      Whoops! Looks like your browser is a bit too dated to tune in. Update to <a href="http://chrome.google.com">something more modern?</a>
+    </audio>
+    <p id="pick">Pick your channel...</p>
+    <!-- Stream switch control -->
+    <section id="switch">
+      <div id="first" class="on" onclick="playFirst()" style="background-image:url('<?php echo get_template_directory_uri(); ?>/img/radio.png')">
+      </div>
+      <div id="second" onclick="playSecond()" style="background-image:url('<?php echo get_option('second_stream_img'); ?>')">
+      </div>
+    </section>
+  </section>
+
+  <script>
+    var audio = document.getElementById('audio');
+    var firstDiv = document.getElementById('first');
+    var secondDiv = document.getElementById('second');
+    // var volcontrol = document.getElementById('vol-control');
+    // Play pause control
+    function playFirst() {
+        audio.src = '<?php echo get_option('stream_url'); ?>';
+        audio.play();
+        secondDiv.className="";
+        firstDiv.className="on";
+    }
+    // Play pause control
+    function playSecond() {
+        audio.src = '<?php echo get_option('second_stream'); ?>';
+        audio.play();
+        firstDiv.className="";
+        secondDiv.className="on";
+    }
+  </script>
+
+<?php
+// If there is no second stream specified, do this instead
+}else{
+?>
     <section id="media">
       <!-- The audio element -->
       <?php
@@ -155,8 +232,17 @@ Template Name: Radio Player
         <?php
       }
       ?>
-
     </section>
+<?php
+}
+?>
+
+
+
+
+
+
+
     <section id="data">
       <!-- Marconi-powered progamme info widget -->
       <?php

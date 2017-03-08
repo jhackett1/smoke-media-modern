@@ -954,6 +954,7 @@ EOD;
 		$feat_video_url = isset( $values['feat_video_url'] ) ? esc_attr( $values['feat_video_url'][0] ) : "";
 		$star_rating = isset( $values['star_rating'] ) ? esc_attr( $values['star_rating'][0] ) : "";
 		$smoke_promoted = isset( $values['smoke_promoted'] ) ? $values['smoke_promoted'][0] : "";
+		$standfirst = isset( $values['standfirst'] ) ? $values['standfirst'][0] : "";
 
 		//What a nonce
 		wp_nonce_field( 'smoke_post_options_nonce', 'meta_box_nonce' );

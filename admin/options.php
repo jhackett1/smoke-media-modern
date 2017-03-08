@@ -188,6 +188,24 @@
   		<p class="description">Give the full URL of the Smoke Radio output stream here. The player will connect to this.</p>
     <?php
   }
+
+
+  function second_stream_element()
+  {
+  	?>
+    	<input type="text" name="second_stream" id="second_stream" value="<?php echo get_option('second_stream'); ?>" />
+  		<p class="description">Give the full URL of the SECOND Smoke Radio output stream here, if applicable. A switch option will appear in the player.</p>
+    <?php
+  }
+
+  function second_stream_img_element()
+  {
+  	?>
+    	<input type="text" name="second_stream_img" id="second_stream_img" value="<?php echo get_option('second_stream_img'); ?>" />
+  		<p class="description">Give the full URL to the image you would like to use as the background of the second stream's switch button.</p>
+    <?php
+  }
+
   function stream_type_element()
   {
   	?>
@@ -325,6 +343,14 @@ function display_theme_panel_fields()
 	add_settings_field("stream type", "Output Stream Type", "stream_type_element", "theme-options", "broadcast-section");
 	// Automate saving of field to database
   register_setting("section", "stream_type");
+  // Add a single field
+	add_settings_field("second stream URL", "Second Stream URL", "second_stream_element", "theme-options", "broadcast-section");
+	// Automate saving of field to database
+  register_setting("section", "second_stream");
+  // Add a single field
+  add_settings_field("stream img", "Second Stream Image", "second_stream_img_element", "theme-options", "broadcast-section");
+  // Automate saving of field to database
+  register_setting("section", "second_stream_img");
   // Add a single field
 	add_settings_field("schedule override", "Schedule Override", "schedule_override_element", "theme-options", "broadcast-section");
 	// Automate saving of field to database
